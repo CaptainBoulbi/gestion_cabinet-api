@@ -3,17 +3,14 @@
 include_once 'JWTUtils.php';
 include_once 'AuthAPI.php';
 
-$auth_api = new AuthAPI();
+$auth_api = new AuthAPI(['GET', 'POST', 'OPTIONS']);
 $jwt_utils = new JWTUtils();
 
 $SECRET = 'secret';
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'OPTIONS':
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Authorization, Accept");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-        http_response_code(204);
+        $auth_api->optionRequest();
         break;
     case 'GET':
         $jwt = $jwt_utils->get_bearer_token();

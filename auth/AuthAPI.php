@@ -4,14 +4,25 @@ include_once 'ConnexionDB.php';
 
 class AuthAPI extends ConnexionDB
 {
-    public function __construct(){
+    private array $allowedOptions;
+
+    public function __construct(array $allowedOptions){
         parent::__construct();
+        $this->allowedOptions = $allowedOptions;
     }
 
     public function postLogin(array $donnees): bool|array
     {
         $sql = "SELECT * FROM `user_auth_v2` WHERE login = ?";
         return $this->selectFirst($sql, [$donnees['login']]);
+    }
+
+    public function optionRequest(): void
+    {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Authorization, Accept");
+        header("Access-Control-Allow-Methods: " . implode(', ', $this->allowedOptions));
+        http_response_code(204);
     }
 
     public function deliverResponse($status, $status_code, $status_message, $data = null): void
