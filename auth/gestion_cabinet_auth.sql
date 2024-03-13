@@ -1,8 +1,10 @@
--- Active: 1706110255136@@127.0.0.1@3306
+-- Active: 1707474650741@@localhost@3306
 CREATE OR REPLACE USER 'local_user'@'localhost' IDENTIFIED BY 'password';
 
 DROP DATABASE IF EXISTS db_gestion_cabinet_auth;
 create database db_gestion_cabinet_auth;
+
+grant all privileges on db_gestion_cabinet_auth.* TO 'local_user'@'localhost' identified by 'password';
 
 USE db_gestion_cabinet_auth;
 
