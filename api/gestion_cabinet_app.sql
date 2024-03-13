@@ -1,4 +1,4 @@
--- Active: 1706110255136@@127.0.0.1@3306
+-- Active: 1710323626621@@127.0.0.1@3306@db_gestion_cabinet_app
 CREATE OR REPLACE USER 'local_user'@'localhost' IDENTIFIED BY 'password';
 DROP DATABASE IF EXISTS db_gestion_cabinet_app;
 create database db_gestion_cabinet_app;
@@ -24,7 +24,7 @@ CREATE TABLE usager(
    CONSTRAINT ch_sexe_usa CHECK(sexe IN ('M', 'F')),
    CONSTRAINT ch_code_postal_usa CHECK(LENGTH(code_postal) = 5),
    CONSTRAINT ch_num_secu_usa CHECK(LENGTH(num_secu) = 15),
-   CONSTRAINT ch_civilite_usa CHECK(civilite IN ('Monsieur', 'Madame'))
+   CONSTRAINT ch_civilite_usa CHECK(civilite IN ('M.', 'Mme.'))
 );
 
 CREATE TABLE medecin(
@@ -33,7 +33,7 @@ CREATE TABLE medecin(
    nom VARCHAR(50) NOT NULL,
    prenom VARCHAR(50) NOT NULL,
    CONSTRAINT PK_medecin PRIMARY KEY(id_medecin),
-   CONSTRAINT ch_civilite_med CHECK(civilite IN ('Monsieur', 'Madame'))
+   CONSTRAINT ch_civilite_med CHECK(civilite IN ('M.', 'Mme.'))
 );
 
 CREATE TABLE consultation(
@@ -52,29 +52,35 @@ CREATE TABLE consultation(
    CONSTRAINT ch_duree_consult CHECK(duree_consult IN (15, 30, 45, 60))
 );
 
-INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu)
-VALUES('Monsieur', 'Dupont', 'Jean', 'M', '1 rue de la Paix', '75000', 'Paris', '1990-01-06', 'Paris', '180010101010101'),
-         ('Madame', 'Durand', 'Marie', 'F', '2 avenu de l''Angle', '31320', 'Auzeville-Tolosane', '1987-03-07', 'Clermont-Ferrant', '280010101010101'),
-         ('Madame', 'Martin', 'Sophie', 'F', '3 rue de la Paix', '75000', 'Paris', '1980-02-09', 'Paris', '380010101010101'),
-         ('Monsieur', 'Lefevre', 'Pierre', 'M', '4 rue de la Paix', '75000', 'Paris', '1975-04-10', 'Paris', '480010101010101'),
-         ('Monsieur', 'Leroy', 'Jacques', 'M', '5 rue de la Paix', '75000', 'Paris', '1970-05-11', 'Paris', '580010101010101'),
-         ('Madame', 'Leroy', 'Marie', 'F', '6 rue de la Paix', '75000', 'Paris', '1965-06-12', 'Paris', '680010101010101'),
-         ('Monsieur', 'Leroy', 'Pierre', 'M', '7 rue de la Paix', '75000', 'Paris', '1960-07-13', 'Paris', '780010101010101'),
-         ('Madame', 'Leroy', 'Sophie', 'F', '8 rue de la Paix', '75000', 'Paris', '1955-08-14', 'Paris', '880010101010101'),
-         ('Monsieur', 'Leroy', 'Jacques', 'M', '9 rue de la Paix', '75000', 'Paris', '1950-09-15', 'Paris', '980010101010101'),
-         ('Madame', 'Leroy', 'Marie', 'F', '10 rue de la Paix', '75000', 'Paris', '1945-10-16', 'Paris', '080010101010101');
 
+-- aucune répétition de nom et prénom
+INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu)
+VALUES('M.', 'Dupont', 'Jean', 'M', '1 rue de la Paix', '75000', 'Paris', '1990-01-06', 'Paris', '180010101010101'),
+         ('Mme.', 'Durand', 'Marie', 'F', '2 avenu de l''Angle', '31320', 'Auzeville-Tolosane', '1987-03-07', 'Clermont-Ferrant', '280010101010101'),
+         ('Mme.', 'Martin', 'Sophie', 'F', '3 rue de la Paix', '75000', 'Paris', '1980-02-09', 'Paris', '380010101010101'),
+         ('M.', 'Lefevre', 'Pierre', 'M', '4 rue de la Paix', '75000', 'Paris', '1975-04-10', 'Paris', '480010101010101'),
+         ('M.', 'Leroy', 'Jacques', 'M', '5 rue de la Paix', '75000', 'Paris', '1970-05-11', 'Paris', '580010101010101'),
+         ('Mme.', 'Darc', 'Jeanne', 'F', '6 rue de la Paix', '75000', 'Paris', '1965-06-12', 'Paris', '680010101010101'),
+         ('M.', 'Siphon', 'Paul', 'M', '7 rue de la Paix', '75000', 'Paris', '1960-07-13', 'Paris', '780010101010101'),
+         ('Mme.', 'Pinet', 'Maitas', 'F', '8 rue de la Paix', '75000', 'Paris', '1955-08-14', 'Paris', '880010101010101'),
+         ('M.', 'Leroy', 'Raymond', 'M', '9 rue de la Paix', '75000', 'Paris', '1950-09-15', 'Paris', '980010101010101'),
+         ('Mme.', 'Duminet', 'Marie', 'F', '10 rue de la Paix', '75000', 'Paris', '1945-10-16', 'Paris', '080010101010101');
+         
+
+-- different prenom et nom pour chaque medecin et aucun similaire a un usager
+-- 10 medecins en total
+-- aucune répétition de nom et prénom
 INSERT INTO medecin(civilite, nom, prenom)
-VALUES('Monsieur', 'Dupont-de-Ligones', 'Xavier'),
-         ('Madame', 'Durand', 'Marie'),
-         ('Madame', 'Martin', 'Sophie'),
-         ('Monsieur', 'Lefevre', 'Pierre'),
-         ('Monsieur', 'Leroy', 'Jacques'),
-         ('Madame', 'Leroy', 'Marie'),
-         ('Monsieur', 'Leroy', 'Pierre'),
-         ('Madame', 'Leroy', 'Sophie'),
-         ('Monsieur', 'Leroy', 'Jacques'),
-         ('Madame', 'Leroy', 'Marie');
+VALUES('M.', 'Dupont', 'Xavier'),
+         ('Mme.', 'Darc', 'Jeanne'),
+         ('M.', 'Siphon', 'Paul'),
+         ('Mme.', 'Pinet', 'Maitas'),
+         ('M.', 'Huge', 'Gilbert'),
+         ('Mme.', 'Fanso', 'Sofian'),
+         ('M.', 'Cub', 'Buque'),
+         ('Mme.', 'Detoi', 'Morgan'),
+         ('M.', 'Oskour', 'Jeanne'),
+         ('Mme.', 'Manda', 'Loriianne');
 
 -- different date and hour for each consultation, all based in 2024, consultation BETWEEN 8:00 and 18:00 and duration in 15, 30, 45 or 60 minutes
 --  10 medecins and 10 usagers in total
