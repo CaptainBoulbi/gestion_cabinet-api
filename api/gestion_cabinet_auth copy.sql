@@ -3,6 +3,8 @@ CREATE OR REPLACE USER 'local_user'@'localhost' IDENTIFIED BY 'password';
 DROP DATABASE IF EXISTS db_gestion_cabinet_app;
 create database db_gestion_cabinet_app;
 
+grant all privileges on db_gestion_cabinet_app.* TO 'local_user'@'localhost' identified by 'password';
+
 USE db_gestion_cabinet_app;
 
 CREATE TABLE usager(
