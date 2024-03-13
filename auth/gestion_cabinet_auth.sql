@@ -20,6 +20,6 @@ CREATE TABLE user_auth_v2(
 );
 
 INSERT INTO user_auth_v2(login, mdp, role)
-VALUES('secretaire1', 'password1234!', 'secretaire'),
-         ('medecin', 'password1234!', 'medecin'),
-         ('admin', 'password1234!', 'usager');
+VALUES('secretaire1', '$2y$08$EPJXk5LG41f1usT95xQyT.nZ5WGSd.rtn93ebWlKl4b3UqoykmpaW', 'secretaire'),
+         ('medecin', '$2y$08$.YH/iH.3QmefKdaDCvj/VuV7UFx/HQBkNRfKpAPGWDM2YtwgGeH4W', 'medecin'),
+         ('admin', '$2y$08$DeSNMhna8Un5l00J6UpYbued5keF4cRRnKo5XPEwQw5cJXELDmGn6', 'usager');
