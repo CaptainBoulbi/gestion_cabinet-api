@@ -1,9 +1,10 @@
 <?php 
 
-include_once 'jwt_utils.php';
+include_once 'JWTUtils.php';
 include_once 'AuthAPI.php';
 
 $auth_api = new AuthAPI();
+$jwt_utils = new JWTUtils();
 
 $SECRET = 'secret';
 
@@ -15,10 +16,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         http_response_code(204);
         break;
     case 'GET':
-        $jwt = get_bearer_token();
+        $jwt = $jwt_utils->get_bearer_token();
         if ($jwt && $jwt != 'undefined') {
-            if (is_jwt_valid($jwt, $SECRET)) {
-                deliverResponse('success',200, '[R200 REST AUTH] : Jeton valide');
+            if ($jwt_utils->is_jwt_valid($jwt, $SECRET)) {
+                $jwt_decoded = $jwt_utils->decode_jwt($jwt);
+                deliverResponse('success',200, '[R200 REST AUTH] : Jeton valide', $jwt_decoded);
                 exit;
             } else {
                 deliverResponse('error',401, '[R401 REST AUTH] : Jeton invalide');
@@ -35,7 +37,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
             $payload = array('login' => $recup['login'], 'role' => $data['role'], 'exp' => time() + 3600);
             
-            $jwt = generate_jwt($headers, $payload, $SECRET);
+            $jwt = $jwt_utils->generate_jwt($headers, $payload, $SECRET);
             deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', $jwt);
         } else {
             deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée');
