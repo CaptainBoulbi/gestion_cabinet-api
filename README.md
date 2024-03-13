@@ -1,31 +1,30 @@
 # Gestion Cabinet
 
-## Configuration Docker
+A faire 
 
-Le chemin `/path/to/gestion_cabinet/` doit être remplacé par le chemin absolu du dossier `gestion_cabinet` du projet.
+## Liste des routes :
 
-```dockerfile
-sudo docker run --restart unless-stopped --name gestionCabinet -p 41061:22 -p 41062:80 -d -v /path/to/gestion_cabinet/:/opt/lampp/htdocs/ tomsik68/xampp:8 
-```
+A faire 
 
-On peux ensuite accéder au site via l'adresse `http://localhost:41062/`
+### Authentification
 
-## Configuration de la base de données
+> Préfixe : cabmed
 
-Le fichier de création de la base de données se nomme `sql/gestion_cabinet.sql` et se trouve à la racine du projet.
+### API
 
-Il est nécessaire de créer la base de donnée à l'aide de ce fichier dans le container.
-La connexion via un gestionnaire de base de données est possible en établissant un tunnel SSH sur le port 41061.
-<br>
-Le nom d'utilisateur est `root` et le mot de passe est `root` pour la connexion SSH.
-<br>
-Pour la base de données le nom d'utilisateur est `root` et le mot de passe est vide, le port est `3306`.
+> Préfixe : authapi
 
+A faire 
+
+### Cabinet
+
+> Préfixe : cabmed-client
+
+A faire 
 
 ## Liens
 
-- [github](https://github.com/FruitPassion/gestion_cabinet)
-- [demo du projet](https://gestion-cabinet.fruitpassion.fr/)
+A faire 
 
 Réalisé par :
 - [Raphael BOUDIN](https://github.com/FruitPassion)
