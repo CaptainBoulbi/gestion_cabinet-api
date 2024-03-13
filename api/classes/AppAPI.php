@@ -1,16 +1,35 @@
 <?php
 
-include_once 'ConnexionDB.php';
+$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+require_once $rootDir . '/classes/ConnexionDB.php';
 
+/**
+ * AppAPI 
+ * 
+ * This class is used to handle the OPTIONS request and deliver the response to the client
+ * It extends the ConnexionDB class to have access to the database 
+ * 
+ * @category API
+ * @author FruitPassion
+ */
 class AppAPI extends ConnexionDB
 {
+
     private array $allowedOptions;
 
+    /**
+     * Constructor
+     * 
+     * @param array $allowedOptions Array of allowed options
+     */
     public function __construct(array $allowedOptions){
         parent::__construct();
         $this->allowedOptions = $allowedOptions;
     }
 
+    /**
+     * This function is used to handle the OPTIONS request
+     */
     public function optionRequest(): void
     {
         header("Access-Control-Allow-Origin: *");
@@ -19,8 +38,18 @@ class AppAPI extends ConnexionDB
         http_response_code(204);
     }
 
+    /**
+    * This function is used to deliver the response to the client after the request has been processed
+    *
+    * @param string $status Status of the request, either success or error
+    * @param int $status_code HTTP status code
+    * @param string $status_message Message to be sent to the client
+    * @param array|null $data Data to be sent to the client, null if there is no data to be sent
+    * @return void Nothing is returned instead the response is sent to the client in a JSON format
+    */
     public function deliverResponse($status, $status_code, $status_message, $data = null): void
     {
+
         http_response_code($status_code);
 
         header("HTTP/1.1 $status_code $status_message");
@@ -29,7 +58,7 @@ class AppAPI extends ConnexionDB
 
         header("Access-Control-Allow-Origin: *");
 
-        $response['status'] = $status; // success or error
+        $response['status'] = $status;
         $response['status_code'] = $status_code;
         $response['status_message'] = $status_message;
         if ($data){

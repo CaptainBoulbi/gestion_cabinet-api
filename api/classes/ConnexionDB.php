@@ -1,11 +1,23 @@
 <?php
 
+/**
+ * ConnexionDB
+ * 
+ * This class is used to connect to the database and execute queries
+ * 
+ * @category DB
+ * @author FruitPassion
+ */
 class ConnexionDB
 {
     private ?PDO $pdo = null;
     private $stmt = null;
 
-
+    /**
+     * Constructor
+     * 
+     * This constructor is used to connect to the database
+     */
     protected function __construct()
     {
         try {
@@ -21,7 +33,11 @@ class ConnexionDB
         }
     }
 
-    
+    /**
+     * Destructor
+     * 
+     * This destructor is used to close the connection to the database
+     */
     public function __destruct()
     {
         if ($this->stmt !== null) {
@@ -32,18 +48,39 @@ class ConnexionDB
         }
     }
 
+    /**
+     * This function is used to execute a select query and return the first row
+     *
+     * @param string $sql SQL query
+     * @param array|null $data Data to be used in the query
+     * @return array|false Returns the first row of the result set as an associative array, or false if there is no result
+     */
     protected function selectFirst($sql, $data = null): false|array
     {
         $this->updateDelete($sql, $data);
         return $this->stmt->fetch();
     }
 
+    /**
+     * This function is used to execute a select query and return all the rows
+     * 
+     * @param string $sql SQL query
+     * @param array|null $data Data to be used in the query
+     * @return false|array Returns an array containing all of the result set rows, or false if there is no result
+     */
     protected function selectAll($sql, $data = null): false|array
     {
         $this->updateDelete($sql, $data);
         return $this->stmt->fetchAll();
     }
 
+    /**
+     * This function is used to execute an insert query
+     *
+     * @param string $sql SQL query
+     * @param array|null $data Data to be used in the query
+     * @return string|bool Returns the last inserted id, or false if the query failed
+     */
     protected function insert($sql, $data = null): string|bool
     {
         try {
@@ -56,6 +93,13 @@ class ConnexionDB
         }
     }
 
+    /**
+     * This function is used to execute an update or delete query
+     *
+     * @param string $sql SQL query
+     * @param array|null $data Data to be used in the query
+     * @return bool Returns true if the query was successful, otherwise it returns false
+     */
     protected function updateDelete($sql, $data = null): bool
     {
         try {
