@@ -20,14 +20,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if ($jwt && $jwt != 'undefined') {
             if ($jwt_utils->is_jwt_valid($jwt, $SECRET)) {
                 $jwt_decoded = $jwt_utils->decode_jwt($jwt);
-                deliverResponse('success',200, '[R200 REST AUTH] : Jeton valide', $jwt_decoded);
+                $auth_api->deliverResponse('success',200, '[R200 REST AUTH] : Jeton valide', $jwt_decoded);
                 exit;
             } else {
-                deliverResponse('error',401, '[R401 REST AUTH] : Jeton invalide');
+                $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Jeton invalide');
                 exit;
             }
         } else {
-            deliverResponse('error',401, '[R401 REST AUTH] : Jeton requis');
+            $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Jeton requis');
             exit;
         }
     case 'POST':
@@ -38,38 +38,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $payload = array('login' => $recup['login'], 'role' => $data['role'], 'exp' => time() + 3600);
             
             $jwt = $jwt_utils->generate_jwt($headers, $payload, $SECRET);
-            deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', $jwt);
+            $auth_api->deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', $jwt);
         } else {
-            deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée');
+            $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée');
         }
         break;
     default:
-        deliverResponse('error',405, '[R401 REST AUTH] : Methodes utilisées non autorisées');
+        $auth_api->deliverResponse('error',405, '[R401 REST AUTH] : Methodes utilisées non autorisées');
         break;
-}
-
-function deliverResponse($status, $status_code, $status_message, $data = null): void
-{
-    http_response_code($status_code);
-
-    header("HTTP/1.1 $status_code $status_message");
-
-    header("Content-Type:application/json; charset=utf-8");
-
-    header("Access-Control-Allow-Origin: *");
-
-    $response['status'] = $status; // success or error
-    $response['status_code'] = $status_code;
-    $response['status_message'] = $status_message;
-    if ($data){
-        $response['data'] = $data;
-    }
-
-    $json_response = json_encode($response);
-
-    if ($json_response === false) {
-        die('json encode ERROR : ' . json_last_error_msg());
-    }
-
-    echo $json_response;
 }
