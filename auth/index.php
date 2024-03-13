@@ -18,7 +18,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $jwt = get_bearer_token();
         if ($jwt && $jwt != 'undefined') {
             if (is_jwt_valid($jwt, $SECRET)) {
-                deliverResponse('success',201, '[R201 REST AUTH] : Jeton valide');
+                deliverResponse('success',204, '[R204 REST AUTH] : Jeton valide');
                 exit;
             } else {
                 deliverResponse('error',401, '[R401 REST AUTH] : Jeton invalide');
