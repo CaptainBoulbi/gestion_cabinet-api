@@ -1,6 +1,7 @@
 <?php 
 
-include_once 'AppAPI.php';
+$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+require $rootDir . '/classes/ConsultationsAPI.php';
 
 $app_api = new AppAPI(['GET', 'OPTIONS']);
 
