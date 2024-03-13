@@ -1,8 +1,26 @@
 <?php
 
+
+/*
+ * JWTUtils
+ * 
+ * This class is used to handle the JWT token generation and validation
+ * 
+ * @category API
+ * @author FruitPassion
+ */
 class JWTUtils{
 
-	public function generate_jwt($headers, $payload, $secret) {
+	/**
+	 * This function is used to generate a JWT token
+	 *
+	 * @param array $headers Array of headers
+	 * @param array $payload Array of payload
+	 * @param string $secret Secret key
+	 * @return string Returns the generated JWT token
+	 */
+	public function generate_jwt(array $headers, array $payload, string $secret): string
+	{
 		$headers_encoded = $this->base64url_encode(json_encode($headers));
 	
 		$payload_encoded = $this->base64url_encode(json_encode($payload));
@@ -15,8 +33,15 @@ class JWTUtils{
 		return $jwt;
 	}
 	
-	
-	public function is_jwt_valid($jwt, $secret) {
+	/**
+	 * This function is used to check if a JWT token is valid
+	 *
+	 * @param string $jwt JWT token
+	 * @param string $secret Secret key
+	 * @return bool Returns true if the token is valid, otherwise it returns false
+	 */
+	public function is_jwt_valid(string $jwt, string $secret) : bool
+	{
 		// split the jwt
 		$tokenParts = explode('.', $jwt);
 		$header = base64_decode($tokenParts[0]);
@@ -43,7 +68,13 @@ class JWTUtils{
 		}
 	}
 	
-	public function get_bearer_token() {
+	/** 
+	 * This function is used to get the bearer token from the request
+	 *
+	 * @return string|null Returns the bearer token if it exists, otherwise it returns null
+	 */
+	public function get_bearer_token() : ?string
+	{
 		$headers = $this->get_authorization_header();
 		
 		if (!empty($headers)) {
@@ -57,17 +88,37 @@ class JWTUtils{
 		return null;
 	}
 	
-	public function decode_jwt($jwt) {
+	/**
+	 * This function is used to decode a JWT token
+	 *
+	 * @param string $jwt JWT token
+	 * @return array Returns the decoded payload
+	 */
+	public function decode_jwt($jwt) : array
+	{
 		$tokenParts = explode('.', $jwt);
 		$payload = base64_decode($tokenParts[1]);
 		return json_decode($payload, true);
 	}
 	
-	private function base64url_encode($data) {
+	/**
+	 * This function is used to encode a string to base64url
+	 *
+	 * @param string $data String to be encoded
+	 * @return string Returns the encoded string
+	 */
+	private function base64url_encode($data): string
+	{
 		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 	}
 
-	private function get_authorization_header(){
+	/**
+	 * This function is used to get the authorization header from the request
+	 *
+	 * @return string|null Returns the authorization header if it exists, otherwise it returns null
+	 */
+	private function get_authorization_header(): ?string
+	{
 		$headers = null;
 	
 		if (isset($_SERVER['Authorization'])) {
@@ -83,9 +134,6 @@ class JWTUtils{
 				$headers = trim($requestHeaders['Authorization']);
 			}
 		}
-	
 		return $headers;
 	}
-	
-
 }
