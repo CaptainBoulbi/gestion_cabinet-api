@@ -3,12 +3,13 @@ RewriteEngine On
 # remove access to classes folder
 RewriteRule ^classes/ - [F]
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^/]+)$ $1.php [L]
+# comment 
+RewriteCond %{REQUEST_FILENAME} !-d # if the request is not a directory
+RewriteCond %{REQUEST_FILENAME} !-f # if the request is not a file
+RewriteCond %{REQUEST_FILENAME}.php -f # if the request with .php is a file
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^/]+)/([^/]+)$ $1.php?arg=$2 [L]
+# for the request like url/page
+RewriteRule ^([^/]+)$ $1.php [L] # rewrite the request to .php
+
+# for the request like url/page/id
+RewriteRule ^([^/]+)/([^/]+)$ $1.php?arg=$2 [L] # rewrite the request to .php?arg=arg
