@@ -5,7 +5,10 @@ require $rootDir . '/classes/MedecinAPI.php';
 
 $medecin_api = new MedecinAPI(['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']);
 
-$request = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+$arg = $_GET['arg'] ?? null;
+if (isset($arg)) {
+    $medecin_api->checkArgumentIsInt($arg);
+} 
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'OPTIONS':
@@ -13,12 +16,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
         
     case 'GET':
-        if (count($request) == 1) {
-            $medecin_api->getRequest();
-        } elseif (count($request) == 2) {
-            $medecin_api->getRequestById($_GET['arg']);
+        if (isset($arg)) {
+            $medecin_api->getRequestById($arg);
         } else {
-            $medecin_api->deliverResponse('error', 404, '[R404 REST API] : Ressource non trouvée');
+            $medecin_api->getRequest();
         }
         break;
         
@@ -27,11 +28,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
         
     case 'PATCH':
-        $medecin_api->patchRequest($_GET['arg']);
+        $medecin_api->checkArguments($arg);
+        $medecin_api->patchRequest($arg);
         break;
         
     case 'DELETE':
-        $medecin_api->deleteRequest($_GET['arg']);
+        $medecin_api->checkArguments($arg);
+        $medecin_api->deleteRequest($arg);
         break;
         
     default:

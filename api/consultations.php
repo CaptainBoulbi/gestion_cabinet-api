@@ -3,20 +3,34 @@
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 require $rootDir . '/classes/ConsultationsAPI.php';
 
-$app_api = new AppAPI(['GET', 'OPTIONS']);
+$consultations_api = new AppAPI(['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']);
 
+$arg = $_GET['arg'] ?? null;
+if (isset($arg)) {
+    $consultations_api->checkArgumentIsInt($arg);
+} 
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'OPTIONS':
-        $auth_api->optionRequest();
+        $consultations_api->optionRequest();
         break;
-        
+    
     case 'GET':
         break;
         
+    case 'POST':
+        break;
+        
+    case 'PATCH':
+        break;
+        
+    case 'DELETE':
+        break;
+        
     default:
-        $app_api->deliverResponse('error',405, '[R401 REST AUTH] : Methodes utilisées non autorisées');
+        $consultations_api->deliverResponse('error',405, '[R401 REST AUTH] : Methodes utilisées non autorisées');
         break;
 }
+
 
 
