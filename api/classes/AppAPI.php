@@ -73,4 +73,32 @@ class AppAPI extends ConnexionDB
 
         echo $json_response;
     }
+
+
+    public function checkArguments($args): void
+    {
+        if (empty($args)) {
+            $this->deliverResponse('error', 400, '[R400 REST API] : Aucun argument n\'a été fourni');
+        }
+    }
+
+    public function checkArgumentIsInt($arg): void
+    {
+        if ((!is_numeric($arg)) || ($arg < 1)) {
+            $this->deliverResponse('error', 400, '[R400 REST] : L\'identifiant doit être un entier positif non null');
+            die();
+        } elseif ($arg > 2147483647) {
+            $this->deliverResponse('error', 400, '[R400 REST] : L\'identifiant doit être un entier inférieur à 2147483647');
+            die();
+        }
+    }
+
+
+    public function checkArgumentIsString($arg): void
+    {
+        if (!is_string($arg)) {
+            $this->deliverResponse('error', 400, '[R400 REST] : L\'argument doit être une chaine de caractère');
+            die();
+        }
+    }
 }

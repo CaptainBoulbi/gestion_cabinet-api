@@ -17,6 +17,8 @@ class MedecinAPI extends AppAPI{
      * Constructor
      * 
      * This constructor is used to call the parent constructor and pass the allowed options to the parent constructor
+     * 
+     * @param array $allowedOptions Allowed options for the API
      */
     public function __construct(array $allowedOptions){
         parent::__construct($allowedOptions);
@@ -76,6 +78,8 @@ class MedecinAPI extends AppAPI{
 
     /**
      * This function is used to handle the PATCH request
+     * 
+     * @param int $id Id of the medecin
      */
     public function patchRequest(int $id): void
     {
@@ -92,6 +96,8 @@ class MedecinAPI extends AppAPI{
 
     /**
      * This function is used to handle the DELETE request
+     * 
+     * @param int $id Id of the medecin
      */
     public function deleteRequest(int $id): void
     {
