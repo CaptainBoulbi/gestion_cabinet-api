@@ -111,6 +111,17 @@ class ConnexionDB
             return false;
         }
     }
+
+    /**
+     * This function is used to convert a date to the mysql format
+     * 
+     * @param string $date Date to be converted
+     * @return string Returns the date in the mysql format
+     */
+    protected function convertDateToMysql($date): string
+    {
+        return date('Y-m-d', strtotime($date));
+    }
 }
 
 const DB_HOST = 'localhost';
