@@ -51,7 +51,7 @@ class MedecinAPI extends AppAPI{
         if($result){
             $this->deliverResponse('success', 200, '[R200 REST API] : Médecin trouvé', $result);
         }else{
-            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun médecin trouvé avec l'id $id n'a été trouvé");
+            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun médecin avec l'id $id n'a été trouvé");
         }
     }
 
