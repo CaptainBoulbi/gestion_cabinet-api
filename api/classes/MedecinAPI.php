@@ -105,7 +105,7 @@ class MedecinAPI extends AppAPI{
         $data = [$id];
         $result = $this->selectFirst($sql, $data);
         if(!$result){
-            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun médecin trouvé avec l'id $id n'a été trouvé");
+            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun médecin avec l'id $id n'a été trouvé");
         } else {
             $sql = "DELETE FROM medecin WHERE id_medecin = ?";
             $result = $this->updateDelete($sql, [$id]);
