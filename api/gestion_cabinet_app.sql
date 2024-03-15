@@ -1,4 +1,4 @@
--- Active: 1710323626621@@127.0.0.1@3306@db_gestion_cabinet_app
+-- Active: 1710323626621@@127.0.0.1@3306@phpmyadmin
 CREATE OR REPLACE USER 'local_user'@'localhost' IDENTIFIED BY 'password';
 DROP DATABASE IF EXISTS db_gestion_cabinet_app;
 create database db_gestion_cabinet_app;
@@ -21,7 +21,7 @@ CREATE TABLE usager(
    num_secu CHAR(15) NOT NULL,
    CONSTRAINT PK_usager_usa PRIMARY KEY(id_usager),
    CONSTRAINT AK_usager_usa UNIQUE(num_secu),
-   CONSTRAINT ch_sexe_usa CHECK(sexe IN ('M', 'F')),
+   CONSTRAINT ch_sexe_usa CHECK(sexe IN ('H', 'F')),
    CONSTRAINT ch_code_postal_usa CHECK(LENGTH(code_postal) = 5),
    CONSTRAINT ch_num_secu_usa CHECK(LENGTH(num_secu) = 15),
    CONSTRAINT ch_civilite_usa CHECK(civilite IN ('M.', 'Mme.'))
@@ -55,15 +55,15 @@ CREATE TABLE consultation(
 
 -- aucune répétition de nom et prénom
 INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu)
-VALUES('M.', 'Dupont', 'Jean', 'M', '1 rue de la Paix', '75000', 'Paris', '1990-01-06', 'Paris', '180010101010101'),
+VALUES('M.', 'Dupont', 'Jean', 'H', '1 rue de la Paix', '75000', 'Paris', '1990-01-06', 'Paris', '180010101010101'),
          ('Mme.', 'Durand', 'Marie', 'F', '2 avenu de l''Angle', '31320', 'Auzeville-Tolosane', '1987-03-07', 'Clermont-Ferrant', '280010101010101'),
          ('Mme.', 'Martin', 'Sophie', 'F', '3 rue de la Paix', '75000', 'Paris', '1980-02-09', 'Paris', '380010101010101'),
-         ('M.', 'Lefevre', 'Pierre', 'M', '4 rue de la Paix', '75000', 'Paris', '1975-04-10', 'Paris', '480010101010101'),
-         ('M.', 'Leroy', 'Jacques', 'M', '5 rue de la Paix', '75000', 'Paris', '2000-05-11', 'Paris', '580010101010101'),
+         ('M.', 'Lefevre', 'Pierre', 'H', '4 rue de la Paix', '75000', 'Paris', '1975-04-10', 'Paris', '480010101010101'),
+         ('M.', 'Leroy', 'Jacques', 'H', '5 rue de la Paix', '75000', 'Paris', '2000-05-11', 'Paris', '580010101010101'),
          ('Mme.', 'Darc', 'Jeanne', 'F', '6 rue de la Paix', '75000', 'Paris', '1965-06-12', 'Paris', '680010101010101'),
-         ('M.', 'Siphon', 'Paul', 'M', '7 rue de la Paix', '75000', 'Paris', '1989-07-13', 'Paris', '780010101010101'),
+         ('M.', 'Siphon', 'Paul', 'H', '7 rue de la Paix', '75000', 'Paris', '1989-07-13', 'Paris', '780010101010101'),
          ('Mme.', 'Pinet', 'Maitas', 'F', '8 rue de la Paix', '75000', 'Paris', '2003-08-14', 'Paris', '880010101010101'),
-         ('M.', 'Leroy', 'Raymond', 'M', '9 rue de la Paix', '75000', 'Paris', '2004-09-15', 'Paris', '980010101010101'),
+         ('M.', 'Leroy', 'Raymond', 'H', '9 rue de la Paix', '75000', 'Paris', '2004-09-15', 'Paris', '980010101010101'),
          ('Mme.', 'Duminet', 'Marie', 'F', '10 rue de la Paix', '75000', 'Paris', '1945-10-16', 'Paris', '080010101010101');
          
 
