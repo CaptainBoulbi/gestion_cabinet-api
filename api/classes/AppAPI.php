@@ -72,9 +72,14 @@ class AppAPI extends ConnexionDB
         }
 
         echo $json_response;
+        die();
     }
 
-
+    /**
+     * This function is used to check if the arguments are not empty
+     * 
+     * @param array $args Array of arguments
+     */
     public function checkArguments($args): void
     {
         if (empty($args)) {
@@ -82,6 +87,11 @@ class AppAPI extends ConnexionDB
         }
     }
 
+    /**
+     * This function is used to check if the argument is an integer
+     * 
+     * @param mixed $arg Argument to be checked
+     */
     public function checkArgumentIsInt($arg): void
     {
         if ((!is_numeric($arg)) || ($arg < 1)) {
@@ -94,6 +104,11 @@ class AppAPI extends ConnexionDB
     }
 
 
+    /**
+     * This function is used to check if the argument is a string
+     * 
+     * @param mixed $arg Argument to be checked
+     */
     public function checkArgumentIsString($arg): void
     {
         if (!is_string($arg)) {
