@@ -1,7 +1,7 @@
 <?php 
 
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
-require $rootDir . '/classes/MedecinAPI.php';
+require_once $rootDir . '/classes/MedecinAPI.php';
 
 $medecin_api = new MedecinAPI(['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']);
 
@@ -14,7 +14,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'OPTIONS':
         $medecin_api->optionRequest();
         break;
-        
+                
     case 'GET':
         if (isset($arg)) {
             $medecin_api->getRequestById($arg);
