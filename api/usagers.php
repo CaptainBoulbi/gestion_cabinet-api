@@ -1,7 +1,6 @@
 <?php 
 
-$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
-require $rootDir . '/classes/UsagersAPI.php';
+include_once 'AppAPI.php';
 
 $usager_api = new AppAPI(['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']);
 
