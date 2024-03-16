@@ -11,7 +11,8 @@ require_once $rootDir . '/classes/AppAPI.php';
  * @category API
  * @author FruitPassion
  */
-class MedecinAPI extends AppAPI{
+class MedecinAPI extends AppAPI
+{
 
     /**
      * Constructor
@@ -45,14 +46,8 @@ class MedecinAPI extends AppAPI{
      */
     public function getRequestById(int $id): void
     {
-        $sql = "SELECT * FROM medecin WHERE id_medecin = ?";
-        $data = [$id];
-        $result = $this->selectFirst($sql, $data);
-        if($result){
-            $this->deliverResponse('success', 200, '[R200 REST API] : Médecin trouvé', $result);
-        }else{
-            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun médecin avec l'id $id n'a été trouvé");
-        }
+        $result = $this->checkMedecinExists($id);
+        $this->deliverResponse('success', 200, '[R200 REST API] : Médecin trouvé', $result);
     }
 
     /**
@@ -61,6 +56,9 @@ class MedecinAPI extends AppAPI{
     public function postRequest(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        
+        $this->checkCivilite($data['civilite']);
+
         $sql = "INSERT INTO medecin (civilite, nom, prenom) VALUE (?, ?, ?)";
         $result = $this->insert($sql, [
             $data['civilite'],
@@ -84,6 +82,11 @@ class MedecinAPI extends AppAPI{
     public function patchRequest(int $id): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        $this->checkMedecinExists($id);
+        if (isset($data['civilite'])) {
+            $this->checkCivilite($data['civilite']);
+        }
+
         $keys = implode(' = ?, ',array_keys($data));
         $sql = "UPDATE medecin SET $keys = ? WHERE id_medecin = ?";
         $finalData = array_merge(array_values($data), [$id]);
@@ -101,20 +104,15 @@ class MedecinAPI extends AppAPI{
      */
     public function deleteRequest(int $id): void
     {
-        $sql = "SELECT * FROM medecin WHERE id_medecin = ?";
-        $data = [$id];
-        $result = $this->selectFirst($sql, $data);
-        if(!$result){
-            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun médecin avec l'id $id n'a été trouvé");
-        } else {
-            $sql = "DELETE FROM medecin WHERE id_medecin = ?";
-            $result = $this->updateDelete($sql, [$id]);
-            var_dump($result);
-            if($result){
-                $this->deliverResponse('success', 200, '[R200 REST API] : Médecin supprimé avec succès');
-            }else{
-                $this->deliverResponse('error', 400, '[R400 REST API] : Médecins non supprimées');
-            }
+        $this->checkMedecinExists($id);
+
+        $this->updateDelete("DELETE FROM consultation WHERE id_medecin = ?", [$id]);
+
+        $sql = "DELETE FROM medecin WHERE id_medecin = ?";
+        if($this->updateDelete($sql, [$id])){
+            $this->deliverResponse('success', 200, '[R200 REST API] : Médecin supprimé avec succès');
+        }else{
+            $this->deliverResponse('error', 400, '[R400 REST API] : Médecins non supprimées');
         }
     }
 }
