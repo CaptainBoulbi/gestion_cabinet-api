@@ -142,19 +142,19 @@ class AppAPI extends ConnexionDB
         if ($sup_inf !== 'sup' && $sup_inf !== 'inf') {
             throw new Exception("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
         }
-        $currentDate = date('Y/m/d');
+        $currentDate = date('d/m/y');
         switch ($sup_inf) {
             case 'sup':
-                if ($date > $currentDate) {
-                    return true;
-                } else {
-                    $this->deliverResponse('error', 400, '[R400 REST API] : La date de naissance ' . $date . ' est invalide car elle est inferieure à la date actuelle');
-                }
-            case 'inf':
                 if ($date < $currentDate) {
                     return true;
                 } else {
-                    $this->deliverResponse('error', 400, '[R400 REST API] : La date de naissance ' . $date . ' est invalide car elle est supérieure à la date actuelle');
+                    $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide car elle est inferieure à la date actuelle');
+                }
+            case 'inf':
+                if ($date > $currentDate) {
+                    return true;
+                } else {
+                    $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide car elle est supérieure à la date actuelle');
                 }
             default:
                 return false;
