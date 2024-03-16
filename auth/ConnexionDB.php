@@ -88,7 +88,6 @@ class ConnexionDB
             $this->stmt->execute($data);
             return $this->pdo->lastInsertId();
         } catch (PDOException $e) {
-            var_dump($e->getMessage());
             return false;
         }
     }
@@ -107,7 +106,6 @@ class ConnexionDB
             $this->stmt->execute($data);
             return true;
         } catch (PDOException $e) {
-            var_dump($e->getMessage());
             return false;
         }
     }
