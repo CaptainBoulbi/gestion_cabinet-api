@@ -22,7 +22,8 @@ class UsagerAPI extends AppAPI
      * @param array $allowedOptions Allowed options for the API
      */
     public function __construct(array $allowedOptions){
-        parent::__construct($allowedOptions);
+        parent::__construct($allowedOptions, ['civilite', 'nom', 'prenom', 'sexe', 'adresse', 'code_postal',
+        'ville', 'date_nais', 'lieu_nais', 'num_secu', 'id_medecin']);
     }
 
 
@@ -57,6 +58,8 @@ class UsagerAPI extends AppAPI
     public function postRequest(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
+
+        $this->checkNeededData($data, $this->getInfos());
         
         $this->checkNumSecuUsed($data['num_secu']);
         $this->validateDate($data['date_nais'], 'inf');
@@ -64,8 +67,7 @@ class UsagerAPI extends AppAPI
         $this->checkCivilite($data['civilite']);
         $this->checkSexe($data['sexe']);
 
-        $sql = "INSERT INTO usager (civilite, nom, prenom, sexe, adresse, code_postal,
-        ville, date_nais, lieu_nais, num_secu, id_medecin) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = 'INSERT INTO usager ('. implode(', ', $this->getInfos()) .') VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         $result = $this->insert($sql, [
             $data['civilite'],
@@ -100,6 +102,8 @@ class UsagerAPI extends AppAPI
     public function patchRequest(int $id): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
+
+        $this->checkAllowedData($data, $this->getInfos());
 
         $this->checkUsagerExists($id);
         

@@ -22,7 +22,7 @@ class MedecinAPI extends AppAPI
      * @param array $allowedOptions Allowed options for the API
      */
     public function __construct(array $allowedOptions){
-        parent::__construct($allowedOptions);
+        parent::__construct($allowedOptions, ['civilite', 'nom', 'prenom']);
     }
 
     /**
@@ -56,10 +56,12 @@ class MedecinAPI extends AppAPI
     public function postRequest(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
+
+        $this->checkNeededData($data, $this->getInfos());
         
         $this->checkCivilite($data['civilite']);
 
-        $sql = "INSERT INTO medecin (civilite, nom, prenom) VALUE (?, ?, ?)";
+        $sql = 'INSERT INTO medecin ('. implode(', ', $this->getInfos()) .') VALUE (?, ?, ?)';
         $result = $this->insert($sql, [
             $data['civilite'],
             $data['nom'],
@@ -82,6 +84,9 @@ class MedecinAPI extends AppAPI
     public function patchRequest(int $id): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
+
+        $this->checkAllowedData($data, $this->getInfos());
+
         $this->checkMedecinExists($id);
         if (isset($data['civilite'])) {
             $this->checkCivilite($data['civilite']);
