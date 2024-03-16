@@ -70,11 +70,11 @@ class ConsultationAPI extends AppAPI {
             $this->deliverResponse('error', 400, '[R400 REST API] : La durée de la consultation doit être 15, 30, 45 ou 60 minutes');
         }
 
-        if (!preg_match('/^(0[8-9]|1[0-7]):[0-5][0-9]$/', $data['heure_consult'])) {
+        if (!preg_match('/^(0[8-9]|1[0-7]):\d\d$/', $data['heure_consult'])) {
             $this->deliverResponse('error', 400, '[R400 REST API] : L\'heure de la consultation doit être entre 08:00 et 18:00');
         }
 
-        // TODO : check if the medecin is available at the given date and time
+        $this->checkMedecinAvailable($data);
 
         $sql = 'INSERT INTO consultation ('. implode(', ', $this->getInfos()) .') VALUES (?, ?, ?, ?, ?)';
         $id = $this->insert($sql, array_values($data));
@@ -105,6 +105,7 @@ class ConsultationAPI extends AppAPI {
         if (!in_array($data["duree_consult"], [15, 30, 45, 60])) {
             $this->deliverResponse('error', 400, '[R400 REST API] : La durée de la consultation doit être 15, 30, 45 ou 60 minutes');
         }
+        $this->checkMedecinAvailable($data);
 
         $keys = implode(' = ?, ',array_keys($data));
         $sql = 'UPDATE consultation SET ' . $keys . ' = ? WHERE id_consult = ?';
@@ -151,6 +152,37 @@ class ConsultationAPI extends AppAPI {
             $this->deliverResponse('error', 404, "[R404 REST API] : Aucune consultation avec l'id $id n'a été trouvée");
             return null;
         }
+    }
+
+
+    /**
+     * This function is used to check if a medecin is available
+     * 
+     * @param array $data Data of the consultation
+     * @return bool|null Returns true if the medecin is available, delivers an error message otherwise
+     */
+    private function checkMedecinAvailable(array $data): bool|null
+    {
+        $id_medecin = $data['id_medecin'];
+        $date = $data['date_consult'];
+        $heure = $data['heure_consult'];
+        $duree = $data['duree_consult'];
+        
+        $sql = "SELECT * FROM consultation WHERE id_medecin = ? AND date_consult = ?";
+        $consultations = $this->selectAll($sql, [$id_medecin, $date]);
+
+        $heure = strtotime($heure);
+        $heure_fin = $heure + $duree * 60;
+
+        foreach ($consultations as $consultation) {
+            $heure_consult = strtotime($consultation['heure_consult']);
+            $heure_consult_fin = $heure_consult + $consultation['duree_consult'] * 60;
+
+            if (($heure >= $heure_consult && $heure < $heure_consult_fin) || ($heure_fin > $heure_consult && $heure_fin <= $heure_consult_fin)) {
+                $this->deliverResponse('error', 400, '[R400 REST API] : Le médecin n\'est pas disponible à cette date et heure');
+            }
+        }
+        return true;
     }
 
 }
