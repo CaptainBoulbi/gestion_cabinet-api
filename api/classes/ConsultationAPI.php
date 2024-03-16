@@ -6,20 +6,20 @@ require_once $rootDir . '/classes/AppAPI.php';
 
 /**
  * ConsultationAPI
- * 
+ *
  * This class is used to manage the consultation of the database
- * 
+ *
  * @category API
  * @author FruitPassion
  */
 class ConsultationAPI extends AppAPI {
 
 
-    /** 
+    /**
      * Constructor
-     * 
+     *
      * This constructor is used to call the parent constructor and pass the allowed options to the parent constructor
-     * 
+     *
      * @param array $allowedOptions Allowed options for the API
      */
     public function __construct(array $allowedOptions){
@@ -120,7 +120,7 @@ class ConsultationAPI extends AppAPI {
 
     /**
      * This function is used to handle the DELETE request
-     * 
+     *
      * @param int $id Id of the consultation
      */
     public function deleteRequest(int $id): void
