@@ -151,4 +151,30 @@ class UsagerAPI extends AppAPI
             $this->deliverResponse('error', 400, '[R400 REST API] : Usager non supprimé');
         }
     }
+
+    /**
+     * This function is used to check if the sexe is valid
+     *
+     * @param string $sexe Sexe to be checked
+     */
+    private function checkSexe(string $sexe): void
+    {
+        if ($sexe !== 'M' && $sexe !== 'F') {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le sexe doit être soit 'M' soit 'F'");
+        }
+    }
+
+    /**
+     * This function is used to check if the num_secu is already used
+     *
+     * @param int $num Num_secu to be checked
+     */
+    private function checkNumSecuUsed(int $num): void
+    {
+        $sql = "SELECT * FROM usager WHERE num_secu = ?";
+        $result = $this->selectFirst($sql, [$num]);
+        if ($result) {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale $num est déjà utilisé");
+        }
+    }
 }

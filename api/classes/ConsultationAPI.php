@@ -42,7 +42,7 @@ class ConsultationAPI extends AppAPI {
 
     /**
      * This function is used to handle the GET request by id
-     * 
+     *
      * @param int $id Id of the consultation
      */
     public function getRequestById(int $id): void
@@ -90,7 +90,7 @@ class ConsultationAPI extends AppAPI {
 
     /**
      * This function is used to handle the PATCH request
-     * 
+     *
      * @param int $id Id of the consultation
      */
     public function patchRequest(int $id): void
@@ -132,6 +132,24 @@ class ConsultationAPI extends AppAPI {
             $this->deliverResponse('success', 200, '[R200 REST API] : Consultation supprimée');
         }else{
             $this->deliverResponse('error', 400, '[R400 REST API] : Echec de la suppression de la consultation');
+        }
+    }
+
+    /**
+     * This function is used to check if a consultation exists
+     *
+     * @param int $id Id of the consultation
+     * @return array|null Returns the data of the consultation if it exists, false otherwise
+     */
+    private function checkConsultationExists(int $id): array|null 
+    {
+        $sql = "SELECT * FROM consultation WHERE id_consult = ?";
+        $result = $this->selectFirst($sql, [$id]);
+        if ($result) {
+            return $result;
+        } else {
+            $this->deliverResponse('error', 404, "[R404 REST API] : Aucune consultation avec l'id $id n'a été trouvée");
+            return null;
         }
     }
 

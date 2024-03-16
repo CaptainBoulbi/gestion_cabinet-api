@@ -198,38 +198,6 @@ class AppAPI extends ConnexionDB
     }
 
     /**
-     * This function is used to check if a consultation exists
-     *
-     * @param int $id Id of the consultation
-     * @return array|null Returns the data of the consultation if it exists, false otherwise
-     */
-    protected function checkConsultationExists(int $id): array|null 
-    {
-        $sql = "SELECT * FROM consultation WHERE id_consult = ?";
-        $result = $this->selectFirst($sql, [$id]);
-        if ($result) {
-            return $result;
-        } else {
-            $this->deliverResponse('error', 404, "[R404 REST API] : Aucune consultation avec l'id $id n'a été trouvée");
-            return null;
-        }
-    }
-
-    /**
-     * This function is used to check if the num_secu is already used
-     *
-     * @param int $num Num_secu to be checked
-     */
-    protected function checkNumSecuUsed(int $num): void
-    {
-        $sql = "SELECT * FROM usager WHERE num_secu = ?";
-        $result = $this->selectFirst($sql, [$num]);
-        if ($result) {
-            $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale $num est déjà utilisé");
-        }
-    }
-
-    /**
      * This function is used to check if the civilite is valid
      *
      * @param string $civilite Civilite to be checked
@@ -242,19 +210,11 @@ class AppAPI extends ConnexionDB
     }
 
     /**
-     * This function is used to check if the sexe is valid
-     *
-     * @param string $sexe Sexe to be checked
-     */
-    protected function checkSexe(string $sexe): void
-    {
-        if ($sexe !== 'M' && $sexe !== 'F') {
-            $this->deliverResponse('error', 400, "[R400 REST API] : Le sexe doit être soit 'M' soit 'F'");
-        }
-    }
-
-    /**
      * For a set of data, check if all $neededData value are in $data keys
+     * 
+     * @param array $data Data to be checked
+     * @param array $neededData Array of needed data
+     * @return void Nothing is returned instead the response is sent to the client in a JSON format
      */
     protected function checkNeededData(array $data, array $neededData): void
     {
@@ -265,7 +225,13 @@ class AppAPI extends ConnexionDB
         }
     }
 
-
+    /**
+     * For a set of data, check if all $allowedData keys are in $data keys
+     * 
+     * @param array $data Data to be checked
+     * @param array $allowedData Array of allowed data
+     * @return void Nothing is returned instead the response is sent to the client in a JSON format
+     */
     protected function checkAllowedData(array $data, array $allowedData): void
     {
         foreach ($data as $key => $value) {
