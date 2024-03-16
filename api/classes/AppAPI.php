@@ -4,11 +4,11 @@ $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 require_once $rootDir . '/classes/ConnexionDB.php';
 
 /**
- * AppAPI 
- * 
+ * AppAPI
+ *
  * This class is used to handle the OPTIONS request and deliver the response to the client
- * It extends the ConnexionDB class to have access to the database 
- * 
+ * It extends the ConnexionDB class to have access to the database
+ *
  * @category API
  * @author FruitPassion
  */
@@ -16,15 +16,27 @@ class AppAPI extends ConnexionDB
 {
 
     private array $allowedOptions;
+    private array $infos;
 
     /**
      * Constructor
-     * 
+     *
      * @param array $allowedOptions Array of allowed options
      */
-    public function __construct(array $allowedOptions){
+    public function __construct(array $allowedOptions, array $infos = []){
         parent::__construct();
         $this->allowedOptions = $allowedOptions;
+        $this->infos = $infos;
+    }
+
+    /**
+     * This function is used to get infos
+     * 
+     * @return array Array of infos
+    **/
+    protected function getInfos(): array
+    {
+        return $this->infos;
     }
 
     /**
@@ -77,7 +89,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to check if the arguments are not empty
-     * 
+     *
      * @param array $args Array of arguments
      */
     public function checkArguments($args): void
@@ -89,7 +101,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to check if the argument is an integer
-     * 
+     *
      * @param mixed $arg Argument to be checked
      */
     public function checkArgumentIsInt($arg): void
@@ -151,7 +163,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to check if a medecin exists in the database
-     * 
+     *
      * @param int $id Id of the medecin
      * @return array|null Returns the data of the medecin if it exists, delivers an error message otherwise
      */
@@ -169,7 +181,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to check if an usager exists
-     * 
+     *
      * @param int $id Id of the usager
      * @return array|null Returns the data of the usager if it exists, delivers an error message otherwise
      */
@@ -187,19 +199,25 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to check if a consultation exists
-     * 
+     *
      * @param int $id Id of the consultation
-     * @return bool Returns the data of the consultation if it exists, false otherwise
+     * @return array|null Returns the data of the consultation if it exists, false otherwise
      */
-    protected function checkConsultationExists(int $id): bool
+    protected function checkConsultationExists(int $id): array|null 
     {
         $sql = "SELECT * FROM consultation WHERE id_consult = ?";
-        return $this->selectFirst($sql, [$id]);
+        $result = $this->selectFirst($sql, [$id]);
+        if ($result) {
+            return $result;
+        } else {
+            $this->deliverResponse('error', 404, "[R404 REST API] : Aucune consultation avec l'id $id n'a été trouvée");
+            return null;
+        }
     }
 
     /**
      * This function is used to check if the num_secu is already used
-     * 
+     *
      * @param int $num Num_secu to be checked
      */
     protected function checkNumSecuUsed(int $num): void
@@ -213,25 +231,47 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to check if the civilite is valid
-     * 
+     *
      * @param string $civilite Civilite to be checked
      */
     protected function checkCivilite(string $civilite): void
     {
         if ($civilite !== 'M.' && $civilite !== 'Mme') {
             $this->deliverResponse('error', 400, "[R400 REST API] : La civilité doit être soit 'M.' soit 'Mme'");
-        };
+        }
     }
 
     /**
      * This function is used to check if the sexe is valid
-     * 
+     *
      * @param string $sexe Sexe to be checked
      */
     protected function checkSexe(string $sexe): void
     {
         if ($sexe !== 'M' && $sexe !== 'F') {
             $this->deliverResponse('error', 400, "[R400 REST API] : Le sexe doit être soit 'M' soit 'F'");
-        };
+        }
+    }
+
+    /**
+     * For a set of data, check if all $neededData value are in $data keys
+     */
+    protected function checkNeededData(array $data, array $neededData): void
+    {
+        foreach ($neededData as $value) {
+            if (!array_key_exists($value, $data)) {
+                $this->deliverResponse('error', 400, "[R400 REST API] : Le champ $value est requis");
+            }
+        }
+    }
+
+
+    protected function checkAllowedData(array $data, array $allowedData): void
+    {
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $allowedData)) {
+                $this->deliverResponse('error', 400, "[R400 REST API] : Le champ $key n'est pas autorisé");
+            }
+        }
     }
 }
