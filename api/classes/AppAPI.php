@@ -116,4 +116,122 @@ class AppAPI extends ConnexionDB
             die();
         }
     }
+
+
+    /**
+     * This function is used to validate if the date is superior or inferior to the current date
+     *
+     * @param string $date Date to be validated
+     * @param string $sup_inf String to indicate if the date should be superior or inferior to the current date, either 'sup' or 'inf'
+     * @return bool Returns true if the date is valid, false otherwise
+     */
+    protected function validateDate(string $date, string $sup_inf): bool
+    {
+        if ($sup_inf !== 'sup' && $sup_inf !== 'inf') {
+            throw new Exception("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
+        }
+        $currentDate = date('Y/m/d');
+        switch ($sup_inf) {
+            case 'sup':
+                if ($date > $currentDate) {
+                    return true;
+                } else {
+                    $this->deliverResponse('error', 400, '[R400 REST API] : La date de naissance ' . $date . ' est invalide car elle est inferieure à la date actuelle');
+                }
+            case 'inf':
+                if ($date < $currentDate) {
+                    return true;
+                } else {
+                    $this->deliverResponse('error', 400, '[R400 REST API] : La date de naissance ' . $date . ' est invalide car elle est supérieure à la date actuelle');
+                }
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * This function is used to check if a medecin exists in the database
+     * 
+     * @param int $id Id of the medecin
+     * @return array|null Returns the data of the medecin if it exists, delivers an error message otherwise
+     */
+    protected function checkMedecinExists(int $id): array|null
+    {
+        $sql = "SELECT * FROM medecin WHERE id_medecin = ?";
+        $result = $this->selectFirst($sql, [$id]);
+        if ($result) {
+            return $result;
+        } else {
+            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun Medecin avec l'id $id n'a été trouvé");
+            return null;
+        }
+    }
+
+    /**
+     * This function is used to check if an usager exists
+     * 
+     * @param int $id Id of the usager
+     * @return array|null Returns the data of the usager if it exists, delivers an error message otherwise
+     */
+    protected function checkUsagerExists(int $id): array|null
+    {
+        $sql = "SELECT * FROM usager WHERE id_usager = ?";
+        $result = $this->selectFirst($sql, [$id]);
+        if ($result) {
+            return $result;
+        } else {
+            $this->deliverResponse('error', 404, "[R404 REST API] : Aucun usager avec l'id $id n'a été trouvé");
+            return null;
+        }
+    }
+
+    /**
+     * This function is used to check if a consultation exists
+     * 
+     * @param int $id Id of the consultation
+     * @return bool Returns the data of the consultation if it exists, false otherwise
+     */
+    protected function checkConsultationExists(int $id): bool
+    {
+        $sql = "SELECT * FROM consultation WHERE id_consult = ?";
+        return $this->selectFirst($sql, [$id]);
+    }
+
+    /**
+     * This function is used to check if the num_secu is already used
+     * 
+     * @param int $num Num_secu to be checked
+     */
+    protected function checkNumSecuUsed(int $num): void
+    {
+        $sql = "SELECT * FROM usager WHERE num_secu = ?";
+        $result = $this->selectFirst($sql, [$num]);
+        if ($result) {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale $num est déjà utilisé");
+        }
+    }
+
+    /**
+     * This function is used to check if the civilite is valid
+     * 
+     * @param string $civilite Civilite to be checked
+     */
+    protected function checkCivilite(string $civilite): void
+    {
+        if ($civilite !== 'M.' && $civilite !== 'Mme') {
+            $this->deliverResponse('error', 400, "[R400 REST API] : La civilité doit être soit 'M.' soit 'Mme'");
+        };
+    }
+
+    /**
+     * This function is used to check if the sexe is valid
+     * 
+     * @param string $sexe Sexe to be checked
+     */
+    protected function checkSexe(string $sexe): void
+    {
+        if ($sexe !== 'M' && $sexe !== 'F') {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le sexe doit être soit 'M' soit 'F'");
+        };
+    }
 }
