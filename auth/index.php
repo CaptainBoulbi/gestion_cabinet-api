@@ -30,12 +30,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
         $recup = json_decode(file_get_contents('php://input'), true);
         $data = $auth_api->postLogin($recup);
-        if ($data && password_verify($recup['password'], $data['password'])) {
+        if ($data && password_verify($recup['mdp'], $data['password'])) {
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
             $payload = array('login' => $recup['login'], 'role' => $data['role'], 'exp' => time() + 3600);
             
             $jwt = $jwt_utils->generate_jwt($headers, $payload, $SECRET);
-            $auth_api->deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', $jwt);
+            $auth_api->deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', [$jwt]);
         } else {
             $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée');
         }
