@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  auth:
+    image: "tomsik68/xampp"
+    container_name: "auth"
+    ports: 
+      - "7070:80"
+    volumes:
+      - "./auth:/opt/lampp/htdocs"
+      - "auth-bdd:/opt/lampp/var/mysql/"
+
+  api:
+    image: "tomsik68/xampp"
+    container_name: "api"
+    ports: 
+      - "9090:80"
+    volumes:
+      - "./api:/opt/lampp/htdocs"
+      - "api-bdd:/opt/lampp/var/mysql/"
+
+  redistribuer:
+    image: "httpd"
+    container_name: "redistribuer"
+    ports: 
+      - "8080:80"
+    volumes:
+      - "./redistribuer:/usr/local/apache2/htdocs/"
+
+volumes:
+  auth-bdd:
+  api-bdd:
