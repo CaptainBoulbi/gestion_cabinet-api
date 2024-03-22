@@ -1,4 +1,4 @@
--- Active: 1707474650741@@localhost@3306
+-- Active: 1707474650741@@localhost@3306@db_gestion_cabinet_auth
 CREATE OR REPLACE USER 'local_user'@'localhost' IDENTIFIED BY 'password';
 
 DROP DATABASE IF EXISTS db_gestion_cabinet_auth;
@@ -12,7 +12,7 @@ USE db_gestion_cabinet_auth;
 CREATE TABLE user_auth_v2(
    id_auth INT AUTO_INCREMENT NOT NULL,
    login VARCHAR(50) NOT NULL,
-   mdp VARCHAR(50) NOT NULL,
+   mdp VARCHAR(100) NOT NULL,
    role VARCHAR(50) NOT NULL,
    PRIMARY KEY(login),
    UNIQUE(id_auth),
