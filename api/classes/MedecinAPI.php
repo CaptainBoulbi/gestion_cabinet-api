@@ -96,7 +96,7 @@ class MedecinAPI extends AppAPI
         $sql = "UPDATE medecin SET $keys = ? WHERE id_medecin = ?";
         $finalData = array_merge(array_values($data), [$id]);
         if($this->updateDelete($sql, $finalData)){
-            $this->deliverResponse('success', 200, '[R200 REST API] : Médecin mit à jour avec succès');
+            $this->deliverResponse('success', 201, '[R201 REST API] : Médecin mit à jour avec succès');
         }else{
             $this->deliverResponse('error', 500, '[R500 REST API] : Médecin non mises à jour');
         }
