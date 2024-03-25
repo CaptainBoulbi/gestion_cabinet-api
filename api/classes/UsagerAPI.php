@@ -2,6 +2,8 @@
 
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 require_once $rootDir . '/classes/AppAPI.php';
+require_once $rootDir . '/classes/JWTUtils.php';
+
 
 /**
  * UsagerAPI
@@ -13,6 +15,8 @@ require_once $rootDir . '/classes/AppAPI.php';
  */
 class UsagerAPI extends AppAPI
 {
+    private $jwtu;
+
 
     /**
      * Constructor
@@ -24,6 +28,7 @@ class UsagerAPI extends AppAPI
     public function __construct(array $allowedOptions){
         parent::__construct($allowedOptions, ['civilite', 'nom', 'prenom', 'sexe', 'adresse', 'code_postal',
         'ville', 'date_nais', 'lieu_nais', 'num_secu', 'id_medecin']);
+        $this->jwtu = new JWTUtils();
     }
 
 
@@ -32,6 +37,7 @@ class UsagerAPI extends AppAPI
      */
     public function getRequest(): void
     {
+        $this->jwtu->getAndVerify();
         $sql = "SELECT * FROM usager";
         $result = $this->selectAll($sql);
         if($result){
@@ -89,7 +95,7 @@ class UsagerAPI extends AppAPI
             $this->deliverResponse('success', 201, '[R201 REST API] : Usager inséré en base de
             donnée avec succès', $result);
         }else{
-            $this->deliverResponse('error', 400, "[R400 REST API] : Erreur lors de l'insertion de l'usager
+            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion de l'usager
             en base de donnée");
         }
     }
@@ -127,9 +133,9 @@ class UsagerAPI extends AppAPI
         $sql = "UPDATE usager SET $keys = ? WHERE id_usager = ?";
         $finalData = array_merge(array_values($data), [$id]);
         if($this->updateDelete($sql, $finalData)){
-            $this->deliverResponse('success', 200, '[R200 REST API] : Usager mit à jour avec succès');
+            $this->deliverResponse('success', 201, '[R201 REST API] : Usager mit à jour avec succès');
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Usager non mis à jour');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Usager non mis à jour');
         }
     }
 
@@ -148,7 +154,7 @@ class UsagerAPI extends AppAPI
         if($this->updateDelete($sql, [$id])){
             $this->deliverResponse('success', 200, '[R200 REST API] : Usager supprimé avec succès');
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Usager non supprimé');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Usager non supprimé');
         }
     }
 
