@@ -83,7 +83,7 @@ class ConsultationAPI extends AppAPI {
         if($result){
             $this->deliverResponse('success', 201, '[R201 REST API] : Consultation ajoutée', $result);
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Echec de l\'ajout de la consultation');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Echec de l\'ajout de la consultation');
         }
     }
 
@@ -113,9 +113,9 @@ class ConsultationAPI extends AppAPI {
         $result = $this->updateDelete($sql, $finalData);
         if($result){
             $result = $this->selectFirst("SELECT * FROM consultation WHERE id_consult = ?", [$id]);
-            $this->deliverResponse('success', 200, '[R200 REST API] : Consultation modifiée', $result);
+            $this->deliverResponse('success', 201, '[R201 REST API] : Consultation modifiée', $result);
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Echec de la modification de la consultation');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Echec de la modification de la consultation');
         }
     }
 
@@ -132,7 +132,7 @@ class ConsultationAPI extends AppAPI {
         if($result){
             $this->deliverResponse('success', 200, '[R200 REST API] : Consultation supprimée');
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Echec de la suppression de la consultation');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Echec de la suppression de la consultation');
         }
     }
 
