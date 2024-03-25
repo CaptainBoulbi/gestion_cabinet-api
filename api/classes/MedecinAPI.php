@@ -72,7 +72,7 @@ class MedecinAPI extends AppAPI
             $result = $this->selectFirst($sql, [$result]);
             $this->deliverResponse('success', 201, '[R201 REST API] : Médecin inséré en base de donnée avec succès', $result);
         }else{
-            $this->deliverResponse('error', 400, "[R400 REST API] : Erreur lors de l'insertion du médecin en base de donnée");
+            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion du médecin en base de donnée");
         }
     }
 
@@ -98,7 +98,7 @@ class MedecinAPI extends AppAPI
         if($this->updateDelete($sql, $finalData)){
             $this->deliverResponse('success', 200, '[R200 REST API] : Médecin mit à jour avec succès');
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Médecin non mises à jour');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Médecin non mises à jour');
         }
     }
 
@@ -117,7 +117,7 @@ class MedecinAPI extends AppAPI
         if($this->updateDelete($sql, [$id])){
             $this->deliverResponse('success', 200, '[R200 REST API] : Médecin supprimé avec succès');
         }else{
-            $this->deliverResponse('error', 400, '[R400 REST API] : Médecins non supprimées');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Médecins non supprimées');
         }
     }
 }
