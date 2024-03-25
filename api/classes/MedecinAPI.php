@@ -98,7 +98,7 @@ class MedecinAPI extends AppAPI
         if($this->updateDelete($sql, $finalData)){
             $this->deliverResponse('success', 201, '[R201 REST API] : Médecin mit à jour avec succès');
         }else{
-            $this->deliverResponse('error', 500, '[R500 REST API] : Médecin non mises à jour');
+            $this->deliverResponse('error', 500, '[R500 REST API] : Médecin non mis à jour');
         }
     }
 
@@ -112,6 +112,8 @@ class MedecinAPI extends AppAPI
         $this->checkMedecinExists($id);
 
         $this->updateDelete("DELETE FROM consultation WHERE id_medecin = ?", [$id]);
+
+        $this->updateDelete("UPDATE usager SET id_medecin = NULL WHERE id_medecin = ?", [$id]);
 
         $sql = "DELETE FROM medecin WHERE id_medecin = ?";
         if($this->updateDelete($sql, [$id])){
