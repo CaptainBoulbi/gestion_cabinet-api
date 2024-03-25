@@ -4,26 +4,31 @@
 Utilisé pour permettre de modifier le contenu en rapport avec les médecins.
 
 
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold;">
-Obtenir tout les médecins
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
+
 </summary>
 
-### Request
- 
+### - Request
+
+**Method :** &nbsp;&nbsp;
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark> 
-&nbsp; [https://api_med_app.fruitpassion.fr/**medecins**/](https://api_med_app.fruitpassion.fr/medecins/)
+
+**URL :** &nbsp;&nbsp;
+`/medecins/`
 
 
-### Response - *200*
+### - Response - *200*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
@@ -48,15 +53,15 @@ Content-Type : application/json
 }
 ```
 
-### Response - *404*
+### - Response - *404*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
@@ -75,25 +80,30 @@ Content-Type : application/json
 <br>
 
 <details>
-<summary style="font-size: 1.5em; font-weight: bold;">
-Obtenir un médecin avec son id
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/medecins/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir un médecin</div>
+
 </summary>
 
-### Request
+### - Request
 
+**Method :** &nbsp;&nbsp;
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark> 
-&nbsp; [https://api_med_app.fruitpassion.fr/**medecins**/*<span style="color:#d147ff">\<id\></span>*](https://api_med_app.fruitpassion.fr/medecins/id)
+
+**URL :** &nbsp;&nbsp;
+`/medecins/{id}`
 
 
-### Response - *200*
+### - Response - *200*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
@@ -111,15 +121,15 @@ Content-Type : application/json
 }
 ```
 
-### Response - *404*
+### - Response - *404*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
@@ -139,30 +149,51 @@ Content-Type : application/json
 
 
 <details>
-<summary style="font-size: 1.5em; font-weight: bold;">
-Créer un médecin
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
 </summary>
 
 
-> 🛑 <span style="color:red">Important</span>
->
-> Nécessite le role de : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark>
+### - Authentication 
 
-### Request
+> Requires the role of : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark>
 
+### - Request
+
+**Method :** &nbsp;&nbsp;
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark> 
-&nbsp; [https://api_med_app.fruitpassion.fr/**medecins**/](https://api_med_app.fruitpassion.fr/medecins/)
+
+**URL :** &nbsp;&nbsp;
+`/medecins/`
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+```
+
+**Body :**
+
+```json
+{
+    "civilite":"M.",
+    "nom":"Dupond",
+    "prenom":"Gérard"
+}
+```
 
 
-### Response - *201*
+### - Response - *201*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
@@ -179,15 +210,15 @@ Content-Type : application/json
 ```
 
 
-### Response - *500*
+### - Response - *500*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
@@ -207,68 +238,73 @@ Content-Type : application/json
 
 
 <details>
-<summary style="font-size: 1.5em; font-weight: bold;">
-Modifier un médecin avec son id
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/medecins/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Modifier partiellement un médecin</div>
 </summary>
 
-> 🛑 <span style="color:red">Important</span>
->
-> Nécessite le role de : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">médecin</mark>
+### - Authentication 
 
-### Request
+> Requires the role of : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">médecin</mark>
 
+### - Request
+
+**Method :** &nbsp;&nbsp;
 <mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark> 
-&nbsp; [https://api_med_app.fruitpassion.fr/**medecins**/*<span style="color:#d147ff">\<id\></span>*](https://api_med_app.fruitpassion.fr/medecins/id)
 
+**URL :** &nbsp;&nbsp;
+`/medecins/{id}`
 
-### Response - *200*
+**Header :**
 
-**Header**
+```yaml
+Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+```
+
+**Body :**
+
+```json
+{
+    "civilite":"M.",
+    "nom":"Dupond",
+    "prenom":"Gérard"
+}
+```
+
+### - Response - *201*
+
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
     "status": "success",
-    "status_code": 200,
-    "status_message": "[R200 REST API] : Médecins trouvés",
-    "data": [
-        {
-            "id_medecin": 1,
-            "civilite": "M.",
-            "nom": "Dupont",
-            "prenom": "Xavier"
-        },
-        {
-            "id_medecin": 2,
-            "civilite": "Mme.",
-            "nom": "Darc",
-            "prenom": "Jeanne"
-        },
-        ...
-    ]
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Médecin mit à jour avec succès"
 }
 ```
 
-### Response - *404*
+### - Response - *500*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
     "status": "error",
-    "status_code": 404,
-    "status_message": "[R404 REST API] : Aucun médecin trouvé"
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Médecin non mis à jour"
 }
 ```
 
@@ -282,69 +318,62 @@ Content-Type : application/json
 <br>
 
 <details>
-<summary style="font-size: 1.5em; font-weight: bold;">
-Supprimer un médecin avec son id
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/medecins/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Supprimer un médecin</div>
 </summary>
 
+### - Authentication 
 
-> 🛑 <span style="color:red">Important</span>
->
-> Nécessite le role de : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark>
+> Requires the role of : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark>
 
-### Request
+### - Request
 
+**Method :** &nbsp;&nbsp;
 <mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark>
-&nbsp; [https://api_med_app.fruitpassion.fr/**medecins**/*<span style="color:#d147ff">\<id\></span>*](https://api_med_app.fruitpassion.fr/medecins/id)
 
+**URL :** &nbsp;&nbsp;
+`/medecins/{id}`
 
-### Response - *200*
+**Header :**
 
-**Header**
+```yaml
+Authorization : Bearer eyJhbGc...
+```
+
+### - Response - *200*
+
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
     "status": "success",
     "status_code": 200,
-    "status_message": "[R200 REST API] : Médecins trouvés",
-    "data": [
-        {
-            "id_medecin": 1,
-            "civilite": "M.",
-            "nom": "Dupont",
-            "prenom": "Xavier"
-        },
-        {
-            "id_medecin": 2,
-            "civilite": "Mme.",
-            "nom": "Darc",
-            "prenom": "Jeanne"
-        },
-        ...
-    ]
+    "status_message": "[R200 REST API] : Médecin supprimé avec succès"
 }
 ```
 
-### Response - *404*
+### - Response - *500*
 
-**Header**
+**Header :**
 
 ```yaml
 Content-Type : application/json
 ```
 
-**Body**
+**Body :**
 
 ```json
 {
     "status": "error",
-    "status_code": 404,
-    "status_message": "[R404 REST API] : Aucun médecin trouvé"
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Médecins non supprimées"
 }
 ```
 
