@@ -25,6 +25,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
         
     default:
-        $stat_api->deliverResponse('error',405, '[R401 REST AUTH] : Methodes utilisées non autorisées');
+        $stat_api->deliverResponse('error',405, '[R405 REST AUTH] : Methodes utilisées non autorisées');
         break;
 }

@@ -38,7 +38,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
         
     default:
-        $usager_api->deliverResponse('error',405, '[R401 REST AUTH] : Methodes utilisées non autorisées');
+        $usager_api->deliverResponse('error',405, '[R405 REST AUTH] : Methodes utilisées non autorisées');
         break;
 }
 
