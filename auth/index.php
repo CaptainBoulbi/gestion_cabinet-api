@@ -30,7 +30,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
         $recup = json_decode(file_get_contents('php://input'), true);
         $data = $auth_api->postLogin($recup);
-        if ($data && password_verify($recup['mdp'], $data['password'])) {
+        if ($data && password_verify($recup['mdp'], $data['mdp'])) {
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
             $payload = array('login' => $recup['login'], 'role' => $data['role'], 'exp' => time() + 3600);
             
