@@ -1,0 +1,6 @@
+[book]
+authors = ["_N3m0"]
+language = "fr"
+multilingual = false
+src = "src"
+title = "doc-api"

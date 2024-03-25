@@ -23,9 +23,17 @@ services:
     image: "httpd"
     container_name: "redistribuer"
     ports: 
-      - "8080:80"
+      - "6060:80"
     volumes:
       - "./redistribuer:/usr/local/apache2/htdocs/"
+
+  doc:
+    image: "httpd"
+    container_name: "doc"
+    ports:
+      - "8080:80"
+    volumes:
+      - "./doc/book:/usr/local/apache2/htdocs/"
 
 volumes:
   auth-bdd:
