@@ -5,14 +5,49 @@ class JWTUtils
     private string $SERVER_AUTH = 'http://172.18.0.1:41066';
 
 	/**
-	 * This function is used to get and verify the token
+	 * This function is used to check if the bearer token is valid and if the user has the required role
+	 * 
+	 * @param array $roles The roles required to access the resource
+	 * @return array Returns infos of user if he has the required role, otherwise it dies
 	 */
-    public function getAndVerify(){
+	public function checkRole(array $roles) : array
+	{
+		$infos = $this->getAndVerify();
+		if(!in_array($infos['role'], $roles)){
+			header("HTTP/1.1 403 Forbidden");
+
+			header("Content-Type:application/json; charset=utf-8");
+	
+			header("Access-Control-Allow-Origin: *");
+			$response['status'] = 'error';
+			$response['status_code'] = 403;
+			$response['status_message'] = '[R403 REST AUTH] : Rôle non autorisé à effectuer cette action.';
+			echo json_encode($response);
+			die();
+		} else {
+			return $infos;
+		}
+	}
+
+	public function createMedecin()
+	{
+		if ($this->checkRole(["administrateur", "secretaire"])){
+
+		}
+	}
+
+	/**
+	 * This function is used to get and verify the token
+	 * 
+	 * @return array Returns the data from the token, otherwise it dies
+	 */
+    private function getAndVerify() : array
+	{
         $token = $this->get_bearer_token();
         if($token){
             $response = $this->jwtConfirm($token);
 			if ($response['status'] == 'success') {
-				return;
+				return $response['data'];
 			} else {
 				header("HTTP/1.1 401 Unauthorized");
 
@@ -21,13 +56,20 @@ class JWTUtils
 				header("Access-Control-Allow-Origin: *");
 				$response['status'] = 'error';
 				$response['status_code'] = 401;
-				$response['status_message'] = 'Accès refusé.';
+				$response['status_message'] = '[R401 REST AUTH] : Jeton invalide.';
 				echo json_encode($response);
 				die();
 			}
         } else{
-            http_response_code(401);
-            echo json_encode(array("message" => "Accès refusé."));
+			header("HTTP/1.1 401 Unauthorized");
+
+			header("Content-Type:application/json; charset=utf-8");
+		
+			header("Access-Control-Allow-Origin: *");
+			$response['status'] = 'error';
+			$response['status_code'] = 401;
+			$response['status_message'] = '[R401 REST AUTH] : Jeton requis.';
+            echo json_encode($response);
             die();
         }
     }
@@ -84,6 +126,36 @@ class JWTUtils
 
     }
 
+    /**
+     * This function is used to create an entity in the database
+     *
+     * @param string $token The token to be verified
+     * @return array Returns the response from the server
+     */
+    private function createEntity($token): array
+	{
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $this->SERVER_AUTH); // Set the URL
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return response as a string
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Authorization: Bearer ' . $token, // Set the Authorization header with Bearer token
+        ));
+
+        // Execute the GET request
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if ($response === false) {
+            echo 'Error: ' . curl_error($ch);
+            die();
+        } else {
+			curl_close($ch);
+            return json_decode($response, true);
+        }
+
+    }
 	/**
 	 * This function is used to get the authorization header from the request
 	 *
