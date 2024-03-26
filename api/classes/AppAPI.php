@@ -251,4 +251,37 @@ class AppAPI extends ConnexionDB
     {
         return date('Y-m-d', strtotime($date));
     }
+
+
+    public function generateLogin($data, $prefix) {
+        $civility = $data["civilite"];
+        $lastname = $this->convertAccents($data["nom"]);
+        $firstname = $this->convertAccents($data["prenom"]);
+        $lastname = strtoupper(substr($lastname, 0, 2));
+        $firstname = strtoupper(substr($firstname, 0, 2));
+        $name_length = strlen($data["nom"]);
+        $firstname_length = strlen($data["prenom"]);
+        $civility_length = strlen($civility);
+        $sum = ($name_length + $firstname_length + $civility_length) * $name_length;
+        $login_number = $sum % 100;
+    
+        if ($civility === 'M.') {
+            $civ = 'MO';
+        } elseif ($civility === 'Mme.') {
+            $civ = 'MA';
+        }
+    
+        $login = $prefix . $civ . $lastname . $firstname . $login_number;
+        return $login;
+    }
+
+    private function convertAccents($str) : string
+    {
+        $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+                            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+                            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+                            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+        return strtr( $str, $unwanted_array );
+    }
 }
