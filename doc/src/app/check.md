@@ -6,7 +6,41 @@ Répertoire de toute les vérifications pouvant être effectué pour chaque requ
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification argument
+Méthode
+</summary>
+
+Chaque route détient une liste de  méthodes autorisée. Cette vérification est la première effectuée à chaque requête. 
+
+### - Response - *405*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 405,
+    "status_message": "[R405 REST AUTH] : Methodes utilisées non autorisées"
+}
+```
+
+
+</details>
+
+<br>
+
+---
+
+<br>
+
+<details>
+<summary style="font-size: 1.5em; font-weight: bold;">
+Argument
 </summary>
 
 Utilisé quand la requete attend un argument que ca soit un `{id}` ou un nom de fonction tel que `{usager}` (pour les statistiques).
@@ -41,7 +75,7 @@ Content-Type : application/json
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification type argument string
+Type argument string
 </summary>
 
 Utilisé pour vérifier le type d'argument que l'on attend est une `string`.
@@ -77,7 +111,7 @@ Content-Type : application/json
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification type argument int
+Type argument int
 </summary>
 
 Utilisé pour vérifier le type d'argument que l'on attend est un `int` (pour les `{id}`). Impose une taille limite de `2147483647`.
@@ -130,7 +164,7 @@ Content-Type : application/json
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification de la date
+Date
 </summary>
 
 Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.
@@ -183,7 +217,7 @@ Content-Type : application/json
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification medecin
+Medecin
 </summary>
 
 Utilisé pour vérifier à partir d'un ID si un medecin existe.
@@ -218,7 +252,7 @@ Content-Type : application/json
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification usager
+Usager
 </summary>
 
 Utilisé pour vérifier à partir d'un ID si un usager existe.
@@ -252,7 +286,7 @@ Content-Type : application/json
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold;">
-Vérification civilité
+Civilité
 </summary>
 
 Vérifie si la civilité est valide. Celle ci doit être soit `M.` soit `Mme`.
