@@ -12,6 +12,7 @@ CREATE TABLE medecin(
    civilite VARCHAR(50) NOT NULL,
    nom VARCHAR(50) NOT NULL,
    prenom VARCHAR(50) NOT NULL,
+   login VARCHAR(10) NOT NULL,
    CONSTRAINT PK_medecin PRIMARY KEY(id_medecin),
    CONSTRAINT ch_civilite_med CHECK(civilite IN ('M.', 'Mme.'))
 );
@@ -28,6 +29,7 @@ CREATE TABLE usager(
    date_nais DATE NOT NULL,
    lieu_nais VARCHAR(50) NOT NULL,
    num_secu CHAR(15) NOT NULL,
+   login VARCHAR(10) NOT NULL,
    id_medecin INT,
    CONSTRAINT PK_usager_usa PRIMARY KEY(id_usager),
    CONSTRAINT FK_usager_medecin FOREIGN KEY(id_medecin) REFERENCES medecin(id_medecin),
@@ -55,30 +57,30 @@ CREATE TABLE consultation(
 );
 
 
-INSERT INTO medecin(civilite, nom, prenom)
-VALUES('M.', 'Dupont', 'Xavier'),
-         ('Mme.', 'Darc', 'Jeanne'),
-         ('M.', 'Siphon', 'Paul'),
-         ('Mme.', 'Pinet', 'Maitas'),
-         ('M.', 'Huge', 'Gilbert'),
-         ('Mme.', 'Fanso', 'Sofian'),
-         ('M.', 'Cub', 'Buque'),
-         ('Mme.', 'Detoi', 'Morgan'),
-         ('M.', 'Oskour', 'Jeanne'),
-         ('Mme.', 'Manda', 'Lorianne');
+INSERT INTO medecin(civilite, nom, prenom, login)
+VALUES('M.', 'Dupont', 'Xavier', 'MMODUXA84'),
+         ('Mme.', 'Darc', 'Jeanne', 'MMADAJE56'),
+         ('M.', 'Siphon', 'Paul', 'MMOSIPA72'),
+         ('Mme.', 'Pinet', 'Maitas', 'MMAPIMA75'),
+         ('M.', 'Huge', 'Gilbert', 'MMOHUGI52'),
+         ('Mme.', 'Fanso', 'Sofian', 'MMAFASO75'),
+         ('M.', 'Cub', 'Buque', 'MMOCUBU30'),
+         ('Mme.', 'Detoi', 'Morgan', 'MMADEMO75'),
+         ('M.', 'Oskour', 'Jeanne', 'MMOOSJE84'),
+         ('Mme.', 'Manda', 'Lorianne', 'MMAMALO85');
 
 
-INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu, id_medecin)
-VALUES('M.', 'Dupont', 'Jean', 'H', '1 rue de la Paix', '75000', 'Paris', '1990-01-06', 'Paris', '180010101010101', 7),
-         ('Mme.', 'Durand', 'Marie', 'F', '2 avenu de l''Angle', '31320', 'Auzeville-Tolosane', '1987-03-07', 'Clermont-Ferrant', '280010101010101', 5),
-         ('Mme.', 'Martin', 'Sophie', 'F', '3 rue de la Paix', '75000', 'Paris', '1980-02-09', 'Paris', '380010101010101', 1),
-         ('M.', 'Lefevre', 'Pierre', 'H', '4 rue de la Paix', '75000', 'Paris', '1975-04-10', 'Paris', '480010101010101', 2),
-         ('M.', 'Leroy', 'Jacques', 'H', '5 rue de la Paix', '75000', 'Paris', '2000-05-11', 'Paris', '580010101010101', NULL),
-         ('Mme.', 'Darc', 'Jeanne', 'F', '6 rue de la Paix', '75000', 'Paris', '1965-06-12', 'Paris', '680010101010101', 2),
-         ('M.', 'Siphon', 'Paul', 'H', '7 rue de la Paix', '75000', 'Paris', '1989-07-13', 'Paris', '780010101010101', 3),
-         ('Mme.', 'Pinet', 'Maitas', 'F', '8 rue de la Paix', '75000', 'Paris', '2003-08-14', 'Paris', '880010101010101', 4),
-         ('M.', 'Leroy', 'Raymond', 'H', '9 rue de la Paix', '75000', 'Paris', '2004-09-15', 'Paris', '980010101010101', NULL),
-         ('Mme.', 'Duminet', 'Marie', 'F', '10 rue de la Paix', '75000', 'Paris', '1945-10-16', 'Paris', '080010101010101', 1);
+INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu, id_medecin, login)
+VALUES('M.', 'Dupont', 'Jean', 'H', '1 rue de la Paix', '75000', 'Paris', '1990-01-06', 'Paris', '180010101010101', 7, 'UMODUJE72'),
+         ('Mme.', 'Durand', 'Marie', 'F', '2 avenu de l''Angle', '31320', 'Auzeville-Tolosane', '1987-03-07', 'Clermont-Ferrant', '280010101010101', 5, 'UMADUMA90'),
+         ('Mme.', 'Martin', 'Sophie', 'F', '3 rue de la Paix', '75000', 'Paris', '1980-02-09', 'Paris', '380010101010101', 1, 'UMAMASO96'),
+         ('M.', 'Lefevre', 'Pierre', 'H', '4 rue de la Paix', '75000', 'Paris', '1975-04-10', 'Paris', '480010101010101', 2, 'UMOLEPI05'),
+         ('M.', 'Leroy', 'Jacques', 'H', '5 rue de la Paix', '75000', 'Paris', '2000-05-11', 'Paris', '580010101010101', NULL, 'UMOLEJA70'),
+         ('Mme.', 'Darc', 'Jeanne', 'F', '6 rue de la Paix', '75000', 'Paris', '1965-06-12', 'Paris', '680010101010101', 2, 'UMADAJE56'),
+         ('M.', 'Siphon', 'Paul', 'H', '7 rue de la Paix', '75000', 'Paris', '1989-07-13', 'Paris', '780010101010101', 3, 'UMOSIPA72'),
+         ('Mme.', 'Pinet', 'Maitas', 'F', '8 rue de la Paix', '75000', 'Paris', '2003-08-14', 'Paris', '880010101010101', 4, 'UMAPIMA75'),
+         ('M.', 'Leroy', 'Raymond', 'H', '9 rue de la Paix', '75000', 'Paris', '2004-09-15', 'Paris', '980010101010101', NULL, 'UMOLERA70'),
+         ('Mme.', 'Duminet', 'Marie', 'F', '10 rue de la Paix', '75000', 'Paris', '1945-10-16', 'Paris', '080010101010101', 1, 'UMADUMA12');
 
 INSERT INTO consultation(date_consult, heure_consult, duree_consult, id_medecin, id_usager)
 VALUES('2024-01-01', '08:00:00', 15, 1, 1),
