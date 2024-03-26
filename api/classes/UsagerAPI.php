@@ -14,8 +14,8 @@ require_once $rootDir . '/classes/JWTUtils.php';
  * @author FruitPassion
  */
 class UsagerAPI extends AppAPI
-{
-    private $jwtu;
+{    
+    private JWTUtils $jwtu;
 
 
     /**
@@ -37,7 +37,7 @@ class UsagerAPI extends AppAPI
      */
     public function getRequest(): void
     {
-        $this->jwtu->getAndVerify();
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin"]);
         $sql = "SELECT * FROM usager";
         $result = $this->selectAll($sql);
         if($result){
@@ -54,8 +54,12 @@ class UsagerAPI extends AppAPI
      */
     public function getRequestById(int $id): void
     {
-        $result = $this->checkUsagerExists($id);
-        $this->deliverResponse('success', 200, '[R200 REST API] : Usager trouvé', $result);
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
+        $infos_us = $this->checkUsagerExists($id);
+        if ($infos_jwt["role"] == "usager" && $infos_jwt["login"] != $infos_us["login"]) {
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les ifnormations de cet usager.');
+        }
+        $this->deliverResponse('success', 200, '[R200 REST API] : Usager trouvé', $infos_us);
     }
 
     /**
@@ -63,9 +67,10 @@ class UsagerAPI extends AppAPI
      */
     public function postRequest(): void
     {
+        $this->jwtu->checkRole(["administrateur", "invite"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $this->checkNeededData($data, $this->getInfos());
+        $this->checkNeededData($data, array_merge($this->getInfos(),["mdp"]));
         
         $this->checkNumSecuUsed($data['num_secu']);
         $this->validateDate($data['date_nais'], 'inf');
@@ -93,8 +98,7 @@ class UsagerAPI extends AppAPI
         if($result){
             $sql = "SELECT * FROM usager WHERE id_usager = ?";
             $result = $this->selectFirst($sql, [$result]);
-            $this->deliverResponse('success', 201, '[R201 REST API] : Usager inséré en base de
-            donnée avec succès', $result);
+            $this->deliverResponse('success', 201, '[R201 REST API] : Usager inséré en base de donnée avec succès', $result);
         }else{
             $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion de l'usager
             en base de donnée");
@@ -108,11 +112,15 @@ class UsagerAPI extends AppAPI
      */
     public function patchRequest(int $id): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "usager"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
         $this->checkAllowedData($data, $this->getInfos());
 
-        $this->checkUsagerExists($id);
+        $infos_us = $this->checkUsagerExists($id);
+        if ($infos_jwt["role"] == "usager" && $infos_jwt["login"] != $infos_us["login"]) {
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de modifier cet usager');
+        }
         
         if (isset($data['num_secu'])) {
             $this->checkNumSecuUsed($data['num_secu']);
@@ -147,7 +155,12 @@ class UsagerAPI extends AppAPI
      */
     public function deleteRequest(int $id): void
     {
-        $this->checkUsagerExists($id);
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "usager"]);
+        $infos_us = $this->checkUsagerExists($id);
+
+        if ($infos_jwt["role"] == "usager" && $infos_jwt["login"] != $infos_us["login"]) {
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de supprimer cet usager');
+        }
         
         $this->updateDelete("DELETE FROM consultation WHERE id_usager = ?", [$id]);
 
