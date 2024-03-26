@@ -2,6 +2,7 @@
 
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 require_once $rootDir . '/classes/AppAPI.php';
+require_once $rootDir . '/classes/JWTUtils.php';
 
 /**
  * MedecinAPI
@@ -13,6 +14,7 @@ require_once $rootDir . '/classes/AppAPI.php';
  */
 class MedecinAPI extends AppAPI
 {
+    private JWTUtils $jwtu;
 
     /**
      * Constructor
@@ -23,6 +25,7 @@ class MedecinAPI extends AppAPI
      */
     public function __construct(array $allowedOptions){
         parent::__construct($allowedOptions, ['civilite', 'nom', 'prenom']);
+        $this->jwtu = new JWTUtils();
     }
 
     /**
@@ -30,6 +33,7 @@ class MedecinAPI extends AppAPI
      */
     public function getRequest(): void
     {
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $sql = "SELECT * FROM medecin";
         $result = $this->selectAll($sql);
         if($result){
@@ -46,6 +50,7 @@ class MedecinAPI extends AppAPI
      */
     public function getRequestById(int $id): void
     {
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $result = $this->checkMedecinExists($id);
         $this->deliverResponse('success', 200, '[R200 REST API] : Médecin trouvé', $result);
     }
@@ -55,6 +60,7 @@ class MedecinAPI extends AppAPI
      */
     public function postRequest(): void
     {
+        $this->jwtu->checkRole(["administrateur", "secretaire"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
         $this->checkNeededData($data, $this->getInfos());
@@ -63,7 +69,7 @@ class MedecinAPI extends AppAPI
         var_dump($this->generateLogin($data, 'M'));
         
 
-        $sql = 'INSERT INTO medecin ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?)';
+        $sql = 'INSERT INTO medecin ('. implode(', ', array_merge($this->getInfos(),["mdp"])) .', login) VALUE (?, ?, ?, ?)';
         $result = $this->insert($sql, [
             $data['civilite'],
             $data['nom'],
@@ -75,7 +81,7 @@ class MedecinAPI extends AppAPI
             $result = $this->selectFirst($sql, [$result]);
             $this->deliverResponse('success', 201, '[R201 REST API] : Médecin inséré en base de donnée avec succès', $result);
         }else{
-            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion du médecin en base de donnée");
+            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur l✅ 🚹ors de l'insertion du médecin en base de donnée");
         }
     }
 
@@ -86,11 +92,15 @@ class MedecinAPI extends AppAPI
      */
     public function patchRequest(int $id): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "medecin"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
         $this->checkAllowedData($data, $this->getInfos());
 
-        $this->checkMedecinExists($id);
+        $infos_med = $this->checkMedecinExists($id);
+        if ($infos_jwt["role"] == "medecin" && $infos_jwt["login"] != $infos_med["login"]) {
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de modifier ce médecin');
+        }
         if (isset($data['civilite'])) {
             $this->checkCivilite($data['civilite']);
         }
@@ -112,7 +122,11 @@ class MedecinAPI extends AppAPI
      */
     public function deleteRequest(int $id): void
     {
-        $this->checkMedecinExists($id);
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "medecin"]);
+        $infos_med = $this->checkMedecinExists($id);
+        if ($infos_jwt["role"] == "medecin" && $infos_jwt["login"] != $infos_med["login"]) {
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de modifier ce médecin');
+        }
 
         $this->updateDelete("DELETE FROM consultation WHERE id_medecin = ?", [$id]);
 
