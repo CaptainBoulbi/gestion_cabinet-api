@@ -60,12 +60,15 @@ class MedecinAPI extends AppAPI
         $this->checkNeededData($data, $this->getInfos());
         
         $this->checkCivilite($data['civilite']);
+        var_dump($this->generateLogin($data, 'M'));
+        
 
-        $sql = 'INSERT INTO medecin ('. implode(', ', $this->getInfos()) .') VALUE (?, ?, ?)';
+        $sql = 'INSERT INTO medecin ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?)';
         $result = $this->insert($sql, [
             $data['civilite'],
             $data['nom'],
-            $data['prenom']
+            $data['prenom'],
+            $this->generateLogin($data, 'M')
         ]);
         if($result){
             $sql = "SELECT * FROM medecin WHERE id_medecin = ?";

@@ -73,7 +73,7 @@ class UsagerAPI extends AppAPI
         $this->checkCivilite($data['civilite']);
         $this->checkSexe($data['sexe']);
 
-        $sql = 'INSERT INTO usager ('. implode(', ', $this->getInfos()) .') VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO usager ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         $result = $this->insert($sql, [
             $data['civilite'],
@@ -86,7 +86,8 @@ class UsagerAPI extends AppAPI
             $this->convertDateToMysql($data['date_nais']),
             $data['lieu_nais'],
             $data['num_secu'],
-            $data['id_medecin']
+            $data['id_medecin'],
+            $this->generateLogin($data, 'U')
         ]);
 
         if($result){
