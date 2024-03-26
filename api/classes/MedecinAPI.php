@@ -81,7 +81,7 @@ class MedecinAPI extends AppAPI
             $result = $this->selectFirst($sql, [$result]);
             $this->deliverResponse('success', 201, '[R201 REST API] : Médecin inséré en base de donnée avec succès', $result);
         }else{
-            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur l✅ 🚹ors de l'insertion du médecin en base de donnée");
+            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion du médecin en base de donnée");
         }
     }
 
@@ -125,7 +125,7 @@ class MedecinAPI extends AppAPI
         $infos_jwt = $this->jwtu->checkRole(["administrateur", "medecin"]);
         $infos_med = $this->checkMedecinExists($id);
         if ($infos_jwt["role"] == "medecin" && $infos_jwt["login"] != $infos_med["login"]) {
-            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de modifier ce médecin');
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de supprimer ce médecin');
         }
 
         $this->updateDelete("DELETE FROM consultation WHERE id_medecin = ?", [$id]);
