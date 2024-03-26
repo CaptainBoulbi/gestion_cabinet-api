@@ -29,15 +29,21 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
     case 'POST':
         $recup = json_decode(file_get_contents('php://input'), true);
+        if (!isset($recup['login'])){
+            $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée, login maquant');
+        }
+        if (!isset($recup['mdp']) and $recup['login'] != 'invite'){
+            $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée, mot de passe manquant');
+        }
         $data = $auth_api->postLogin($recup);
-        if ($data && password_verify($recup['mdp'], $data['mdp'])) {
+        if (($recup['login'] == 'invite' && $data['role'] == 'invite') || ($data && password_verify($recup['mdp'], $data['mdp']))) {
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
             $payload = array('login' => $recup['login'], 'role' => $data['role'], 'exp' => time() + 3600);
             
             $jwt = $jwt_utils->generate_jwt($headers, $payload, $SECRET);
             $auth_api->deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', [$jwt]);
         } else {
-            $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée');
+            $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée, login ou mot de passe incorrect');
         }
         break;
     default:
