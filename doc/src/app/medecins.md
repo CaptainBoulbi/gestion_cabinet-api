@@ -12,6 +12,10 @@ Utilisé pour permettre de modifier le contenu en rapport avec les médecins.
 
 </summary>
 
+### - Authentication 
+
+> Nécessite le role de : &nbsp;<mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">mecedin</mark> , &nbsp;<mark style="background-color:#F1C40F; color:white;">usager</mark>
+
 ### - Request
 
 **Method :** &nbsp;&nbsp;
@@ -19,6 +23,12 @@ Utilisé pour permettre de modifier le contenu en rapport avec les médecins.
 
 **URL :** &nbsp;&nbsp;
 `/medecins/`
+
+**Header :**
+
+```yaml
+Authorization : Bearer eyJhbGc...
+```
 
 
 ### - Response - *200*
@@ -87,6 +97,10 @@ Content-Type : application/json
 
 </summary>
 
+### - Authentication 
+
+> Nécessite le role de : &nbsp;<mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">mecedin</mark> , &nbsp;<mark style="background-color:#F1C40F; color:white;">usager</mark>
+
 ### - Request
 
 **Method :** &nbsp;&nbsp;
@@ -95,6 +109,11 @@ Content-Type : application/json
 **URL :** &nbsp;&nbsp;
 `/medecins/{id}`
 
+**Header :**
+
+```yaml
+Authorization : Bearer eyJhbGc...
+```
 
 ### - Response - *200*
 
@@ -246,7 +265,7 @@ Content-Type : application/json
 
 ### - Authentication 
 
-> Nécessite le role de : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">médecin</mark>
+> Nécessite le role de : <mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">médecin</mark>
 
 ### - Request
 
@@ -326,7 +345,7 @@ Content-Type : application/json
 
 ### - Authentication 
 
-> Nécessite le role de : &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark>
+> Nécessite le role de : &nbsp;<mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">médecin</mark>
 
 ### - Request
 
