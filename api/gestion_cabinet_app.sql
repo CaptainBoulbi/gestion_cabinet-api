@@ -65,7 +65,7 @@ VALUES('M.', 'Dupont', 'Xavier'),
          ('M.', 'Cub', 'Buque'),
          ('Mme.', 'Detoi', 'Morgan'),
          ('M.', 'Oskour', 'Jeanne'),
-         ('Mme.', 'Manda', 'Loriianne');
+         ('Mme.', 'Manda', 'Lorianne');
 
 
 INSERT INTO usager(civilite, nom, prenom, sexe, adresse, code_postal, ville, date_nais, lieu_nais, num_secu, id_medecin)
