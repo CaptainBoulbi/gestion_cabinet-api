@@ -83,5 +83,6 @@ class AuthAPI extends ConnexionDB
         }
 
         echo $json_response;
+        die();
     }
 }
