@@ -57,7 +57,7 @@ class UsagerAPI extends AppAPI
         $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $infos_us = $this->checkUsagerExists($id);
         if ($infos_jwt["role"] == "usager" && $infos_jwt["login"] != $infos_us["login"]) {
-            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les ifnormations de cet usager.');
+            $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les informations de cet usager.');
         }
         $this->deliverResponse('success', 200, '[R200 REST API] : Usager trouvé', $infos_us);
     }
