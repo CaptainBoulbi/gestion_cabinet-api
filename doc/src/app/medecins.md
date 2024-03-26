@@ -3,6 +3,7 @@
 
 Utilisé pour permettre de modifier le contenu en rapport avec les médecins.
 
+**Allowed Methods :** &nbsp;&nbsp;&nbsp; [`GET`, `POST`, `PATCH`, `DELETE`, `OPTIONS`]
 
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
