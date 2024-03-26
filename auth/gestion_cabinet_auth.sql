@@ -16,12 +16,13 @@ CREATE TABLE user_auth_v2(
    role VARCHAR(50) NOT NULL,
    PRIMARY KEY(login),
    UNIQUE(id_auth),
-   CONSTRAINT ch_role CHECK(role IN ('secretaire', 'administrateur', 'medecin', 'usager'))
+   CONSTRAINT ch_role CHECK(role IN ('secretaire', 'invite', 'administrateur', 'medecin', 'usager'))
 );
 
 INSERT INTO user_auth_v2(login, mdp, role)
-VALUES('secretaire1', '$2y$08$EPJXk5LG41f1usT95xQyT.nZ5WGSd.rtn93ebWlKl4b3UqoykmpaW', 'secretaire'), # password1234!
-      ('admin1', '$2y$08$EPJXk5LG41f1usT95xQyT.nZ5WGSd.rtn93ebWlKl4b3UqoykmpaW', 'administrateur'), # password1234!
+VALUES ('invite', '', 'invite'), # no password
+      ('secretaire1', '$2y$08$EPJXk5LG41f1usT95xQyT.nZ5WGSd.rtn93ebWlKl4b3UqoykmpaW', 'secretaire'), # password1234!
+      ('admin', '$2y$08$EPJXk5LG41f1usT95xQyT.nZ5WGSd.rtn93ebWlKl4b3UqoykmpaW', 'administrateur'), # password1234!
       ('UMODUJE72', '$2y$08$g.I3si7EXhvcxF1Y5SZxYOMeGX1Plgj5lLxE4rJGDGU3N1BEXpGAm', 'usager'), # user1234!
       ('UMADUMA90', '$2y$08$M5XgCc2ZPyXHzAuM6Pa04eUcOa9n6GFddJDEWwXDMsbeBcyh1jble', 'usager'),
       ('UMAMASO96', '$2y$08$76farNwGzKMKCKk7WX8XlOppNYBdvrMwYtVvTcQ8z6EFprcqM1w0.', 'usager'),
