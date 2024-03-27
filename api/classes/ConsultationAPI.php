@@ -80,21 +80,9 @@ class ConsultationAPI extends AppAPI
         $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $result =$this->checkConsultationExists($id);
 
-        if ($infos_jwt["role"] == "medecin") {
-            $sql = "SELECT * FROM medecin WHERE login = ?";
-            $medecin = $this->selectFirst($sql, [$infos_jwt["login"]]);
-            if ($result["id_medecin"] != $medecin["id_medecin"]) {
-                $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les informations de cette consultation.');
-            }
-        }
+        $this->checkRight("medecin", "[R403 REST API] : Vous n'avez pas le droit de visualiser les informations de cette consultation.", $infos_jwt, $result);
         
-        if ($infos_jwt["role"] == "usager") {
-            $sql = "SELECT * FROM usager WHERE login = ?";
-            $usager = $this->selectFirst($sql, [$infos_jwt["login"]]);
-            if ($result["id_usager"] != $usager["id_usager"]) {
-                $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les informations de cette consultation.');
-            }
-        }
+        $this->checkRight("usager", "[R403 REST API] : Vous n'avez pas le droit de visualiser les informations de cette consultation.", $infos_jwt, $result);
 
         if($result){
             $this->deliverResponse('success', 200, '[R200 REST API] : Consultation trouvée', $result);
@@ -113,6 +101,11 @@ class ConsultationAPI extends AppAPI
 
         $this->checkUsagerExists($data['id_usager']);
         $this->checkMedecinExists($data['id_medecin']);
+
+        $this->checkRight("medecin", "[R403 REST API] : Vous n'avez pas le droit de créer une consultation avec un médecin différent de vous.", $infos_jwt, $data);
+        
+        $this->checkRight("usager", "[R403 REST API] : Vous n'avez pas le droit de créer une consultation avec un usager différent de vous.", $infos_jwt, $data);
+
         $this->validateDate($data['date_consult'], 'sup');
 
         if (!in_array($data["duree_consult"], [15, 30, 45, 60])) {
@@ -149,7 +142,12 @@ class ConsultationAPI extends AppAPI
 
         $this->checkAllowedData($data, $this->getInfos());
 
-        $this->checkConsultationExists($id);
+        $result = $this->checkConsultationExists($id);
+        
+        $this->checkRight("medecin", "[R403 REST API] : Vous n'avez pas le droit de modifier cette consultation.", $infos_jwt, $result);
+        
+        $this->checkRight("usager", "[R403 REST API] : Vous n'avez pas le droit de modifier cette consultation.", $infos_jwt, $result);
+
         $this->validateDate($data['date_consult'], 'sup');
 
         if (!in_array($data["duree_consult"], [15, 30, 45, 60])) {
@@ -177,7 +175,12 @@ class ConsultationAPI extends AppAPI
     public function deleteRequest(int $id): void
     {
         $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
-        $this->checkConsultationExists($id);
+        $result = $this->checkConsultationExists($id);
+
+        
+        $this->checkRight("medecin", "[R403 REST API] : Vous n'avez pas le droit de supprimer cette consultation.", $infos_jwt, $result);
+        
+        $this->checkRight("usager", "[R403 REST API] : Vous n'avez pas le droit de supprimer cette consultation.", $infos_jwt, $result);
 
         $result = $this->updateDelete("DELETE FROM consultation WHERE id_consult = ?", [$id]);
         if($result){
@@ -236,4 +239,24 @@ class ConsultationAPI extends AppAPI
         return true;
     }
 
+
+    /**
+     * This function is used to check if a given role has the right to access the data
+     *
+     * @param string $role The role of the user
+     * @param string $error_message The error message to deliver if the user doesn't have the right
+     * @param array $infos_jwt Infos of the user's JWT
+     * @param array $result Infos of the consultation
+     * @return void
+     */
+    private function checkRight(string $role, string $error_message, array $infos_jwt, array $result) : void
+    {
+        if ($infos_jwt["role"] == $role) {
+            $sql = "SELECT * FROM ".$role." WHERE login = ?";
+            $usager = $this->selectFirst($sql, [$infos_jwt["login"]]);
+            if ($result["id_".$role] != $usager["id_".$role]) {
+                $this->deliverResponse('error', 403, $error_message);
+            }
+        }
+    }
 }
