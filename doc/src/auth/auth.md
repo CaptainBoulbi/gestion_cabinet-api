@@ -71,7 +71,7 @@ Content-Type : application/json
 <mark style="background-color:#3498DB; color:white;">secretaire</mark> &nbsp; | ✅ | ✅ | ❌ | ❌
 <mark style="background-color:#27AE60; color:white;">medecin</mark> &nbsp; | ✅ | ❌ | ✅ 🚹 | ✅ 🚹
 <mark style="background-color:#F1C40F; color:white;">usager</mark> &nbsp; | ✅ | ❌ | ❌ | ❌
-<mark style="background-color:#757575; color:white;">invite</mark> &nbsp; | ❌ | ❌ | ❌ | ❌
+<mark style="background-color:#757575; color:white;">invite</mark> &nbsp; | ✅ | ❌ | ❌ | ❌
 
 
 ## Interaction avec les usagers 
