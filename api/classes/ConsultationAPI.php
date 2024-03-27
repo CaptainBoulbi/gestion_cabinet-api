@@ -59,7 +59,7 @@ class ConsultationAPI extends AppAPI
             }
         }
 
-        if (count($result) == 0) {
+        if (empty($result)) {
             $this->deliverResponse('error', 404, '[R404 REST API] : Aucune consultation trouvée');
         }
         
