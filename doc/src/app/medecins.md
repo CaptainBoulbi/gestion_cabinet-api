@@ -101,6 +101,13 @@ Content-Type : application/json
 
 > Nécessite le role de : &nbsp;<mark style="background-color:#FF5733; color:white;">administrateur</mark> , &nbsp;<mark style="background-color:#3498DB; color:white;">secrétaire</mark> , &nbsp;<mark style="background-color:#27AE60; color:white;">mecedin</mark> , &nbsp;<mark style="background-color:#F1C40F; color:white;">usager</mark>
 
+### - Checks
+
+- [Verification argument](check.html#argument)
+- [Type d'argument int](check.html#type-argument-int)
+- [Médecin existe](check.html#medecin)
+
+
 ### - Request
 
 **Method :** &nbsp;&nbsp;
