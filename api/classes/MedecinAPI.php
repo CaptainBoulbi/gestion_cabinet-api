@@ -60,7 +60,7 @@ class MedecinAPI extends AppAPI
      */
     public function postRequest(): void
     {
-        $this->jwtu->checkRole(["administrateur", "secretaire"]);
+        $jwt = $this->jwtu->checkRole(["administrateur", "secretaire"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
         $this->checkNeededData($data, $this->getInfos());
@@ -76,6 +76,7 @@ class MedecinAPI extends AppAPI
             $data['prenom'],
             $this->generateLogin($data, 'M')
         ]);
+
         if($result){
             $sql = "SELECT * FROM medecin WHERE id_medecin = ?";
             $result = $this->selectFirst($sql, [$result]);

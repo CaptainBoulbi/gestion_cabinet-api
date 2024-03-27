@@ -29,19 +29,12 @@ class JWTUtils
 		}
 	}
 
-	public function createMedecin()
-	{
-		if ($this->checkRole(["administrateur", "secretaire"])){
-
-		}
-	}
-
 	/**
 	 * This function is used to get and verify the token
 	 * 
-	 * @return array Returns the data from the token, otherwise it dies
+	 * @return ?array Returns the data from the token, otherwise it dies
 	 */
-    private function getAndVerify() : array
+    private function getAndVerify() : ?array
 	{
         $token = $this->get_bearer_token();
         if($token){
@@ -49,30 +42,12 @@ class JWTUtils
 			if ($response['status'] == 'success') {
 				return $response['data'];
 			} else {
-				header("HTTP/1.1 401 Unauthorized");
-
-				header("Content-Type:application/json; charset=utf-8");
-		
-				header("Access-Control-Allow-Origin: *");
-				$response['status'] = 'error';
-				$response['status_code'] = 401;
-				$response['status_message'] = '[R401 REST AUTH] : Jeton invalide.';
-				echo json_encode($response);
-				die();
+				$this->deliverResponse('error', 401, '[R401 REST AUTH] : Jeton invalide.');
 			}
         } else{
-			header("HTTP/1.1 401 Unauthorized");
-
-			header("Content-Type:application/json; charset=utf-8");
-		
-			header("Access-Control-Allow-Origin: *");
-			$response['status'] = 'error';
-			$response['status_code'] = 401;
-			$response['status_message'] = '[R401 REST AUTH] : Jeton requis.';
-            echo json_encode($response);
-            die();
-        }
-    }
+			$this->deliverResponse('error', 401, '[R401  REST AUTH] : Jeton requis.');
+		}
+	}
 
     /** 
 	 * This function is used to get the bearer token from the request
@@ -126,36 +101,41 @@ class JWTUtils
 
     }
 
+	public function createMedecin($data)
+	{
+		if ($this->checkRole(["administrateur", "secretaire"])){
+			$token = $this->get_bearer_token();
+			$response = $this->jwtCreate($token , "medecin", $data); 
+		}
+	}
+
     /**
      * This function is used to create an entity in the database
      *
      * @param string $token The token to be verified
+	 * @param string $role The role of the user
+	 * @param array $data The data to be sent to the server containing the login and password
      * @return array Returns the response from the server
      */
-    private function createEntity($token): array
+    private function jwtCreate(string $token, string $role, array $data): array
 	{
 
-        $ch = curl_init();
+		// use key 'http' even if you send the request to https://...
+		$options = [
+			'http' => [
+				'header' => "Content-Type : application/json\r\nAuthorization: Bearer " . $token,
+				'method' => 'POST',
+				'content' => json_encode($data),
+			],
+		];
 
-        curl_setopt($ch, CURLOPT_URL, $this->SERVER_AUTH); // Set the URL
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return response as a string
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Authorization: Bearer ' . $token, // Set the Authorization header with Bearer token
-        ));
+		$context = stream_context_create($options);
+		$result = file_get_contents($this->SERVER_AUTH.'/'.$role.'/', false, $context);
 
-        // Execute the GET request
-        $response = curl_exec($ch);
-
-        // Check for errors
-        if ($response === false) {
-            echo 'Error: ' . curl_error($ch);
-            die();
-        } else {
-			curl_close($ch);
-            return json_decode($response, true);
-        }
-
+		return json_decode($result, true);
     }
+
+
 	/**
 	 * This function is used to get the authorization header from the request
 	 *
@@ -180,4 +160,40 @@ class JWTUtils
 		}
 		return $headers;
 	}
+
+	    /**
+    * This function is used to deliver the response to the client after the request has been processed
+    *
+    * @param string $status Status of the request, either success or error
+    * @param int $status_code HTTP status code
+    * @param string $status_message Message to be sent to the client
+    * @param array|null $data Data to be sent to the client, null if there is no data to be sent
+    * @return void Nothing is returned instead the response is sent to the client in a JSON format
+    */
+    private function deliverResponse($status, $status_code, $status_message, $data = null): void
+    {
+
+        http_response_code($status_code);
+
+        header("HTTP/1.1 $status_code $status_message");
+
+        header("Content-Type:application/json; charset=utf-8");
+
+        header("Access-Control-Allow-Origin: *");
+        $response['status'] = $status;
+        $response['status_code'] = $status_code;
+        $response['status_message'] = $status_message;
+        if ($data){
+            $response['data'] = $data;
+        }
+
+        $json_response = json_encode($response);
+
+        if ($json_response === false) {
+            die('json encode ERROR : ' . json_last_error_msg());
+        }
+
+        echo $json_response;
+        die();
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
-include_once 'ConnexionDB.php';
+$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+require_once $rootDir . '/classes/ConnexionDB.php';
 
 
 /**

@@ -1,7 +1,8 @@
 <?php 
 
-include_once 'JWTUtils.php';
-include_once 'AuthAPI.php';
+$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+require $rootDir . '/classes/JWTUtils.php';
+require $rootDir . '/classes/AuthAPI.php';
 
 $auth_api = new AuthAPI(['GET', 'POST', 'OPTIONS']);
 $jwt_utils = new JWTUtils();
@@ -28,6 +29,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit;
         }
     case 'POST':
+        
         $recup = json_decode(file_get_contents('php://input'), true);
         if (!isset($recup['login'])){
             $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée, login maquant');
@@ -35,6 +37,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (!isset($recup['mdp']) and $recup['login'] != 'invite'){
             $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée, mot de passe manquant');
         }
+
         $data = $auth_api->postLogin($recup);
         if (($recup['login'] == 'invite' && $data['role'] == 'invite') || ($data && password_verify($recup['mdp'], $data['mdp']))) {
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
