@@ -33,7 +33,7 @@ class MedecinAPI extends AppAPI
      */
     public function getRequest(): void
     {
-        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager", "invite"]);
         $sql = "SELECT * FROM medecin";
         $result = $this->selectAll($sql);
         if($result){
@@ -50,7 +50,7 @@ class MedecinAPI extends AppAPI
      */
     public function getRequestById(int $id): void
     {
-        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager", "invite"]);
         $result = $this->checkMedecinExists($id);
         $this->deliverResponse('success', 200, '[R200 REST API] : Médecin trouvé', $result);
     }
