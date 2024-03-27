@@ -2,6 +2,7 @@
 
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 require_once $rootDir . '/classes/AppAPI.php';
+require_once $rootDir . '/classes/JWTUtils.php';
 
 
 /**
@@ -12,7 +13,9 @@ require_once $rootDir . '/classes/AppAPI.php';
  * @category API
  * @author FruitPassion
  */
-class ConsultationAPI extends AppAPI {
+class ConsultationAPI extends AppAPI
+{
+    private JWTUtils $jwtu;
 
 
     /**
@@ -24,6 +27,7 @@ class ConsultationAPI extends AppAPI {
      */
     public function __construct(array $allowedOptions){
         parent::__construct($allowedOptions, ['id_usager', 'id_medecin', 'date_consult', 'heure_consult', 'duree_consult']);
+        $this->jwtu = new JWTUtils();
     }
 
     /**
@@ -31,8 +35,34 @@ class ConsultationAPI extends AppAPI {
      */
     public function getRequest(): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $sql = "SELECT * FROM consultation";
         $result = $this->selectAll($sql);
+        
+        if ($infos_jwt["role"] == "medecin") {
+            $sql = "SELECT * FROM medecin WHERE login = ?";
+            $medecin = $this->selectFirst($sql, [$infos_jwt["login"]]);
+            foreach($result as $key => $consultation){
+                if($consultation["id_medecin"] != $medecin["id_medecin"]){
+                    unset($result[$key]);
+                }
+            }
+        }
+        
+        if ($infos_jwt["role"] == "usager") {
+            $sql = "SELECT * FROM usager WHERE login = ?";
+            $usager = $this->selectFirst($sql, [$infos_jwt["login"]]);
+            foreach($result as $key => $consultation){
+                if($consultation["id_usager"] != $usager["id_usager"]){
+                    unset($result[$key]);
+                }
+            }
+        }
+
+        if (count($result) == 0) {
+            $this->deliverResponse('error', 404, '[R404 REST API] : Aucune consultation trouvée');
+        }
+        
         if($result){
             $this->deliverResponse('success', 200, '[R200 REST API] : Consultations trouvées', $result);
         }else{
@@ -47,7 +77,25 @@ class ConsultationAPI extends AppAPI {
      */
     public function getRequestById(int $id): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $result =$this->checkConsultationExists($id);
+
+        if ($infos_jwt["role"] == "medecin") {
+            $sql = "SELECT * FROM medecin WHERE login = ?";
+            $medecin = $this->selectFirst($sql, [$infos_jwt["login"]]);
+            if ($result["id_medecin"] != $medecin["id_medecin"]) {
+                $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les informations de cette consultation.');
+            }
+        }
+        
+        if ($infos_jwt["role"] == "usager") {
+            $sql = "SELECT * FROM usager WHERE login = ?";
+            $usager = $this->selectFirst($sql, [$infos_jwt["login"]]);
+            if ($result["id_usager"] != $usager["id_usager"]) {
+                $this->deliverResponse('error', 403, '[R403 REST API] : Vous n\'avez pas le droit de visualiser les informations de cette consultation.');
+            }
+        }
+
         if($result){
             $this->deliverResponse('success', 200, '[R200 REST API] : Consultation trouvée', $result);
         }
@@ -58,6 +106,7 @@ class ConsultationAPI extends AppAPI {
      */
     public function postRequest(): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $data = json_decode(file_get_contents('php://input'), true);
         
         $this->checkNeededData($data, $this->getInfos());
@@ -95,6 +144,7 @@ class ConsultationAPI extends AppAPI {
      */
     public function patchRequest(int $id): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
         $this->checkAllowedData($data, $this->getInfos());
@@ -126,6 +176,7 @@ class ConsultationAPI extends AppAPI {
      */
     public function deleteRequest(int $id): void
     {
+        $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
         $this->checkConsultationExists($id);
 
         $result = $this->updateDelete("DELETE FROM consultation WHERE id_consult = ?", [$id]);
