@@ -2,6 +2,7 @@
 
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 require_once $rootDir . '/classes/AppAPI.php';
+require_once $rootDir . '/classes/JWTUtils.php';
 
 /**
  * StatAPI
@@ -11,7 +12,9 @@ require_once $rootDir . '/classes/AppAPI.php';
  * @category API
  * @author FruitPassion
  */
-class StatAPI extends AppAPI{
+class StatAPI extends AppAPI
+{
+    private JWTUtils $jwtu;
 
     /**
      * Constructor
@@ -22,6 +25,7 @@ class StatAPI extends AppAPI{
      */
     public function __construct(array $allowedOptions){
         parent::__construct($allowedOptions);
+        $this->jwtu = new JWTUtils();
     }
 
     /**
@@ -29,6 +33,7 @@ class StatAPI extends AppAPI{
      */
     public function getRequestMedecin(): void
     {
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager", "invite"]);
         $sql = "SELECT m.* ,COALESCE(TIME_FORMAT(SEC_TO_TIME(SUM(c.duree_consult * 60)), '%kh%i'), '00h00') AS heures_consultees FROM medecin m LEFT JOIN  consultation c ON m.id_medecin = c.id_medecin GROUP BY m.id_medecin, m.civilite, m.nom, m.prenom;";
         $result = $this->selectAll($sql);
         if($result){
@@ -43,6 +48,7 @@ class StatAPI extends AppAPI{
      */
     public function getRequestUsagers(): void
     {
+        $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager", "invite"]);
         $sql = "SELECT u.id_usager, u.sexe, TIMESTAMPDIFF(YEAR, u.date_nais, CURDATE()) AS age FROM usager u;";
         $result = $this->selectAll($sql);
 
@@ -68,7 +74,7 @@ class StatAPI extends AppAPI{
                 } else {
                     $statistiques["moins25"]["femme"]++;
                 }
-            } else if ($usager['age'] >= 25 && $usager['age'] <= 50) {
+            } elseif ($usager['age'] >= 25 && $usager['age'] <= 50) {
                 if ($usager['sexe'] == "M") {
                     $statistiques["entre25et50"]["homme"]++;
                 } else {
