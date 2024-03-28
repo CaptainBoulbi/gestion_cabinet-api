@@ -101,11 +101,61 @@ class JWTUtils
 
     }
 
-	public function createMedecin($data)
+	/**
+	 * This function is used to create a medecin in the auth server
+	 * 
+	 * @param array $data The data to be sent to the server containing the login and password
+	 * @return ?array Returns the response from the server
+	 */
+	public function createMedecin(array $data) : ?array
 	{
 		if ($this->checkRole(["administrateur", "secretaire"])){
 			$token = $this->get_bearer_token();
-			$response = $this->jwtCreate($token , "medecin", $data); 
+			return $this->jwtAction($token , "medecin", $data, 'POST'); 
+		}
+	}
+
+	/**
+	 * This function is used to delete a medecin in the auth server
+	 * 
+	 * @param string $login The data to be sent to the server containing the login and password
+	 * @return ?array Returns the response from the server
+	 */
+	public function deleteMedecin(string $login) : ?array
+	{
+		if ($this->checkRole(["administrateur", "medecin"])){
+			$token = $this->get_bearer_token();
+			return $this->jwtAction($token , "medecin", ['login' => $login], 'DELETE'); 
+		}
+	}
+
+
+	/**
+	 * This function is used to create a usager in the auth server
+	 * 
+	 * @param array $data The data to be sent to the server containing the login and password
+	 * @return ?array Returns the response from the server
+	 */
+	public function createUsager(array $data): ?array
+	{
+		if ($this->checkRole(["administrateur", "invite"])){
+			$token = $this->get_bearer_token();
+			return $this->jwtAction($token , "usager", $data, 'POST'); 
+		}
+	}
+
+
+	/**
+	 * This function is used to delete a usager in the auth server
+	 * 
+	 * @param string $login The data to be sent to the server containing the login and password
+	 * @return ?array Returns the response from the server
+	 */
+	public function deleteUsager(string $login): ?array
+	{
+		if ($this->checkRole(["administrateur", "usager"])){
+			$token = $this->get_bearer_token();
+			return $this->jwtAction($token , "usager", ['login' => $login], 'DELETE'); 
 		}
 	}
 
@@ -117,20 +167,19 @@ class JWTUtils
 	 * @param array $data The data to be sent to the server containing the login and password
      * @return array Returns the response from the server
      */
-    private function jwtCreate(string $token, string $role, array $data): array
+    private function jwtAction(string $token, string $role, array $data, string $method): array
 	{
-
-		// use key 'http' even if you send the request to https://...
 		$options = [
 			'http' => [
-				'header' => "Content-Type : application/json\r\nAuthorization: Bearer " . $token,
-				'method' => 'POST',
-				'content' => json_encode($data),
+				'header' => "Content-Type: application/json\r\n".
+							"Authorization: Bearer " . $token ."\n",
+				'method' => $method,
+				'content' => json_encode($data)
 			],
 		];
 
 		$context = stream_context_create($options);
-		$result = file_get_contents($this->SERVER_AUTH.'/'.$role.'/', false, $context);
+		$result = file_get_contents($this->SERVER_AUTH.'/'.$role, false, $context);
 
 		return json_decode($result, true);
     }
@@ -161,7 +210,7 @@ class JWTUtils
 		return $headers;
 	}
 
-	    /**
+	/**
     * This function is used to deliver the response to the client after the request has been processed
     *
     * @param string $status Status of the request, either success or error

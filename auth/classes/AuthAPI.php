@@ -16,16 +16,29 @@ require_once $rootDir . '/classes/ConnexionDB.php';
 class AuthAPI extends ConnexionDB
 {
     private array $allowedOptions;
+    private array $infos;
 
     /**
      * Constructor
      * 
      * @param array $allowedOptions Array of allowed options
+     * @param array $infos Array of information needed for the request
      */
-    public function __construct(array $allowedOptions)
+    public function __construct(array $allowedOptions, array $infos = [])
     {
         parent::__construct();
         $this->allowedOptions = $allowedOptions;
+        $this->infos = $infos;
+    }
+
+    /**
+     * This function is used to get infos
+     * 
+     * @return array Array of infos
+    **/
+    protected function getInfos(): array
+    {
+        return $this->infos;
     }
 
     /**

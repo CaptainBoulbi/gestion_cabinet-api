@@ -60,16 +60,15 @@ class MedecinAPI extends AppAPI
      */
     public function postRequest(): void
     {
-        $jwt = $this->jwtu->checkRole(["administrateur", "secretaire"]);
+        $this->jwtu->checkRole(["administrateur", "secretaire"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $this->checkNeededData($data, $this->getInfos());
+        $this->checkNeededData($data, array_merge($this->getInfos(),["mdp"]));
         
         $this->checkCivilite($data['civilite']);
-        var_dump($this->generateLogin($data, 'M'));
         
 
-        $sql = 'INSERT INTO medecin ('. implode(', ', array_merge($this->getInfos(),["mdp"])) .', login) VALUE (?, ?, ?, ?)';
+        $sql = 'INSERT INTO medecin ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?)';
         $result = $this->insert($sql, [
             $data['civilite'],
             $data['nom'],
@@ -78,6 +77,10 @@ class MedecinAPI extends AppAPI
         ]);
 
         if($result){
+            $data = ["login" => $this->generateLogin($data, 'M'), "mdp" => $data["mdp"]];
+            if(!$this->jwtu->createMedecin($data)){
+                $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de la création du médecin");
+            }
             $sql = "SELECT * FROM medecin WHERE id_medecin = ?";
             $result = $this->selectFirst($sql, [$result]);
             $this->deliverResponse('success', 201, '[R201 REST API] : Médecin inséré en base de donnée avec succès', $result);
@@ -135,6 +138,10 @@ class MedecinAPI extends AppAPI
 
         $sql = "DELETE FROM medecin WHERE id_medecin = ?";
         if($this->updateDelete($sql, [$id])){
+
+            if(!$this->jwtu->deleteMedecin($infos_med['login'])){
+                $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de la création du médecin");
+            }
             $this->deliverResponse('success', 200, '[R200 REST API] : Médecin supprimé avec succès');
         }else{
             $this->deliverResponse('error', 500, '[R500 REST API] : Médecins non supprimées');

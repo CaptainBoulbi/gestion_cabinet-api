@@ -96,6 +96,10 @@ class UsagerAPI extends AppAPI
         ]);
 
         if($result){
+            $data = ["login" => $this->generateLogin($data, 'U'), "mdp" => $data["mdp"]];
+            if(!$this->jwtu->createUsager($data)){
+                $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de la création de l'usager");
+            }
             $sql = "SELECT * FROM usager WHERE id_usager = ?";
             $result = $this->selectFirst($sql, [$result]);
             $this->deliverResponse('success', 201, '[R201 REST API] : Usager inséré en base de donnée avec succès', $result);
@@ -166,6 +170,9 @@ class UsagerAPI extends AppAPI
 
         $sql = "DELETE FROM usager WHERE id_usager = ?";
         if($this->updateDelete($sql, [$id])){
+            if(!$this->jwtu->deleteUsager($infos_us['login'])){
+                $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de la création du médecin");
+            }
             $this->deliverResponse('success', 200, '[R200 REST API] : Usager supprimé avec succès');
         }else{
             $this->deliverResponse('error', 500, '[R500 REST API] : Usager non supprimé');
@@ -179,8 +186,8 @@ class UsagerAPI extends AppAPI
      */
     private function checkSexe(string $sexe): void
     {
-        if ($sexe !== 'M' && $sexe !== 'F') {
-            $this->deliverResponse('error', 400, "[R400 REST API] : Le sexe doit être soit 'M' soit 'F'");
+        if ($sexe !== 'H' && $sexe !== 'F') {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le sexe doit être soit 'H' soit 'F'");
         }
     }
 
@@ -192,8 +199,7 @@ class UsagerAPI extends AppAPI
     private function checkNumSecuUsed(int $num): void
     {
         $sql = "SELECT * FROM usager WHERE num_secu = ?";
-        $result = $this->selectFirst($sql, [$num]);
-        if ($result) {
+        if ($this->selectFirst($sql, [$num])) {
             $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale $num est déjà utilisé");
         }
     }

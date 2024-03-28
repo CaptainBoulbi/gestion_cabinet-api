@@ -7,8 +7,6 @@ require $rootDir . '/classes/AuthAPI.php';
 $auth_api = new AuthAPI(['GET', 'POST', 'OPTIONS']);
 $jwt_utils = new JWTUtils();
 
-$SECRET = 'secret';
-
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'OPTIONS':
         $auth_api->optionRequest();
@@ -16,7 +14,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $jwt = $jwt_utils->get_bearer_token();
         if ($jwt && $jwt != 'undefined') {
-            if ($jwt_utils->is_jwt_valid($jwt, $SECRET)) {
+            if ($jwt_utils->is_jwt_valid($jwt)) {
                 $jwt_decoded = $jwt_utils->decode_jwt($jwt);
                 $auth_api->deliverResponse('success',200, '[R200 REST AUTH] : Jeton valide', $jwt_decoded);
                 exit;
@@ -43,7 +41,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $headers = array('alg' => 'HS256', 'typ' => 'JWT');
             $payload = array('login' => $recup['login'], 'role' => $data['role'], 'exp' => time() + 3600);
             
-            $jwt = $jwt_utils->generate_jwt($headers, $payload, $SECRET);
+            $jwt = $jwt_utils->generate_jwt($headers, $payload);
             $auth_api->deliverResponse('success',201, '[R201 REST AUTH] : Authentification OK', [$jwt]);
         } else {
             $auth_api->deliverResponse('error',401, '[R401 REST AUTH] : Authentification échouée, login ou mot de passe incorrect');
