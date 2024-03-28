@@ -1,3 +1,6 @@
 *.idea
 
 *.loo
+
+auth/ressources/conf
+api/ressources/conf

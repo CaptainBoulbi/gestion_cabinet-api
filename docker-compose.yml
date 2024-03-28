@@ -9,6 +9,7 @@ services:
     volumes:
       - "./auth:/opt/lampp/htdocs"
       - "auth-bdd:/opt/lampp/var/mysql/"
+      - "auth-conf:/opt/lampp/etc/"
 
   api:
     image: "tomsik68/xampp"
@@ -18,6 +19,7 @@ services:
     volumes:
       - "./api:/opt/lampp/htdocs"
       - "api-bdd:/opt/lampp/var/mysql/"
+      - "api-conf:/opt/lampp/etc/"
 
 #  redistribuer:
 #    image: "httpd"
@@ -38,3 +40,5 @@ services:
 volumes:
   auth-bdd:
   api-bdd:
+  auth-conf:
+  api-conf:
