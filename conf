@@ -1,0 +1,5 @@
+
+<Directory "/opt/lampp/phpmyadmin" >
+        Order Deny,Allow
+        Deny from All
+</Directory>
