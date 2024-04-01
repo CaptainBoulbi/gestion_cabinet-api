@@ -21,13 +21,13 @@ services:
       - "api-bdd:/opt/lampp/var/mysql/"
       - "api-conf:/opt/lampp/etc/"
 
-#  redistribuer:
-#    image: "httpd"
-#    container_name: "redistribuer"
-#    ports: 
-#      - "6060:80"
-#    volumes:
-#      - "./redistribuer:/usr/local/apache2/htdocs/"
+  #  redistribuer:
+  #    image: "httpd"
+  #    container_name: "client_cabinet"
+  #    ports: 
+  #      - "6060:80"
+  #    volumes:
+  #      - "./client:/usr/local/apache2/htdocs/"
 
   doc:
     image: "httpd"
