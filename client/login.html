@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Gestion de cabinet</title>
+    
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+              integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                crossorigin="anonymous"></script>
+    
+        <link rel="icon" href="/static/images/logo.png">
+    </head>
+    <body>
+        <div class="d-flex align-items-center justify-content-center" style="height: 90vh">
+            <div class="w-25 m-auto">
+                <h3 class="text-center mt-4">Connexion</h3>
+                <form name="login" class="border rounded-3 p-3">
+                    <div class="text-center" id="error-div" hidden>
+                        <p class="text-bg-danger">Login ou mot de passe incorrect</p>
+                    </div>
+                    <div class="form-group my-3">
+                        <label for="inputLogin" class="mb-2">Login</label>
+                        <input type="text" class="form-control" id="inputLogin" name="inputLogin" aria-describedby="emailHelp"
+                            placeholder="Entrez votre login">
+                    </div>
+                    <div class="form-group my-3">
+                        <label for="inputPassword" class="mb-2">Mot de passe</label>
+                        <input type="password" class="form-control" id="inputPassword" name="inputPassword"
+                            placeholder="Entrez votre mot de passe">
+                    </div>
+                    <button type="submit" class="btn btn-primary form-control">Se connecter</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            // check with api if login is correct
+            document.forms.login.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const contentData = {
+                    login: document.forms.login.inputLogin.value,
+                    mdp: document.forms.login.inputPassword.value
+                };
+            
+                const requestOptions = {
+                    method: 'POST', // Méthode HTTP
+                    headers: { 'Content-Type': 'application/json' }, // Type de contenu
+                    body: JSON.stringify(contentData) // Corps de la requête
+                };
+            
+                fetch(`http://localhost:41066`, requestOptions)
+                    .then(response => response.json()) // Convertir la réponse en JSON
+                    .then(resp => {
+                        if (resp.status === "success") {
+                            const bearer = `Bearer ${resp.data[0]}`;
+                            document.cookie = `token=${bearer}`;
+                            window.location.href = '/index.html';
+                        } else {
+                            document.getElementById('error-div').removeAttribute('hidden');
+                        }
+                    })
+                    .catch(error =>  console.error('Erreur :', error));
+            });
+        </script>
+    </body>
+</html>

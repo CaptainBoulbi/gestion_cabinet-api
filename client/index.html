@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="static/js/check.js"></script>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Gestion de cabinet</title>
+    
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+              integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                crossorigin="anonymous"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
+
+        <script> 
+            $(function(){
+              $("#footerInclude").load("partial/footer.html"); 
+            });
+        </script> 
+    
+        <link rel="icon" href="/static/images/logo.png">
+    </head>
+    <body>
+        <div class="d-flex align-items-center justify-content-center" style="height: 80vh;">
+        <div class="text-center">
+            <h1>
+                Bienvenue sur la gestion de cabinet <img style="height: 30px;" src="/static/images/logo.png" alt="logo">
+            </h1>
+            <div class="border rounded-3 pt-4 py-2 px-3 mb-3">
+                <p>
+                    Ce site vous permet de gérer les patients de votre cabinet médical.<br>
+                    Il est réalisé dans le cadre d'un projet de BUT Informatique à l'IUT de Toulouse.
+                </p>
+            </div>
+            <a href="/AffichageMedecins"><button class="btn btn-secondary">Voir les médecins</button></a>
+            <a href="/AffichagePatients"><button class="btn btn-secondary">Voir les patients</button></a>
+            <a href="/AffichageRendezVous"><button class="btn btn-secondary">Voir le planning</button></a>
+            <a href="/Statistiques"><button class="btn btn-secondary">Voir les statistiques</button></a>
+            </div>
+        </div>
+        <div id="footerInclude"></div>
+    </body>
+</html>
