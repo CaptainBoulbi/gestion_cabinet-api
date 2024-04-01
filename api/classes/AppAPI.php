@@ -204,7 +204,7 @@ class AppAPI extends ConnexionDB
     protected function checkCivilite(string $civilite): void
     {
         if ($civilite !== 'M.' && $civilite !== 'Mme.') {
-            $this->deliverResponse('error', 400, "[R400 REST API] : La civilité doit être soit 'M.' soit 'Mme'");
+            $this->deliverResponse('error', 400, "[R400 REST API] : La civilité doit être soit 'M.' soit 'Mme.'");
         }
     }
 
