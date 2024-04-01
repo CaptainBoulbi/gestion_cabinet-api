@@ -4,6 +4,9 @@
 
 # DOC API
 - [API Authentification](./auth/auth.md)
+    * [Authetification](./auth/index.md)
+    * [Medecin](./auth/medecin.md)
+    * [Usager](./auth/usager.md)
 - [API Application](./app/app.md)   
     * [Médecins](./app/medecins.md)
     * [Patients](./app/patients.md)

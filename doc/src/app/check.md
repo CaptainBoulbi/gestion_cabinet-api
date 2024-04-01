@@ -9,9 +9,9 @@ Répertoire de toute les vérifications pouvant être effectué pour chaque requ
 ## Méthode
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
-
+<br>
 Chaque route détient une liste de  méthodes autorisée. Cette vérification est la première effectuée à chaque requête. 
 
 ### - Response - *405*
@@ -42,8 +42,9 @@ Content-Type : application/json
 ## Argument
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
 
 Utilisé quand la requete attend un argument que ca soit un `{id}` ou un nom de fonction tel que `{usager}` (pour les statistiques).
@@ -77,8 +78,9 @@ Content-Type : application/json
 ## Type argument string
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
 
 Utilisé pour vérifier le type d'argument que l'on attend est une `string`.
@@ -113,8 +115,9 @@ Content-Type : application/json
 ## Type argument int
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
 
 Utilisé pour vérifier le type d'argument que l'on attend est un `int` (pour les `{id}`). Impose une taille limite de `2147483647`.
@@ -165,8 +168,9 @@ Content-Type : application/json
 ## Date
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
 
 Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.
@@ -216,8 +220,9 @@ Content-Type : application/json
 ## Medecin
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
 
 Utilisé pour vérifier à partir d'un ID si un medecin existe.
@@ -250,8 +255,9 @@ Content-Type : application/json
 ## Usager
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
 
 Utilisé pour vérifier à partir d'un ID si un usager existe.
@@ -284,10 +290,11 @@ Content-Type : application/json
 ## Civilité
 
 <details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translate(-30px, -55px);">
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
+<br>
 
-Vérifie si la civilité est valide. Celle ci doit être soit `M.` soit `Mme`.
+Vérifie si la civilité est valide. Celle ci doit être soit `M.` soit `Mme.`.
 
 ### - Response - *400*
 
