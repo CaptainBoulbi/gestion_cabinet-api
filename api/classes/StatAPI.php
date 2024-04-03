@@ -69,19 +69,19 @@ class StatAPI extends AppAPI
 
         foreach ($result as $usager) {
             if ($usager['age'] < 25) {
-                if ($usager['sexe'] == "M") {
+                if ($usager['sexe'] == "H") {
                     $statistiques["moins25"]["homme"]++;
                 } else {
                     $statistiques["moins25"]["femme"]++;
                 }
             } elseif ($usager['age'] >= 25 && $usager['age'] <= 50) {
-                if ($usager['sexe'] == "M") {
+                if ($usager['sexe'] == "H") {
                     $statistiques["entre25et50"]["homme"]++;
                 } else {
                     $statistiques["entre25et50"]["femme"]++;
                 }
             } else {
-                if ($usager['sexe'] == "M") {
+                if ($usager['sexe'] == "H") {
                     $statistiques["plus50"]["homme"]++;
                 } else {
                     $statistiques["plus50"]["femme"]++;
