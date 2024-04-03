@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Deploiement doc - doc-api</title>
+        <title>API Authentification - doc-api</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="deploiement.html" class="active">Deploiement doc</a></li><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="auth/auth.html"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="app/app.html"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="app/medecins.html"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="app/patients.html"><strong aria-hidden="true">2.2.</strong> Patients</a></li><li class="chapter-item expanded "><a href="app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="auth/auth.html" class="active"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="app/app.html"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="app/medecins.html"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="app/usagers.html"><strong aria-hidden="true">2.2.</strong> Usagers</a></li><li class="chapter-item expanded "><a href="app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -173,28 +173,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="deploiement"><a class="header" href="#deploiement">Deploiement</a></h1>
+                        <h1 id="api-authentification"><a class="header" href="#api-authentification">API Authentification</a></h1>
+<p>Lien de l'api :</p>
 <ul>
-<li>1er etape : installer mdbook</li>
+<li><a href="https://api-med-auth.fruitpassion.fr">https://api-med-auth.fruitpassion.fr</a></li>
 </ul>
-<p><a href="https://rust-lang.github.io/mdBook/guide/installation.html">installation guide</a></p>
-<ul>
-<li>2eme etape : generer le book</li>
-</ul>
-<pre><code class="language-console">mdbook build
-</code></pre>
-<ul>
-<li>3eme etape : deploier</li>
-</ul>
-<pre><code class="language-console">docker-compose up -d
-</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="auth/auth.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="auth/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -205,13 +195,29 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="auth/auth.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="auth/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

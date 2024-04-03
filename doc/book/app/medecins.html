@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../deploiement.html">Deploiement doc</a></li><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="../auth/auth.html"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="../auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="../auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="../app/app.html"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app/medecins.html" class="active"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="../app/patients.html"><strong aria-hidden="true">2.2.</strong> Patients</a></li><li class="chapter-item expanded "><a href="../app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="../app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="../app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="../code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="../auth/auth.html"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="../auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="../auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="../app/app.html"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app/medecins.html" class="active"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="../app/usagers.html"><strong aria-hidden="true">2.2.</strong> Usagers</a></li><li class="chapter-item expanded "><a href="../app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="../app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="../app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="../code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -174,26 +174,31 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="medecins"><a class="header" href="#medecins">Medecins</a></h1>
-<p>Utilisé pour permettre de modifier le contenu en rapport avec les médecins.</p>
-<p><strong>Allowed Methods :</strong>     [<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, <code>OPTIONS</code>]</p>
+<p>Utilisé pour permettre de modifier le contenu en rapport avec les médecins.
+Chaque requête possède une <a href="check.html#roles">vérification des roles</a></p>
+<p><strong>Méthodes autorisées :</strong>     [<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, <code>OPTIONS</code>]</p>
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
 <span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
 </summary>
-<h3 id="--authentication"><a class="header" href="#--authentication">- Authentication</a></h3>
+<h3 id="--authentification"><a class="header" href="#--authentification">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
 </blockquote>
-<h3 id="--request"><a class="header" href="#--request">- Request</a></h3>
-<p><strong>Method :</strong>   
+<h3 id="--requête"><a class="header" href="#--requête">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
 <p><strong>URL :</strong>   
 <code>/medecins/</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
 </code></pre>
-<h3 id="--response---200"><a class="header" href="#--response---200">- Response - <em>200</em></a></h3>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -219,7 +224,13 @@
     ]
 }
 </code></pre>
-<h3 id="--response---404"><a class="header" href="#--response---404">- Response - <em>404</em></a></h3>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 404
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -232,6 +243,8 @@
 </code></pre>
 </details>
 <br>
+</details>
+<br>
 <hr />
 <br>
 <details>
@@ -239,25 +252,29 @@
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
 <span style="color:white">/medecins/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir un médecin</div>
 </summary>
-<h3 id="--authentication-1"><a class="header" href="#--authentication-1">- Authentication</a></h3>
+<h3 id="--authentification-1"><a class="header" href="#--authentification-1">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
 </blockquote>
-<h3 id="--checks"><a class="header" href="#--checks">- Checks</a></h3>
+<h3 id="--vérifications"><a class="header" href="#--vérifications">- Vérifications</a></h3>
 <ul>
-<li><a href="check.html#argument">Verification argument</a></li>
+<li><a href="check.html#argument">Argument nécessaire</a></li>
 <li><a href="check.html#type-argument-int">Type d'argument int</a></li>
-<li><a href="check.html#medecin">Médecin existe</a></li>
+<li><a href="check.html#element-existe">Médecin existe</a></li>
 </ul>
-<h3 id="--request-1"><a class="header" href="#--request-1">- Request</a></h3>
-<p><strong>Method :</strong>   
+<h3 id="--requête-1"><a class="header" href="#--requête-1">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
 <p><strong>URL :</strong>   
 <code>/medecins/{id}</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
 </code></pre>
-<h3 id="--response---200-1"><a class="header" href="#--response---200-1">- Response - <em>200</em></a></h3>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -276,17 +293,8 @@
     ]
 }
 </code></pre>
-<h3 id="--response---404-1"><a class="header" href="#--response---404-1">- Response - <em>404</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 404,
-    "status_message": "[R404 REST API] : Aucun médecin trouvé"
-}
-</code></pre>
+</details>
+<br>
 </details>
 <br>
 <hr />
@@ -296,12 +304,18 @@
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
 <span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
 </summary>
-<h3 id="--authentication-2"><a class="header" href="#--authentication-2">- Authentication</a></h3>
+<p>Envoie une requête au serveur d'authentification pour ajouter le médecin au répertoire de connexion.</p>
+<h3 id="--vérifications-1"><a class="header" href="#--vérifications-1">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#donn%C3%A9es-n%C3%A9cessaires">Données necessaires</a> : [nom, prenom, civilité, mot de passe]</li>
+<li><a href="check.html#civilit%C3%A9">Civilitée</a></li>
+</ul>
+<h3 id="--authentification-2"><a class="header" href="#--authentification-2">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de :  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> , <mark style="background-color:#FF5733; color:white;">administrateur</mark></p>
 </blockquote>
-<h3 id="--request-2"><a class="header" href="#--request-2">- Request</a></h3>
-<p><strong>Method :</strong>   
+<h3 id="--requête-2"><a class="header" href="#--requête-2">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
 <p><strong>URL :</strong>   
 <code>/medecins/</code></p>
@@ -313,10 +327,15 @@ Authorization : Bearer eyJhbGc...
 <pre><code class="language-json">{
     "civilite":"M.",
     "nom":"Dupond",
-    "prenom":"Gérard"
+    "prenom":"Gérard",
+    "mdp": "mdp"
 }
 </code></pre>
-<h3 id="--response---201"><a class="header" href="#--response---201">- Response - <em>201</em></a></h3>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -329,11 +348,18 @@ Authorization : Bearer eyJhbGc...
         "id_medecin": 11,
         "civilite": "M.",
         "nom": "Dupond",
-        "prenom": "Gérard"
+        "prenom": "Gérard",
+        "login": "MMODUGE95"
     }
 }
 </code></pre>
-<h3 id="--response---500"><a class="header" href="#--response---500">- Response - <em>500</em></a></h3>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -346,6 +372,8 @@ Authorization : Bearer eyJhbGc...
 </code></pre>
 </details>
 <br>
+</details>
+<br>
 <hr />
 <br>
 <details>
@@ -353,12 +381,21 @@ Authorization : Bearer eyJhbGc...
 <mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
 <span style="color:white">/medecins/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Modifier partiellement un médecin</div>
 </summary>
-<h3 id="--authentication-3"><a class="header" href="#--authentication-3">- Authentication</a></h3>
+<h3 id="--vérifications-2"><a class="header" href="#--vérifications-2">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#argument">Argument nécessaire</a></li>
+<li><a href="check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [nom, prenom, civilité]</li>
+<li><a href="check.html#element-existe">Médecin existe</a></li>
+<li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit de modification</a></li>
+<li><a href="check.html#civilit%C3%A9">Civilitée</a> (si présent)</li>
+</ul>
+<h3 id="--authentification-3"><a class="header" href="#--authentification-3">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de : <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#27AE60; color:white;">médecin</mark></p>
 </blockquote>
-<h3 id="--request-3"><a class="header" href="#--request-3">- Request</a></h3>
-<p><strong>Method :</strong>   
+<h3 id="--requête-3"><a class="header" href="#--requête-3">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
 <mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></p>
 <p><strong>URL :</strong>   
 <code>/medecins/{id}</code></p>
@@ -373,7 +410,11 @@ Authorization : Bearer eyJhbGc...
     "prenom":"Gérard"
 }
 </code></pre>
-<h3 id="--response---201-1"><a class="header" href="#--response---201-1">- Response - <em>201</em></a></h3>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -384,7 +425,13 @@ Authorization : Bearer eyJhbGc...
     "status_message": "[R201 REST API] : Médecin mit à jour avec succès"
 }
 </code></pre>
-<h3 id="--response---500-1"><a class="header" href="#--response---500-1">- Response - <em>500</em></a></h3>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -397,6 +444,8 @@ Authorization : Bearer eyJhbGc...
 </code></pre>
 </details>
 <br>
+</details>
+<br>
 <hr />
 <br>
 <details>
@@ -404,19 +453,31 @@ Authorization : Bearer eyJhbGc...
 <mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
 <span style="color:white">/medecins/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Supprimer un médecin</div>
 </summary>
-<h3 id="--authentication-4"><a class="header" href="#--authentication-4">- Authentication</a></h3>
+<p>Envoie une requête au serveur d'authentification pour supprimer le médecin du répertoire de connexion. Supprime les rendez-vous associés et retire les médecins traitants de la table des usagers.</p>
+<h3 id="--vérifications-3"><a class="header" href="#--vérifications-3">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#argument">Argument nécessaire</a></li>
+<li><a href="check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="check.html#element-existe">Médecin existe</a></li>
+<li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit de suppression</a></li>
+</ul>
+<h3 id="--authentification-4"><a class="header" href="#--authentification-4">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#27AE60; color:white;">médecin</mark></p>
 </blockquote>
-<h3 id="--request-4"><a class="header" href="#--request-4">- Request</a></h3>
-<p><strong>Method :</strong>   
+<h3 id="--requête-4"><a class="header" href="#--requête-4">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
 <mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></p>
 <p><strong>URL :</strong>   
 <code>/medecins/{id}</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
 </code></pre>
-<h3 id="--response---200-2"><a class="header" href="#--response---200-2">- Response - <em>200</em></a></h3>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -427,7 +488,13 @@ Authorization : Bearer eyJhbGc...
     "status_message": "[R200 REST API] : Médecin supprimé avec succès"
 }
 </code></pre>
-<h3 id="--response---500-2"><a class="header" href="#--response---500-2">- Response - <em>500</em></a></h3>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -439,6 +506,8 @@ Authorization : Bearer eyJhbGc...
 }
 </code></pre>
 </details>
+<br>
+</details>
 
                     </main>
 
@@ -448,7 +517,7 @@ Authorization : Bearer eyJhbGc...
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../app/patients.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../app/usagers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -462,13 +531,29 @@ Authorization : Bearer eyJhbGc...
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../app/patients.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../app/usagers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../deploiement.html">Deploiement doc</a></li><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="../auth/auth.html"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="../auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="../auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="../app/app.html" class="active"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app/medecins.html"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="../app/patients.html"><strong aria-hidden="true">2.2.</strong> Patients</a></li><li class="chapter-item expanded "><a href="../app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="../app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="../app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="../code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="../auth/auth.html"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="../auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="../auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="../app/app.html" class="active"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app/medecins.html"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="../app/usagers.html"><strong aria-hidden="true">2.2.</strong> Usagers</a></li><li class="chapter-item expanded "><a href="../app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="../app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="../app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="../code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -176,18 +176,19 @@
                         <h1 id="api-application"><a class="header" href="#api-application">API Application</a></h1>
 <p>Lien de l'api :</p>
 <ul>
-<li><a href="api-med-app.fruitpassion.fr">api_med_app.fruitpassion.fr</a></li>
+<li><a href="https://api-med-app.fruitpassion.fr">https://api-med-app.fruitpassion.fr</a></li>
 </ul>
 <p>Pour n'importe quelle action l'api requiert un JWT. Une authentification sans compte peux se faire via le role   <mark style="background-color:#757575; color:white;">invite</mark>.</p>
 <ul>
 <li><a href="/auth/auth.html#se-connecter-en-tant-que-invite">Voir comment se connecter en tant qu'invite</a></li>
 </ul>
+<h2 id="tables-daccès"><a class="header" href="#tables-daccès">Tables d'accès</a></h2>
 <blockquote>
 <p>ℹ️ Note</p>
 <p>Le symbole <code>🚹</code> signifie qu'une action n'est possible que sur son propre compte.</p>
 <p>Par exemple un medecin ayant <code>✅ 🚹</code> à l'action <code>Modifier</code>, ne peux que modifier que des informations de son propre compte.</p>
 </blockquote>
-<h2 id="interaction-avec-les-médecins"><a class="header" href="#interaction-avec-les-médecins">Interaction avec les médecins</a></h2>
+<h3 id="interaction-avec-les-médecins"><a class="header" href="#interaction-avec-les-médecins">Interaction avec les médecins</a></h3>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: center">Role</th><th style="text-align: center">Visualiser</th><th style="text-align: center">Créer</th><th style="text-align: center">Modifier</th><th style="text-align: center">Supprimer</th></tr></thead><tbody>
 <tr><td style="text-align: center"><mark style="background-color:#FF5733; color:white;">administrateur</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
 <tr><td style="text-align: center"><mark style="background-color:#3498DB; color:white;">secretaire</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td></tr>
@@ -196,7 +197,7 @@
 <tr><td style="text-align: center"><mark style="background-color:#757575; color:white;">invite</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td></tr>
 </tbody></table>
 </div>
-<h2 id="interaction-avec-les-usagers"><a class="header" href="#interaction-avec-les-usagers">Interaction avec les usagers</a></h2>
+<h3 id="interaction-avec-les-usagers"><a class="header" href="#interaction-avec-les-usagers">Interaction avec les usagers</a></h3>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: center">Role</th><th style="text-align: center">Visualiser</th><th style="text-align: center">Créer</th><th style="text-align: center">Modifier</th><th style="text-align: center">Supprimer</th></tr></thead><tbody>
 <tr><td style="text-align: center"><mark style="background-color:#FF5733; color:white;">administrateur</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
 <tr><td style="text-align: center"><mark style="background-color:#3498DB; color:white;">secretaire</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td></tr>
@@ -208,7 +209,7 @@
 <blockquote>
 <p><em>A noter qu'un usager ne peux être créer que via un compte invité. Une fois que l'invité à créer son compte usager, il bascule automatiquement vers celui-ci.</em></p>
 </blockquote>
-<h2 id="interaction-avec-les-consultations"><a class="header" href="#interaction-avec-les-consultations">Interaction avec les consultations</a></h2>
+<h3 id="interaction-avec-les-consultations"><a class="header" href="#interaction-avec-les-consultations">Interaction avec les consultations</a></h3>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: center">Role</th><th style="text-align: center">Visualiser</th><th style="text-align: center">Créer</th><th style="text-align: center">Modifier</th><th style="text-align: center">Supprimer</th></tr></thead><tbody>
 <tr><td style="text-align: center"><mark style="background-color:#FF5733; color:white;">administrateur</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
 <tr><td style="text-align: center"><mark style="background-color:#3498DB; color:white;">secretaire</mark>  </td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
@@ -217,7 +218,7 @@
 <tr><td style="text-align: center"><mark style="background-color:#757575; color:white;">invite</mark>  </td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td></tr>
 </tbody></table>
 </div>
-<h2 id="interaction-avec-les-statistiques"><a class="header" href="#interaction-avec-les-statistiques">Interaction avec les statistiques</a></h2>
+<h3 id="interaction-avec-les-statistiques"><a class="header" href="#interaction-avec-les-statistiques">Interaction avec les statistiques</a></h3>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: center">Role</th><th style="text-align: center">Visualiser</th></tr></thead><tbody>
 <tr><td style="text-align: center"><mark style="background-color:#FF5733; color:white;">administrateur</mark>  </td><td style="text-align: center">✅</td></tr>
 <tr><td style="text-align: center"><mark style="background-color:#3498DB; color:white;">secretaire</mark>  </td><td style="text-align: center">✅</td></tr>
@@ -255,6 +256,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
