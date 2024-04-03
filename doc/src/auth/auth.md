@@ -1,7 +1,7 @@
 # API Authentification
 
 Lien de l'api :
-- [api_med_auth.fruitpassion.fr](api_med_auth.fruitpassion.fr)
+- [api_med_auth.fruitpassion.fr](api-med-auth.fruitpassion.fr)
 
 
 ## Se connecter en tant que <mark style="background-color:#757575; color:white;">invite</mark>

@@ -1,7 +1,7 @@
 # API Application
 
 Lien de l'api :
-- [api_med_app.fruitpassion.fr](api_med_app.fruitpassion.fr)
+- [api_med_app.fruitpassion.fr](api-med-app.fruitpassion.fr)
 
 Pour n'importe quelle action l'api requiert un JWT. Une authentification sans compte peux se faire via le role &nbsp; <mark style="background-color:#757575; color:white;">invite</mark>.
 
