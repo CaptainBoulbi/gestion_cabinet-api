@@ -2,7 +2,7 @@
 
 class JWTUtils
 {
-    private string $SERVER_AUTH = 'api_med_auth.fruitpassion.fr';
+    private string $SERVER_AUTH = 'api-med-auth.fruitpassion.fr';
 
 	/**
 	 * This function is used to check if the bearer token is valid and if the user has the required role
