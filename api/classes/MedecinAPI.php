@@ -67,7 +67,6 @@ class MedecinAPI extends AppAPI
         
         $this->checkCivilite($data['civilite']);
         
-
         $sql = 'INSERT INTO medecin ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?)';
         $result = $this->insert($sql, [
             $data['civilite'],
