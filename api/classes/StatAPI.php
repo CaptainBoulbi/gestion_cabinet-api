@@ -34,7 +34,7 @@ class StatAPI extends AppAPI
     public function getRequestMedecin(): void
     {
         $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager", "invite"]);
-        $sql = "SELECT m.* ,COALESCE(TIME_FORMAT(SEC_TO_TIME(SUM(c.duree_consult * 60)), '%kh%i'), '00h00') AS heures_consultees FROM medecin m LEFT JOIN  consultation c ON m.id_medecin = c.id_medecin GROUP BY m.id_medecin, m.civilite, m.nom, m.prenom;";
+        $sql = "SELECT m.id_medecin, m.civilite, m.nom, m.prenom ,COALESCE(TIME_FORMAT(SEC_TO_TIME(SUM(c.duree_consult * 60)), '%kh%i'), '00h00') AS heures_consultees FROM medecin m LEFT JOIN  consultation c ON m.id_medecin = c.id_medecin GROUP BY m.id_medecin, m.civilite, m.nom, m.prenom;";
         $result = $this->selectAll($sql);
         if($result){
             $this->deliverResponse('success', 200, '[R200 REST API] : Statistiques des médecins récupérées', $result);
