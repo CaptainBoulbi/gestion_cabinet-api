@@ -1,7 +1,5 @@
 # Summary
 
-[Deploiement doc](./deploiement.md)
-
 # DOC API
 - [API Authentification](./auth/auth.md)
     * [Authetification](./auth/index.md)
@@ -9,7 +7,7 @@
     * [Usager](./auth/usager.md)
 - [API Application](./app/app.md)   
     * [Médecins](./app/medecins.md)
-    * [Patients](./app/patients.md)
+    * [Usagers](./app/usagers.md)
     * [Consultations](./app/consultations.md)
     * [Statistiques](./app/statistiques.md)
     * [Vérifications](./app/check.md)   

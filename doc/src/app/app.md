@@ -1,11 +1,13 @@
 # API Application
 
 Lien de l'api :
-- [api_med_app.fruitpassion.fr](api-med-app.fruitpassion.fr)
+- [https://api-med-app.fruitpassion.fr](https://api-med-app.fruitpassion.fr)
 
 Pour n'importe quelle action l'api requiert un JWT. Une authentification sans compte peux se faire via le role &nbsp; <mark style="background-color:#757575; color:white;">invite</mark>.
 
 -  [Voir comment se connecter en tant qu'invite](/auth/auth.html#se-connecter-en-tant-que-invite)
+  
+## Tables d'accès
 
 
 >  ℹ️ Note
@@ -14,7 +16,7 @@ Pour n'importe quelle action l'api requiert un JWT. Une authentification sans co
 >
 > Par exemple un medecin ayant `✅ 🚹` à l'action `Modifier`, ne peux que modifier que des informations de son propre compte.
 
-## Interaction avec les médecins 
+### Interaction avec les médecins 
 
  Role  | Visualiser | Créer | Modifier | Supprimer 
 :------:|:-----:|:-----:|:-----:|:-----:
@@ -25,7 +27,7 @@ Pour n'importe quelle action l'api requiert un JWT. Une authentification sans co
 <mark style="background-color:#757575; color:white;">invite</mark> &nbsp; | ✅ | ❌ | ❌ | ❌
 
 
-## Interaction avec les usagers 
+### Interaction avec les usagers 
 
  Role  | Visualiser | Créer | Modifier | Supprimer 
 :------:|:-----:|:-----:|:-----:|:-----:
@@ -37,7 +39,7 @@ Pour n'importe quelle action l'api requiert un JWT. Une authentification sans co
 
 > *A noter qu'un usager ne peux être créer que via un compte invité. Une fois que l'invité à créer son compte usager, il bascule automatiquement vers celui-ci.*
 
-## Interaction avec les consultations 
+### Interaction avec les consultations 
 
  Role  | Visualiser | Créer | Modifier | Supprimer 
 :------:|:-----:|:-----:|:-----:|:-----:
@@ -48,7 +50,7 @@ Pour n'importe quelle action l'api requiert un JWT. Une authentification sans co
 <mark style="background-color:#757575; color:white;">invite</mark> &nbsp; | ❌ | ❌ | ❌ | ❌
 
 
-## Interaction avec les statistiques 
+### Interaction avec les statistiques 
 
  Role  | Visualiser 
 :------:|:-----:
