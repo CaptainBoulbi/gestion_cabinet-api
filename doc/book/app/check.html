@@ -177,26 +177,6 @@
 <p>Répertoire de toute les vérifications pouvant être effectué pour chaque requete.</p>
 <p>Si une vérification passe avec succès rien n'est renvoyé. On reçoit un message d'erreur dans le cas contraire.</p>
 <br>
-<h2 id="méthode"><a class="header" href="#méthode">Méthode</a></h2>
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
-</summary>
-<br>
-<p>Chaque route détient une liste de  méthodes autorisée. Cette vérification est la première effectuée à chaque requête.</p>
-<h3 id="--response---405"><a class="header" href="#--response---405">- Response - <em>405</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 405,
-    "status_message": "[R405 REST AUTH] : Methodes utilisées non autorisées"
-}
-</code></pre>
-<br>
-</details>
-<hr />
 <h2 id="argument"><a class="header" href="#argument">Argument</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
@@ -217,12 +197,34 @@
 <br>
 </details>
 <hr />
-<h2 id="roles"><a class="header" href="#roles">Roles</a></h2>
+<h2 id="civilité"><a class="header" href="#civilité">Civilité</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Sachant que toutes les requêtes necessite un token, on vérifie à chacune d'entre elles les roles autorisés à effectuer la requête.</p>
+<p>Vérifie si la civilité est valide. Celle ci doit être soit <code>M.</code> soit <code>Mme.</code>.</p>
+<h3 id="--response---400-1"><a class="header" href="#--response---400-1">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La civilité doit être soit 'M.' soit 'Mme'"
+}
+</code></pre>
+<br>
+</details>
+<hr />
+<h2 id="contrôle-daccès"><a class="header" href="#contrôle-daccès">Contrôle d'Accès</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Certaines données ne peuvent être visualisée, modifiée ou supprimée uniquement par un administrateur, une secretaire ou leur propriétaire.
+On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d'efffectuer l'action demandée.</p>
+<p>De ce fait, un médecin ne pourras par exemple que modifier ses rendez-vous ou alors un usager ne pourras pas visualiser les informations des autres usagers. Voir les <a href="app.html#tables-dacc%C3%A8s">tables d'accès</a></p>
 <h3 id="--response---403"><a class="header" href="#--response---403">- Response - <em>403</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
@@ -231,7 +233,87 @@
 <pre><code class="language-json">{
     "status": "error",
     "status_code": 403,
-    "status_message": "[R403 REST AUTH] : Rôle non autorisé à effectuer cette action."
+    "status_message": "[R403 REST API] : Vous n'avez pas le droit de visualiser/modifier/supprimer cet &lt;élement&gt;"
+}
+</code></pre>
+<br>
+</details>
+<hr />
+<h2 id="date"><a class="header" href="#date">Date</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.</p>
+<h3 id="--response---400-2"><a class="header" href="#--response---400-2">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date &lt;date_parametre&gt; est invalide car elle est inferieure/supérieure à la date actuelle"
+}
+</code></pre>
+<br>
+</details>
+<hr />
+<h2 id="données-autorisées"><a class="header" href="#données-autorisées">Données Autorisées</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>A partir des données passées en corps, vérifie si touts les champs sont autorisés (surtout pour les requêtes de modification).</p>
+<h3 id="--response---400-3"><a class="header" href="#--response---400-3">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : Le champ &lt;champs&gt; n'est pas autorisé"
+}
+</code></pre>
+<br>
+</details>
+<hr />
+<h2 id="données-nécessaires"><a class="header" href="#données-nécessaires">Données Nécessaires</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>A partir des données passées en corps, vérifie si touts les champs nécessaires sont présents (surtout pour les requêtes de création).</p>
+<h3 id="--response---400-4"><a class="header" href="#--response---400-4">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : Le champ &lt;champs&gt; est requis"
+}
+</code></pre>
+<br>
+</details>
+<hr />
+<h2 id="element-existe"><a class="header" href="#element-existe">Element Existe</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Utilisé pour vérifier à partir d'un ID si un element existe (en fonction de si la requête est faites pour un médecin, un usager ou une consultations).</p>
+<h3 id="--response---404"><a class="header" href="#--response---404">- Response - <em>404</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 404,
+    "status_message": "[R404 REST API] : Aucun &lt;element&gt; avec l'ID &lt;id&gt; n'a été trouvé"
 }
 </code></pre>
 <br>
@@ -269,74 +351,32 @@ La vérification de la validité est effectuée coté serveur d'authentification
 <br>
 </details>
 <hr />
-<h2 id="données-nécessaires"><a class="header" href="#données-nécessaires">Données Nécessaires</a></h2>
+<h2 id="méthode"><a class="header" href="#méthode">Méthode</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>A partir des données passées en corps, vérifie si touts les champs nécessaires sont présents (surtout pour les requêtes de création).</p>
-<h3 id="--response---400-1"><a class="header" href="#--response---400-1">- Response - <em>400</em></a></h3>
+<p>Chaque route détient une liste de  méthodes autorisée. Cette vérification est la première effectuée à chaque requête.</p>
+<h3 id="--response---405"><a class="header" href="#--response---405">- Response - <em>405</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
 <p><strong>Body :</strong></p>
 <pre><code class="language-json">{
     "status": "error",
-    "status_code": 400,
-    "status_message": "[R400 REST API] : Le champ &lt;champs&gt; est requis"
+    "status_code": 405,
+    "status_message": "[R405 REST AUTH] : Methodes utilisées non autorisées"
 }
 </code></pre>
 <br>
 </details>
 <hr />
-<h2 id="données-autorisées"><a class="header" href="#données-autorisées">Données Autorisées</a></h2>
+<h2 id="roles"><a class="header" href="#roles">Roles</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>A partir des données passées en corps, vérifie si touts les champs sont autorisés (surtout pour les requêtes de modification).</p>
-<h3 id="--response---400-2"><a class="header" href="#--response---400-2">- Response - <em>400</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 400,
-    "status_message": "[R400 REST API] : Le champ &lt;champs&gt; n'est pas autorisé"
-}
-</code></pre>
-<br>
-</details>
-<hr />
-<h2 id="element-existe"><a class="header" href="#element-existe">Element Existe</a></h2>
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
-</summary>
-<br>
-<p>Utilisé pour vérifier à partir d'un ID si un element existe (en fonction de si la requête est faites pour un médecin, un usager ou une consultations).</p>
-<h3 id="--response---404"><a class="header" href="#--response---404">- Response - <em>404</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 404,
-    "status_message": "[R404 REST API] : Aucun &lt;element&gt; avec l'ID &lt;id&gt; n'a été trouvé"
-}
-</code></pre>
-<br>
-</details>
-<hr />
-<h2 id="contrôle-daccès"><a class="header" href="#contrôle-daccès">Contrôle d'Accès</a></h2>
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
-</summary>
-<br>
-<p>Certaines données ne peuvent être visualisée, modifiée ou supprimée uniquement par un administrateur, une secretaire ou leur propriétaire.
-On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d'efffectuer l'action demandée.</p>
-<p>De ce fait, un médecin ne pourras par exemple que modifier ses rendez-vous ou alors un usager ne pourras pas visualiser les informations des autres usagers. Voir les <a href="app.html#tables-dacc%C3%A8s">tables d'accès</a></p>
+<p>Sachant que toutes les requêtes necessite un token, on vérifie à chacune d'entre elles les roles autorisés à effectuer la requête.</p>
 <h3 id="--response---403-1"><a class="header" href="#--response---403-1">- Response - <em>403</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
@@ -345,49 +385,18 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <pre><code class="language-json">{
     "status": "error",
     "status_code": 403,
-    "status_message": "[R403 REST API] : Vous n'avez pas le droit de visualiser/modifier/supprimer cet &lt;élement&gt;"
+    "status_message": "[R403 REST AUTH] : Rôle non autorisé à effectuer cette action."
 }
 </code></pre>
 <br>
 </details>
 <hr />
-<h2 id="type-argument-string"><a class="header" href="#type-argument-string">Type argument string</a></h2>
+<h2 id="sécurité-sociale"><a class="header" href="#sécurité-sociale">Sécurité sociale</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Utilisé pour vérifier le type d'argument que l'on attend est une <code>string</code>.</p>
-<h3 id="--response---400-3"><a class="header" href="#--response---400-3">- Response - <em>400</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 400,
-    "status_message": "[R400 REST] : L\'argument doit être une chaine de caractère"
-}
-</code></pre>
-<br>
-</details>
-<hr />
-<h2 id="type-argument-int"><a class="header" href="#type-argument-int">Type argument int</a></h2>
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
-</summary>
-<br>
-<p>Utilisé pour vérifier le type d'argument que l'on attend est un <code>int</code> (pour les <code>{id}</code>). Impose une taille limite de <code>2147483647</code>.</p>
-<h3 id="--response---400-4"><a class="header" href="#--response---400-4">- Response - <em>400</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 400,
-    "status_message": "[R400 REST] : L\'identifiant doit être un entier positif non null"
-}
-</code></pre>
+<p>Vérifie si le numéro de sécurité sociale est disponible.</p>
 <h3 id="--response---400-5"><a class="header" href="#--response---400-5">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
@@ -396,47 +405,7 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <pre><code class="language-json">{
     "status": "error",
     "status_code": 400,
-    "status_message": "[R400 REST] : L\'identifiant doit être un entier inférieur à 2147483647"
-}
-</code></pre>
-<br>
-</details>
-<hr />
-<h2 id="date"><a class="header" href="#date">Date</a></h2>
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
-</summary>
-<br>
-<p>Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.</p>
-<h3 id="--response---400-6"><a class="header" href="#--response---400-6">- Response - <em>400</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 400,
-    "status_message": "[R400 REST API] : La date &lt;date_parametre&gt; est invalide car elle est inferieure/supérieure à la date actuelle"
-}
-</code></pre>
-<br>
-</details>
-<hr />
-<h2 id="civilité"><a class="header" href="#civilité">Civilité</a></h2>
-<details open>
-<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
-</summary>
-<br>
-<p>Vérifie si la civilité est valide. Celle ci doit être soit <code>M.</code> soit <code>Mme.</code>.</p>
-<h3 id="--response---400-7"><a class="header" href="#--response---400-7">- Response - <em>400</em></a></h3>
-<p><strong>Header :</strong></p>
-<pre><code class="language-yaml">Content-Type : application/json
-</code></pre>
-<p><strong>Body :</strong></p>
-<pre><code class="language-json">{
-    "status": "error",
-    "status_code": 400,
-    "status_message": "[R400 REST API] : La civilité doit être soit 'M.' soit 'Mme'"
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale &lt;numéro&gt; est déjà utilisé"
 }
 </code></pre>
 <br>
@@ -448,7 +417,7 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 </summary>
 <br>
 <p>Vérifie si le sexe est valide. Celui-ci doit être soit <code>H</code> soit <code>F</code>.</p>
-<h3 id="--response---400-8"><a class="header" href="#--response---400-8">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-6"><a class="header" href="#--response---400-6">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -462,12 +431,43 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <br>
 </details>
 <hr />
-<h2 id="sécurité-sociale"><a class="header" href="#sécurité-sociale">Sécurité sociale</a></h2>
+<h2 id="type-argument-int"><a class="header" href="#type-argument-int">Type argument int</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Vérifie si le numéro de sécurité sociale est disponible.</p>
+<p>Utilisé pour vérifier le type d'argument que l'on attend est un <code>int</code> (pour les <code>{id}</code>). Impose une taille limite de <code>2147483647</code>.</p>
+<h3 id="--response---400-7"><a class="header" href="#--response---400-7">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST] : L\'identifiant doit être un entier positif non null"
+}
+</code></pre>
+<h3 id="--response---400-8"><a class="header" href="#--response---400-8">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST] : L\'identifiant doit être un entier inférieur à 2147483647"
+}
+</code></pre>
+<br>
+</details>
+<hr />
+<h2 id="type-argument-string"><a class="header" href="#type-argument-string">Type argument string</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Utilisé pour vérifier le type d'argument que l'on attend est une <code>string</code>.</p>
 <h3 id="--response---400-9"><a class="header" href="#--response---400-9">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
@@ -476,7 +476,7 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <pre><code class="language-json">{
     "status": "error",
     "status_code": 400,
-    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale &lt;numéro&gt; est déjà utilisé"
+    "status_message": "[R400 REST] : L\'argument doit être une chaine de caractère"
 }
 </code></pre>
 <br>
