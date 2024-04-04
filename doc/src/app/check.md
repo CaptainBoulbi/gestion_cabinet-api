@@ -206,7 +206,7 @@ Content-Type : application/json
 </summary>
 <br>
 
-A partir des données passées en corps, vérifie si touts les champs sont autorisés.
+A partir des données passées en corps, vérifie si touts les champs sont autorisés (surtout pour les requêtes de modification).
 
 ### - Response - *400*
 
