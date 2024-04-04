@@ -491,7 +491,7 @@ Content-Type : application/json
 
 ---
 
-## Sexe
+## Sécurité sociale
 
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
