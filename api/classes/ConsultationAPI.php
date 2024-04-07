@@ -36,6 +36,7 @@ class ConsultationAPI extends AppAPI
     public function getRequest(): void
     {
         $infos_jwt = $this->jwtu->checkRole(["administrateur", "secretaire", "medecin", "usager"]);
+        
         $sql = "SELECT * FROM consultation";
         $result = $this->selectAll($sql);
         
@@ -119,6 +120,7 @@ class ConsultationAPI extends AppAPI
         }
 
         $this->checkMedecinAvailable($data);
+        $this->checkUsagerIsAvailable($data);
 
         $sql = 'INSERT INTO consultation ('. implode(', ', $this->getInfos()) .') VALUES (?, ?, ?, ?, ?)';
         $id = $this->insert($sql, array_values($data));
@@ -150,13 +152,28 @@ class ConsultationAPI extends AppAPI
         
         $this->checkRight("usager", "[R403 REST API] : Vous n'avez pas le droit de modifier cette consultation.", $infos_jwt, $result);
 
-        $this->validateDate($data['date_consult'], 'sup');
+        if (isset($data['id_usager'])) {
+            $this->checkUsagerExists($data['id_usager']);
+        }
 
-        $data['date_consult'] = $this->convertDateToMysql($data['date_consult']);
+        if (isset($data['id_medecin'])) {
+            $this->checkMedecinExists($data['id_medecin']);
+        }
+        if (isset($data['date_consult'])) {
+            $this->validateDate($data['date_consult'], 'sup');
+            $data['date_consult'] = $this->convertDateToMysql($data['date_consult']);
+        }
 
-        if (!in_array($data["duree_consult"], [15, 30, 45, 60])) {
+        if (isset($data['heure_consult'])) {
+            if (!preg_match('/^(0[8-9]|1[0-7]):\d\d$/', $data['heure_consult'])) {
+                $this->deliverResponse('error', 400, '[R400 REST API] : L\'heure de la consultation doit être entre 08:00 et 18:00');
+            }
+        }
+
+        if (isset($data['duree_consult']) && !in_array($data["duree_consult"], [15, 30, 45, 60])) {
             $this->deliverResponse('error', 400, '[R400 REST API] : La durée de la consultation doit être 15, 30, 45 ou 60 minutes');
         }
+        
         $this->checkMedecinAvailable($data);
 
         $keys = implode(' = ?, ',array_keys($data));
@@ -188,7 +205,7 @@ class ConsultationAPI extends AppAPI
 
         $result = $this->updateDelete("DELETE FROM consultation WHERE id_consult = ?", [$id]);
         if($result){
-            $this->deliverResponse('success', 200, '[R200 REST API] : Consultation supprimée');
+            $this->deliverResponse('success', 200, '[R200 REST API] : Consultation supprimée avec succès');
         }else{
             $this->deliverResponse('error', 500, '[R500 REST API] : Echec de la suppression de la consultation');
         }
@@ -238,6 +255,36 @@ class ConsultationAPI extends AppAPI
 
             if (($heure >= $heure_consult && $heure < $heure_consult_fin) || ($heure_fin > $heure_consult && $heure_fin <= $heure_consult_fin)) {
                 $this->deliverResponse('error', 400, '[R400 REST API] : Le médecin n\'est pas disponible à cette date et heure');
+            }
+        }
+        return true;
+    }
+
+    /**
+     * This function is used to check if an usager exists
+     *
+     * @param int $id_usager Id of the usager
+     * @return bool|null Returns true if the usager exists, delivers an error message otherwise
+     */
+    private function checkUsagerIsAvailable(array $data): bool|null
+    {
+        $id_usager = $data['id_usager'];
+        $date = $data['date_consult'];
+        $heure = $data['heure_consult'];
+        $duree = $data['duree_consult'];
+        
+        $sql = "SELECT * FROM consultation WHERE id_usager = ? AND date_consult = ?";
+        $consultations = $this->selectAll($sql, [$id_usager, $date]);
+        
+        $heure = strtotime($heure);
+        $heure_fin = $heure + $duree * 60;
+
+        foreach ($consultations as $consultation) {
+            $heure_consult = strtotime($consultation['heure_consult']);
+            $heure_consult_fin = $heure_consult + $consultation['duree_consult'] * 60;
+
+            if (($heure >= $heure_consult && $heure < $heure_consult_fin) || ($heure_fin > $heure_consult && $heure_fin <= $heure_consult_fin)) {
+                $this->deliverResponse('error', 400, '[R400 REST API] : L\'usager n\'est pas disponible à cette date et heure');
             }
         }
         return true;
