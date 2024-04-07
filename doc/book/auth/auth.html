@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="../auth/auth.html" class="active"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auth/index.html"><strong aria-hidden="true">1.1.</strong> Authetification</a></li><li class="chapter-item expanded "><a href="../auth/medecin.html"><strong aria-hidden="true">1.2.</strong> Medecin</a></li><li class="chapter-item expanded "><a href="../auth/usager.html"><strong aria-hidden="true">1.3.</strong> Usager</a></li></ol></li><li class="chapter-item expanded "><a href="../app/app.html"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app/medecins.html"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="../app/usagers.html"><strong aria-hidden="true">2.2.</strong> Usagers</a></li><li class="chapter-item expanded "><a href="../app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="../app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="../app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="../code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">DOC API</li><li class="chapter-item expanded "><a href="../auth/auth.html" class="active"><strong aria-hidden="true">1.</strong> API Authentification</a></li><li class="chapter-item expanded "><a href="../app/app.html"><strong aria-hidden="true">2.</strong> API Application</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app/medecins.html"><strong aria-hidden="true">2.1.</strong> Médecins</a></li><li class="chapter-item expanded "><a href="../app/usagers.html"><strong aria-hidden="true">2.2.</strong> Usagers</a></li><li class="chapter-item expanded "><a href="../app/consultations.html"><strong aria-hidden="true">2.3.</strong> Consultations</a></li><li class="chapter-item expanded "><a href="../app/statistiques.html"><strong aria-hidden="true">2.4.</strong> Statistiques</a></li><li class="chapter-item expanded "><a href="../app/check.html"><strong aria-hidden="true">2.5.</strong> Vérifications</a></li></ol></li><li class="chapter-item expanded "><a href="../code_source.html"><strong aria-hidden="true">3.</strong> Code Source</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -178,13 +178,93 @@
 <ul>
 <li><a href="https://api-med-auth.fruitpassion.fr">https://api-med-auth.fruitpassion.fr</a></li>
 </ul>
+<h2 id="se-connecter-en-tant-que-invite"><a class="header" href="#se-connecter-en-tant-que-invite">Se connecter en tant que <mark style="background-color:#757575; color:white;">invite</mark></a></h2>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<h3 id="--request"><a class="header" href="#--request">- Request</a></h3>
+<p><strong>Method :</strong>   
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "login":"invite"
+}
+</code></pre>
+<h3 id="--response---201"><a class="header" href="#--response---201">- Response - <em>201</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST AUTH] : Authentification OK",
+    "data": [
+        "eyJhb..."
+    ]
+}
+</code></pre>
+<br>
+</details>
+<hr>
+<h2 id="se-connecter-en-tant-que-usager"><a class="header" href="#se-connecter-en-tant-que-usager">Se connecter en tant que <mark style="background-color:#F1C40F; color:white;">usager</mark></a></h2>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<h3 id="--request-1"><a class="header" href="#--request-1">- Request</a></h3>
+<p><strong>Method :</strong>   
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "login":"usager",
+    "mdp":"mdp"
+}
+</code></pre>
+<h3 id="--response---201-1"><a class="header" href="#--response---201-1">- Response - <em>201</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST AUTH] : Authentification OK",
+    "data": [
+        "eyJhb..."
+    ]
+}
+</code></pre>
+<br>
+</details>
+<hr>
+<h3 id="mots-de-passe-de-connexion"><a class="header" href="#mots-de-passe-de-connexion">Mots de passe de connexion</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Role</th><th style="text-align: center">Mot de passe</th></tr></thead><tbody>
+<tr><td style="text-align: center"><mark style="background-color:#FF5733; color:white;">administrateur</mark>  </td><td style="text-align: center"><code>password1234!</code></td></tr>
+<tr><td style="text-align: center"><mark style="background-color:#3498DB; color:white;">secretaire</mark>  </td><td style="text-align: center"><code>password1234!</code></td></tr>
+<tr><td style="text-align: center"><mark style="background-color:#27AE60; color:white;">medecin</mark>  </td><td style="text-align: center"><code>med1234!</code></td></tr>
+<tr><td style="text-align: center"><mark style="background-color:#F1C40F; color:white;">usager</mark>  </td><td style="text-align: center"><code>user1234!</code></td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><em>Le mot de passe médecin et usaager concerne les 10 premieres entitées de c</em></p>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="../auth/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../app/app.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -195,7 +275,7 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="../auth/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../app/app.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
