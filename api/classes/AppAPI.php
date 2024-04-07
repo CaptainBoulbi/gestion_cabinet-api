@@ -139,19 +139,28 @@ class AppAPI extends ConnexionDB
         if ($sup_inf !== 'sup' && $sup_inf !== 'inf') {
             throw new Exception("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
         }
-        $currentDate = date('d/m/y');
+        if (!preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/', $date)) {
+            $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide, elle doit être au format jj/mm/aaaa');
+        } else {
+            $chdate = explode('/', $date);
+            if (!checkdate($chdate[1], $chdate[0], $chdate[2])) {
+                $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide');
+            }
+        }
+        $currentDate = new DateTime(date('d/m/Y'));
+        $date = DateTime::createFromFormat('d/m/Y', $date);
         switch ($sup_inf) {
             case 'sup':
-                if ($date < $currentDate) {
+                if ($currentDate < $date) {
                     return true;
                 } else {
-                    $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide car elle est inferieure à la date actuelle');
+                    $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date->format('d/m/Y') . ' est invalide car elle est inferieure à la date actuelle');
                 }
             case 'inf':
-                if ($date > $currentDate) {
+                if ($currentDate > $date) {
                     return true;
                 } else {
-                    $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide car elle est supérieure à la date actuelle');
+                    $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date->format('d/m/Y') . ' est invalide car elle est supérieure à la date actuelle');
                 }
             default:
                 return false;
