@@ -82,7 +82,7 @@ class UsagerAPI extends AppAPI
             $data['id_medecin'] = null;
         }
 
-        $sql = 'INSERT INTO usager ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO usager ('. implode(', ', $this->getInfos()) .', id_medecin, login) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         $result = $this->insert($sql, [
             $data['civilite'],
