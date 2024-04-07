@@ -9,7 +9,7 @@ Chaque requête possède une [vérification des roles](check.html#roles)
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
-<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
+<span style="color:white">/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
 </summary>
 
 ### - Authentification 
@@ -22,7 +22,7 @@ Chaque requête possède une [vérification des roles](check.html#roles)
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark> 
 
 **URL :** &nbsp;&nbsp;
-`/medecins/`
+`/medecins`
 
 **Header :**
 
@@ -177,14 +177,14 @@ Content-Type : application/json
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
-<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
+<span style="color:white">/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
 </summary>
 
 Envoie une requête au serveur d'authentification pour ajouter le médecin au répertoire de connexion.
 
 ### - Vérifications
 
-- [Données necessaires](check.html#données-nécessaires) : [nom, prenom, civilité, mot de passe]
+- [Données necessaires](check.html#données-nécessaires) : [`civilite`, `nom`, `prenom`, `mdp`]
 - [Civilitée](check.html#civilité)
 
 
@@ -198,7 +198,7 @@ Envoie une requête au serveur d'authentification pour ajouter le médecin au r�
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark> 
 
 **URL :** &nbsp;&nbsp;
-`/medecins/`
+`/medecins`
 
 **Header :**
 
@@ -294,7 +294,7 @@ Content-Type : application/json
 
 - [Argument nécessaire](check.html#argument)
 - [Type d'argument int](check.html#type-argument-int)
-- [Données autorisées](check.html#données-autorisées) : [nom, prenom, civilité]
+- [Données autorisées](check.html#données-autorisées) : [`civilite`, `nom`, `prenom`]
 - [Médecin existe](check.html#element-existe)
 - [Droit de modification](check.html#contrôle-daccès)
 - [Civilitée](check.html#civilité) (si présent)

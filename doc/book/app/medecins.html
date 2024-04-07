@@ -180,7 +180,7 @@ Chaque requête possède une <a href="check.html#roles">vérification des roles<
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
-<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
+<span style="color:white">/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
 </summary>
 <h3 id="--authentification"><a class="header" href="#--authentification">- Authentification</a></h3>
 <blockquote>
@@ -190,7 +190,7 @@ Chaque requête possède une <a href="check.html#roles">vérification des roles<
 <p><strong>Méthode :</strong>   
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
 <p><strong>URL :</strong>   
-<code>/medecins/</code></p>
+<code>/medecins</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
 </code></pre>
@@ -302,12 +302,12 @@ Réponse - 200
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
-<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
+<span style="color:white">/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
 </summary>
 <p>Envoie une requête au serveur d'authentification pour ajouter le médecin au répertoire de connexion.</p>
 <h3 id="--vérifications-1"><a class="header" href="#--vérifications-1">- Vérifications</a></h3>
 <ul>
-<li><a href="check.html#donn%C3%A9es-n%C3%A9cessaires">Données necessaires</a> : [nom, prenom, civilité, mot de passe]</li>
+<li><a href="check.html#donn%C3%A9es-n%C3%A9cessaires">Données necessaires</a> : [<code>civilite</code>, <code>nom</code>, <code>prenom</code>, <code>mdp</code>]</li>
 <li><a href="check.html#civilit%C3%A9">Civilitée</a></li>
 </ul>
 <h3 id="--authentification-2"><a class="header" href="#--authentification-2">- Authentification</a></h3>
@@ -318,7 +318,7 @@ Réponse - 200
 <p><strong>Méthode :</strong>   
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
 <p><strong>URL :</strong>   
-<code>/medecins/</code></p>
+<code>/medecins</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 Authorization : Bearer eyJhbGc...
@@ -385,7 +385,7 @@ Réponse - 500
 <ul>
 <li><a href="check.html#argument">Argument nécessaire</a></li>
 <li><a href="check.html#type-argument-int">Type d'argument int</a></li>
-<li><a href="check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [nom, prenom, civilité]</li>
+<li><a href="check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [<code>civilite</code>, <code>nom</code>, <code>prenom</code>]</li>
 <li><a href="check.html#element-existe">Médecin existe</a></li>
 <li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit de modification</a></li>
 <li><a href="check.html#civilit%C3%A9">Civilitée</a> (si présent)</li>

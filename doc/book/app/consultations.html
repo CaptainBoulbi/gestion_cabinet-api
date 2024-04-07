@@ -174,6 +174,365 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="consultations"><a class="header" href="#consultations">Consultations</a></h1>
+<p>Utilisé pour permettre de modifier le contenu en rapport avec les consultations.
+Chaque requête possède une <a href="check.html#roles">vérification des roles</a></p>
+<p><strong>Méthodes autorisées :</strong>     [<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, <code>OPTIONS</code>]</p>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir toutes les consultations</div>
+</summary>
+<p>Pour un médecin ou un usager, supprime les consultation dont ils ne font pas partie</p>
+<h3 id="--authentification"><a class="header" href="#--authentification">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête"><a class="header" href="#--requête">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Consultations trouvées",
+    "data": [
+        {
+            "id_consult": 1,
+            "date_consult": "2024-01-01",
+            "heure_consult": "08:00:00",
+            "duree_consult": 15,
+            "id_medecin": 1,
+            "id_usager": 1
+        },
+        {
+            "id_consult": 2,
+            "date_consult": "2024-01-02",
+            "heure_consult": "09:00:00",
+            "duree_consult": 30,
+            "id_medecin": 2,
+            "id_usager": 2
+        },
+        ...
+    ]
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 404
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 404,
+    "status_message": "[R404 REST API] : Aucune consultation trouvée"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir une consultation</div>
+</summary>
+<h3 id="--authentification-1"><a class="header" href="#--authentification-1">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--vérifications"><a class="header" href="#--vérifications">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#argument">Argument nécessaire</a></li>
+<li><a href="check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="check.html#element-existe">Consultation existe</a></li>
+<li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit de visualisation</a></li>
+</ul>
+<h3 id="--requête-1"><a class="header" href="#--requête-1">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Consultation trouvée",
+    "data": {
+        "id_consult": 5,
+        "date_consult": "2024-01-05",
+        "heure_consult": "12:00:00",
+        "duree_consult": 15,
+        "id_medecin": 5,
+        "id_usager": 5
+    }
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer une consultation</div>
+</summary>
+<h3 id="--vérifications-1"><a class="header" href="#--vérifications-1">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit d'ajout</a></li>
+<li><a href="check.html#donn%C3%A9es-autoris%C3%A9es">Données nécessaires</a> : [<code>id_medecin</code>, <code>id_usager</code>, <code>date_consult</code>, <code>heure_consult</code>, <code>duree_consult</code>]</li>
+<li><a href="check.html#element-existe">Médecin existe</a></li>
+<li><a href="check.html#element-existe">Usager existe</a></li>
+<li><a href="check.html#date">Date</a></li>
+<li><a href="check.html#consultation">Consultation valide</a></li>
+<li><a href="check.html#disponible">Disponibilité usager/médecin</a></li>
+</ul>
+<h3 id="--authentification-2"><a class="header" href="#--authentification-2">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-2"><a class="header" href="#--requête-2">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "id_usager":"7",
+    "id_medecin":"8",
+    "date_consult":"12/10/2024",
+    "heure_consult":"11:30",
+    "duree_consult":"30"
+}
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Consultation ajoutée",
+    "data": {
+        "id_consult": 53,
+        "date_consult": "2024-12-10",
+        "heure_consult": "11:30:00",
+        "duree_consult": 30,
+        "id_medecin": 8,
+        "id_usager": 7
+    }
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Echec de l'ajout de la consultation"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Modifier une consultation</div>
+</summary>
+<h3 id="--vérifications-2"><a class="header" href="#--vérifications-2">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#argument">Argument nécessaire</a></li>
+<li><a href="check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit de modification</a></li>
+<li><a href="check.html#element-existe">Consultation existe</a></li>
+<li><a href="check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [<code>id_medecin</code>, <code>id_usager</code>, <code>date_consult</code>, <code>heure_consult</code>, <code>duree_consult</code>]</li>
+<li><a href="check.html#date">Date</a> (si présent)</li>
+<li><a href="check.html#element-existe">Médecin existe</a> (si présent)</li>
+<li><a href="check.html#element-existe">Usager existe</a> (si présent)</li>
+<li><a href="check.html#consultation">Consultation valide</a> (si présent)</li>
+<li><a href="check.html#disponible">Disponibilité usager/médecin</a> (si présent)</li>
+</ul>
+<h3 id="--authentification-3"><a class="header" href="#--authentification-3">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-3"><a class="header" href="#--requête-3">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "id_usager":"2",
+    "id_medecin":"8",
+    "date_consult":"12/10/2024",
+    "heure_consult":"12:30",
+    "duree_consult":"45"
+}
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Consultation modifiée",
+    "data": {
+        "id_consult": 6,
+        "date_consult": "2024-12-10",
+        "heure_consult": "12:30:00",
+        "duree_consult": 45,
+        "id_medecin": 8,
+        "id_usager": 2
+    }
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Echec de la modification de la consultation"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Supprimer une consultation</div>
+</summary>
+<h3 id="--vérifications-3"><a class="header" href="#--vérifications-3">- Vérifications</a></h3>
+<ul>
+<li><a href="check.html#argument">Argument nécessaire</a></li>
+<li><a href="check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="check.html#element-existe">Consultation existe</a></li>
+<li><a href="check.html#contr%C3%B4le-dacc%C3%A8s">Droit de suppression</a></li>
+</ul>
+<h3 id="--authentification-4"><a class="header" href="#--authentification-4">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-4"><a class="header" href="#--requête-4">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Consultation supprimée avec succès"
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Echec de la suppression de la consultatio"
+}
+</code></pre>
+</details>
+<br>
+</details>
 
                     </main>
 

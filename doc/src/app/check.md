@@ -115,6 +115,59 @@ Content-Type : application/json
 
 ---
 
+## Consultation
+
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+
+Vérifie qu'une consultation dure 15, 30, 45 ou 60 minutes et qu'elle se trouve entre 8h00 et 18h00
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "La durée de la consultation doit être 15, 30, 45 ou 60 minutes"
+}
+```
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "L'heure de la consultation doit être entre 08:00 et 18:00"
+}
+```
+
+
+<br>
+
+</details>
+
+
+---
+
 ## Date
 
 <details open>
@@ -123,7 +176,47 @@ Content-Type : application/json
 <br>
 
 
-Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.
+Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle. Ainsi que pour vérifier la validité du format de cette dernière.
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date <date_parametre> est invalide, elle doit être au format jj/mm/aaaa"
+}
+```
+
+<br>
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date <date_parametre> n'existe pas"
+}
+```
+
+<br>
 
 ### - Response - *400*
 
@@ -140,6 +233,39 @@ Content-Type : application/json
     "status": "error",
     "status_code": 400,
     "status_message": "[R400 REST API] : La date <date_parametre> est invalide car elle est inferieure/supérieure à la date actuelle"
+}
+```
+
+<br>
+
+</details>
+
+---
+
+## Disponible
+
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+
+Vérifie qu'un usager ou un médecin est diponible pour une consultation à une date et une heure donnée.
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : Le <médecin/usager> n'est pas disponible à cette date et heure"
 }
 ```
 
@@ -377,7 +503,7 @@ Content-Type : application/json
 </summary>
 <br>
 
-Vérifie si le numéro de sécurité sociale est disponible.
+Vérifie si le numéro de sécurité sociale est composé de 15 chiffres et si il n'est pas déjà utilisé.
 
 ### - Response - *400*
 
@@ -394,6 +520,46 @@ Content-Type : application/json
     "status": "error",
     "status_code": 400,
     "status_message": "[R400 REST API] :  Le numéro de sécurité sociale <numéro> est déjà utilisé"
+}
+```
+
+<br>
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale doit être composé de 15 chiffres"
+}
+```
+
+<br>
+
+### - Response - *400*
+
+**Header :**
+
+```yaml
+Content-Type : application/json
+```
+
+**Body :**
+
+```json
+{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale doit être composé uniquement de chiffres"
 }
 ```
 

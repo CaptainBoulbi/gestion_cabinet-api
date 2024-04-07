@@ -309,7 +309,7 @@ Chaque requête possède une <a href="app/check.html#roles">vérification des ro
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
-<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
+<span style="color:white">/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les médecins </div>
 </summary>
 <h3 id="--authentification"><a class="header" href="#--authentification">- Authentification</a></h3>
 <blockquote>
@@ -319,7 +319,7 @@ Chaque requête possède une <a href="app/check.html#roles">vérification des ro
 <p><strong>Méthode :</strong>   
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
 <p><strong>URL :</strong>   
-<code>/medecins/</code></p>
+<code>/medecins</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
 </code></pre>
@@ -431,12 +431,12 @@ Réponse - 200
 <details>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
-<span style="color:white">/medecins/</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
+<span style="color:white">/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un médecin</div>
 </summary>
 <p>Envoie une requête au serveur d'authentification pour ajouter le médecin au répertoire de connexion.</p>
 <h3 id="--vérifications-1"><a class="header" href="#--vérifications-1">- Vérifications</a></h3>
 <ul>
-<li><a href="app/check.html#donn%C3%A9es-n%C3%A9cessaires">Données necessaires</a> : [nom, prenom, civilité, mot de passe]</li>
+<li><a href="app/check.html#donn%C3%A9es-n%C3%A9cessaires">Données necessaires</a> : [<code>civilite</code>, <code>nom</code>, <code>prenom</code>, <code>mdp</code>]</li>
 <li><a href="app/check.html#civilit%C3%A9">Civilitée</a></li>
 </ul>
 <h3 id="--authentification-2"><a class="header" href="#--authentification-2">- Authentification</a></h3>
@@ -447,7 +447,7 @@ Réponse - 200
 <p><strong>Méthode :</strong>   
 <mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
 <p><strong>URL :</strong>   
-<code>/medecins/</code></p>
+<code>/medecins</code></p>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 Authorization : Bearer eyJhbGc...
@@ -514,7 +514,7 @@ Réponse - 500
 <ul>
 <li><a href="app/check.html#argument">Argument nécessaire</a></li>
 <li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
-<li><a href="app/check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [nom, prenom, civilité]</li>
+<li><a href="app/check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [<code>civilite</code>, <code>nom</code>, <code>prenom</code>]</li>
 <li><a href="app/check.html#element-existe">Médecin existe</a></li>
 <li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit de modification</a></li>
 <li><a href="app/check.html#civilit%C3%A9">Civilitée</a> (si présent)</li>
@@ -638,7 +638,733 @@ Réponse - 500
 <br>
 </details>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="usagers"><a class="header" href="#usagers">Usagers</a></h1>
+<p>Utilisé pour permettre de modifier le contenu en rapport avec les usagers.
+Chaque requête possède une <a href="app/check.html#roles">vérification des roles</a></p>
+<p><strong>Méthodes autorisées :</strong>     [<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, <code>OPTIONS</code>]</p>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/usagers</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir tout les usagers</div>
+</summary>
+<h3 id="--authentification-5"><a class="header" href="#--authentification-5">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark></p>
+</blockquote>
+<h3 id="--requête-5"><a class="header" href="#--requête-5">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/usagers</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Usagers trouvés",
+    "data": [
+        {
+            "id_usager": 1,
+            "civilite": "M.",
+            "nom": "Dupont",
+            "prenom": "Jean",
+            "sexe": "H",
+            "adresse": "1 rue de la Paix",
+            "code_postal": "75000",
+            "ville": "Paris",
+            "date_nais": "1990-01-06",
+            "lieu_nais": "Paris",
+            "num_secu": "180010101010101",
+            "login": "UMODUJE72",
+            "id_medecin": 7
+        },
+        ...
+    ]
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 404
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 404,
+    "status_message": "[R404 REST API] : Aucun usager trouvé"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/usagers/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir un usager</div>
+</summary>
+<h3 id="--authentification-6"><a class="header" href="#--authentification-6">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--vérifications-4"><a class="header" href="#--vérifications-4">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#argument">Argument nécessaire</a></li>
+<li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="app/check.html#element-existe">Usager existe</a></li>
+<li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit de visualisation</a></li>
+</ul>
+<h3 id="--requête-6"><a class="header" href="#--requête-6">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/usagers/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Usager trouvé",
+    "data": {
+        "id_usager": 2,
+        "civilite": "Mme.",
+        "nom": "Durand",
+        "prenom": "Marie",
+        "sexe": "F",
+        "adresse": "2 avenu de l'Angle",
+        "code_postal": "31320",
+        "ville": "Auzeville-Tolosane",
+        "date_nais": "1987-03-07",
+        "lieu_nais": "Clermont-Ferrant",
+        "num_secu": "280010101010101",
+        "login": "UMADUMA90",
+        "id_medecin": 5
+    }
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/usagers</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer un usager</div>
+</summary>
+<p>Envoie une requête au serveur d'authentification pour ajouter l'usager au répertoire de connexion.</p>
+<h3 id="--vérifications-5"><a class="header" href="#--vérifications-5">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#donn%C3%A9es-n%C3%A9cessaires">Données necessaires</a> : [<code>civilite</code>, <code>nom</code>, <code>prenom</code>, <code>sexe</code>, <code>adresse</code>, <code>code_postal</code>, <code>ville</code>, <code>date_nais</code>, <code>lieu_nais</code>, <code>num_secu</code>, <code>mdp</code>]</li>
+<li><a href="app/check.html#date">Date</a></li>
+<li><a href="app/check.html#s%C3%A9curit%C3%A9-sociale">Numéro de sécurité sociale</a></li>
+<li><a href="app/check.html#civilit%C3%A9">Civilitée</a></li>
+<li><a href="app/check.html#sexe">Sexe</a></li>
+<li><a href="app/check.html#element-existe">Médecin existe</a> (si présent)</li>
+</ul>
+<h3 id="--authentification-7"><a class="header" href="#--authentification-7">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :   <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#757575; color:white;">invite</mark></p>
+</blockquote>
+<h3 id="--requête-7"><a class="header" href="#--requête-7">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/usagers</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "civilite":"Mme.",
+    "nom":"Dumont",
+    "prenom":"Armand",
+    "sexe":"H",
+    "adresse":"85, Square de la Couronne",
+    "code_postal":"91120",
+    "ville":"Palaiseau",
+    "date_nais":"14/05/1952",
+    "lieu_nais":"Nantes",
+    "num_secu":"112233445566968",
+    "mdp":"user1234!"
+}
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Usager inséré en base de donnée avec succès",
+    "data": {
+        "id_usager": 11,
+        "civilite": "Mme.",
+        "nom": "Dumont",
+        "prenom": "Armand",
+        "sexe": "H",
+        "adresse": "85, Square de la Couronne",
+        "code_postal": "91120",
+        "ville": "Palaiseau",
+        "date_nais": "1970-01-01",
+        "lieu_nais": "Nantes",
+        "num_secu": "119936645588688",
+        "login": "UMADUAR96",
+        "id_medecin": null
+    }
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Erreur lors de l'insertion de l'usager en base de donnée"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/usagers/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Modifier partiellement un usager</div>
+</summary>
+<h3 id="--vérifications-6"><a class="header" href="#--vérifications-6">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#argument">Argument nécessaire</a></li>
+<li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="app/check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [<code>civilite</code>, <code>nom</code>, <code>prenom</code>, <code>sexe</code>, <code>adresse</code>, <code>code_postal</code>, <code>ville</code>, <code>date_nais</code>, <code>lieu_nais</code>, <code>num_secu</code>, <code>id_medecin</code>]</li>
+<li><a href="app/check.html#date">Date</a> (si présent)</li>
+<li><a href="app/check.html#s%C3%A9curit%C3%A9-sociale">Numéro de sécurité sociale</a> (si présent)</li>
+<li><a href="app/check.html#civilit%C3%A9">Civilitée</a> (si présent)</li>
+<li><a href="app/check.html#sexe">Sexe</a> (si présent)</li>
+<li><a href="app/check.html#element-existe">Médecin existe</a> (si présent)</li>
+</ul>
+<h3 id="--authentification-8"><a class="header" href="#--authentification-8">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de : <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-8"><a class="header" href="#--requête-8">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/usagers/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "adresse":"85, Square de la Couronne",
+    "code_postal":"91120",
+    "ville":"Palaiseau",
+    "id_medecin":"1"
+}
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Usager mit à jour avec succès"
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Usager non mis à jour"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/usagers/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Supprimer un usager</div>
+</summary>
+<p>Envoie une requête au serveur d'authentification pour supprimer l'usager du répertoire de connexion. Supprime les rendez-vous associés.</p>
+<h3 id="--vérifications-7"><a class="header" href="#--vérifications-7">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#argument">Argument nécessaire</a></li>
+<li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="app/check.html#element-existe">Usager existe</a></li>
+<li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit de suppression</a></li>
+</ul>
+<h3 id="--authentification-9"><a class="header" href="#--authentification-9">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-9"><a class="header" href="#--requête-9">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/usagers/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Usager supprimé avec succès"
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Usager non supprimées"
+}
+</code></pre>
+</details>
+<br>
+</details>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="consultations"><a class="header" href="#consultations">Consultations</a></h1>
+<p>Utilisé pour permettre de modifier le contenu en rapport avec les consultations.
+Chaque requête possède une <a href="app/check.html#roles">vérification des roles</a></p>
+<p><strong>Méthodes autorisées :</strong>     [<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, <code>OPTIONS</code>]</p>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir toutes les consultations</div>
+</summary>
+<p>Pour un médecin ou un usager, supprime les consultation dont ils ne font pas partie</p>
+<h3 id="--authentification-10"><a class="header" href="#--authentification-10">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-10"><a class="header" href="#--requête-10">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Consultations trouvées",
+    "data": [
+        {
+            "id_consult": 1,
+            "date_consult": "2024-01-01",
+            "heure_consult": "08:00:00",
+            "duree_consult": 15,
+            "id_medecin": 1,
+            "id_usager": 1
+        },
+        {
+            "id_consult": 2,
+            "date_consult": "2024-01-02",
+            "heure_consult": "09:00:00",
+            "duree_consult": 30,
+            "id_medecin": 2,
+            "id_usager": 2
+        },
+        ...
+    ]
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 404
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 404,
+    "status_message": "[R404 REST API] : Aucune consultation trouvée"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir une consultation</div>
+</summary>
+<h3 id="--authentification-11"><a class="header" href="#--authentification-11">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--vérifications-8"><a class="header" href="#--vérifications-8">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#argument">Argument nécessaire</a></li>
+<li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="app/check.html#element-existe">Consultation existe</a></li>
+<li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit de visualisation</a></li>
+</ul>
+<h3 id="--requête-11"><a class="header" href="#--requête-11">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Consultation trouvée",
+    "data": {
+        "id_consult": 5,
+        "date_consult": "2024-01-05",
+        "heure_consult": "12:00:00",
+        "duree_consult": 15,
+        "id_medecin": 5,
+        "id_usager": 5
+    }
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Créer une consultation</div>
+</summary>
+<h3 id="--vérifications-9"><a class="header" href="#--vérifications-9">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit d'ajout</a></li>
+<li><a href="app/check.html#donn%C3%A9es-autoris%C3%A9es">Données nécessaires</a> : [<code>id_medecin</code>, <code>id_usager</code>, <code>date_consult</code>, <code>heure_consult</code>, <code>duree_consult</code>]</li>
+<li><a href="app/check.html#element-existe">Médecin existe</a></li>
+<li><a href="app/check.html#element-existe">Usager existe</a></li>
+<li><a href="app/check.html#date">Date</a></li>
+<li><a href="app/check.html#consultation">Consultation valide</a></li>
+<li><a href="app/check.html#disponible">Disponibilité usager/médecin</a></li>
+</ul>
+<h3 id="--authentification-12"><a class="header" href="#--authentification-12">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-12"><a class="header" href="#--requête-12">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #eade59;"><span style="color:white">POST</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "id_usager":"7",
+    "id_medecin":"8",
+    "date_consult":"12/10/2024",
+    "heure_consult":"11:30",
+    "duree_consult":"30"
+}
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Consultation ajoutée",
+    "data": {
+        "id_consult": 53,
+        "date_consult": "2024-12-10",
+        "heure_consult": "11:30:00",
+        "duree_consult": 30,
+        "id_medecin": 8,
+        "id_usager": 7
+    }
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Echec de l'ajout de la consultation"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Modifier une consultation</div>
+</summary>
+<h3 id="--vérifications-10"><a class="header" href="#--vérifications-10">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#argument">Argument nécessaire</a></li>
+<li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit de modification</a></li>
+<li><a href="app/check.html#element-existe">Consultation existe</a></li>
+<li><a href="app/check.html#donn%C3%A9es-autoris%C3%A9es">Données autorisées</a> : [<code>id_medecin</code>, <code>id_usager</code>, <code>date_consult</code>, <code>heure_consult</code>, <code>duree_consult</code>]</li>
+<li><a href="app/check.html#date">Date</a> (si présent)</li>
+<li><a href="app/check.html#element-existe">Médecin existe</a> (si présent)</li>
+<li><a href="app/check.html#element-existe">Usager existe</a> (si présent)</li>
+<li><a href="app/check.html#consultation">Consultation valide</a> (si présent)</li>
+<li><a href="app/check.html#disponible">Disponibilité usager/médecin</a> (si présent)</li>
+</ul>
+<h3 id="--authentification-13"><a class="header" href="#--authentification-13">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-13"><a class="header" href="#--requête-13">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #ca5cf9;"><span style="color:white">PATCH</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+Authorization : Bearer eyJhbGc...
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "id_usager":"2",
+    "id_medecin":"8",
+    "date_consult":"12/10/2024",
+    "heure_consult":"12:30",
+    "duree_consult":"45"
+}
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 201
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 201,
+    "status_message": "[R201 REST API] : Consultation modifiée",
+    "data": {
+        "id_consult": 6,
+        "date_consult": "2024-12-10",
+        "heure_consult": "12:30:00",
+        "duree_consult": 45,
+        "id_medecin": 8,
+        "id_usager": 2
+    }
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Echec de la modification de la consultation"
+}
+</code></pre>
+</details>
+<br>
+</details>
+<br>
+<hr />
+<br>
+<details>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(20px);">
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></mark>&nbsp;<mark style="background-color: #333333;">
+<span style="color:white">/consultations/{id}</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal">Supprimer une consultation</div>
+</summary>
+<h3 id="--vérifications-11"><a class="header" href="#--vérifications-11">- Vérifications</a></h3>
+<ul>
+<li><a href="app/check.html#argument">Argument nécessaire</a></li>
+<li><a href="app/check.html#type-argument-int">Type d'argument int</a></li>
+<li><a href="app/check.html#element-existe">Consultation existe</a></li>
+<li><a href="app/check.html#contr%C3%B4le-dacc%C3%A8s">Droit de suppression</a></li>
+</ul>
+<h3 id="--authentification-14"><a class="header" href="#--authentification-14">- Authentification</a></h3>
+<blockquote>
+<p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark></p>
+</blockquote>
+<h3 id="--requête-14"><a class="header" href="#--requête-14">- Requête</a></h3>
+<p><strong>Méthode :</strong>   
+<mark style="background-color: #f96e5c;"><span style="color:white">DELETE</span></mark></p>
+<p><strong>URL :</strong>   
+<code>/consultations/{id}</code></p>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Authorization : Bearer eyJhbGc...
+</code></pre>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 200
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "success",
+    "status_code": 200,
+    "status_message": "[R200 REST API] : Consultation supprimée avec succès"
+}
+</code></pre>
+</details>
+<br>
+<details>
+<summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
+Réponse - 500
+</summary>
+<br>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 500,
+    "status_message": "[R500 REST API] : Echec de la suppression de la consultatio"
+}
+</code></pre>
+</details>
+<br>
+</details>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="statistiques"><a class="header" href="#statistiques">Statistiques</a></h1>
 <p>Utilisé pour permettre de visuliser les différentes statistiques de l'application.
 Chaque requête possède une <a href="app/check.html#roles">vérification des roles</a></p>
@@ -649,16 +1375,16 @@ Chaque requête possède une <a href="app/check.html#roles">vérification des ro
 <span style="color:white">/stats/medecins</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir les stats de chaque médecin</div>
 </summary>
 <p>Pour chaque médecin, spécifie le nombre d'heure de consultation totales effectuées.</p>
-<h3 id="--vérifications-4"><a class="header" href="#--vérifications-4">- Vérifications</a></h3>
+<h3 id="--vérifications-12"><a class="header" href="#--vérifications-12">- Vérifications</a></h3>
 <ul>
 <li><a href="app/check.html#argument">Argument nécessaire</a></li>
 <li><a href="app/check.html#type-argument-string">Type d'argument string</a></li>
 </ul>
-<h3 id="--authentification-5"><a class="header" href="#--authentification-5">- Authentification</a></h3>
+<h3 id="--authentification-15"><a class="header" href="#--authentification-15">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark> ,  <mark style="background-color:#757575; color:white;">invite</mark></p>
 </blockquote>
-<h3 id="--requête-5"><a class="header" href="#--requête-5">- Requête</a></h3>
+<h3 id="--requête-15"><a class="header" href="#--requête-15">- Requête</a></h3>
 <p><strong>Méthode :</strong>   
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
 <p><strong>URL :</strong>   
@@ -726,16 +1452,16 @@ Réponse - 404
 <span style="color:white">/stats/usagers</span></mark><div style="text-align: right; transform: translateY(-38px); font-style: italic; font-weight: normal"> Obtenir les stats des usagers</div>
 </summary>
 <p>Permet de savoir en le nombre d'homme et de femme de différentes tranches d'âge.</p>
-<h3 id="--vérifications-5"><a class="header" href="#--vérifications-5">- Vérifications</a></h3>
+<h3 id="--vérifications-13"><a class="header" href="#--vérifications-13">- Vérifications</a></h3>
 <ul>
 <li><a href="app/check.html#argument">Argument nécessaire</a></li>
 <li><a href="app/check.html#type-argument-string">Type d'argument string</a></li>
 </ul>
-<h3 id="--authentification-6"><a class="header" href="#--authentification-6">- Authentification</a></h3>
+<h3 id="--authentification-16"><a class="header" href="#--authentification-16">- Authentification</a></h3>
 <blockquote>
 <p>Nécessite le role de :  <mark style="background-color:#FF5733; color:white;">administrateur</mark> ,  <mark style="background-color:#3498DB; color:white;">secrétaire</mark> ,  <mark style="background-color:#27AE60; color:white;">mecedin</mark> ,  <mark style="background-color:#F1C40F; color:white;">usager</mark> ,  <mark style="background-color:#757575; color:white;">invite</mark></p>
 </blockquote>
-<h3 id="--requête-6"><a class="header" href="#--requête-6">- Requête</a></h3>
+<h3 id="--requête-16"><a class="header" href="#--requête-16">- Requête</a></h3>
 <p><strong>Méthode :</strong>   
 <mark style="background-color: #65d863;"><span style="color:white">GET</span></mark></p>
 <p><strong>URL :</strong>   
@@ -794,7 +1520,7 @@ Réponse - 404
 </details>
 <br>
 <hr />
-<h2 id="pour-tout-autre-méthode-"><a class="header" href="#pour-tout-autre-méthode-">Pour tout autre méthode :</a></h2>
+<h2 id="pour-tout-autre-url-"><a class="header" href="#pour-tout-autre-url-">Pour tout autre URL :</a></h2>
 <details>
 <summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">
 Réponse - 404
@@ -876,13 +1602,68 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <br>
 </details>
 <hr />
+<h2 id="consultation"><a class="header" href="#consultation">Consultation</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Vérifie qu'une consultation dure 15, 30, 45 ou 60 minutes et qu'elle se trouve entre 8h00 et 18h00</p>
+<h3 id="--response---400-2"><a class="header" href="#--response---400-2">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "La durée de la consultation doit être 15, 30, 45 ou 60 minutes"
+}
+</code></pre>
+<h3 id="--response---400-3"><a class="header" href="#--response---400-3">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "L'heure de la consultation doit être entre 08:00 et 18:00"
+}
+</code></pre>
+<br>
+</details>
+<hr />
 <h2 id="date"><a class="header" href="#date">Date</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.</p>
-<h3 id="--response---400-2"><a class="header" href="#--response---400-2">- Response - <em>400</em></a></h3>
+<p>Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle. Ainsi que pour vérifier la validité du format de cette dernière.</p>
+<h3 id="--response---400-4"><a class="header" href="#--response---400-4">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date &lt;date_parametre&gt; est invalide, elle doit être au format jj/mm/aaaa"
+}
+</code></pre>
+<br>
+<h3 id="--response---400-5"><a class="header" href="#--response---400-5">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date &lt;date_parametre&gt; n'existe pas"
+}
+</code></pre>
+<br>
+<h3 id="--response---400-6"><a class="header" href="#--response---400-6">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -896,13 +1677,33 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <br>
 </details>
 <hr />
+<h2 id="disponible"><a class="header" href="#disponible">Disponible</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Vérifie qu'un usager ou un médecin est diponible pour une consultation à une date et une heure donnée.</p>
+<h3 id="--response---400-7"><a class="header" href="#--response---400-7">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : Le &lt;médecin/usager&gt; n'est pas disponible à cette date et heure"
+}
+</code></pre>
+<br>
+</details>
+<hr />
 <h2 id="données-autorisées"><a class="header" href="#données-autorisées">Données Autorisées</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
 <p>A partir des données passées en corps, vérifie si touts les champs sont autorisés (surtout pour les requêtes de modification).</p>
-<h3 id="--response---400-3"><a class="header" href="#--response---400-3">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-8"><a class="header" href="#--response---400-8">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -922,7 +1723,7 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 </summary>
 <br>
 <p>A partir des données passées en corps, vérifie si touts les champs nécessaires sont présents (surtout pour les requêtes de création).</p>
-<h3 id="--response---400-4"><a class="header" href="#--response---400-4">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-9"><a class="header" href="#--response---400-9">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -1033,8 +1834,8 @@ La vérification de la validité est effectuée coté serveur d'authentification
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Vérifie si le numéro de sécurité sociale est disponible.</p>
-<h3 id="--response---400-5"><a class="header" href="#--response---400-5">- Response - <em>400</em></a></h3>
+<p>Vérifie si le numéro de sécurité sociale est composé de 15 chiffres et si il n'est pas déjà utilisé.</p>
+<h3 id="--response---400-10"><a class="header" href="#--response---400-10">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -1046,6 +1847,30 @@ La vérification de la validité est effectuée coté serveur d'authentification
 }
 </code></pre>
 <br>
+<h3 id="--response---400-11"><a class="header" href="#--response---400-11">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale doit être composé de 15 chiffres"
+}
+</code></pre>
+<br>
+<h3 id="--response---400-12"><a class="header" href="#--response---400-12">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale doit être composé uniquement de chiffres"
+}
+</code></pre>
+<br>
 </details>
 <hr />
 <h2 id="sexe"><a class="header" href="#sexe">Sexe</a></h2>
@@ -1054,7 +1879,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
 </summary>
 <br>
 <p>Vérifie si le sexe est valide. Celui-ci doit être soit <code>H</code> soit <code>F</code>.</p>
-<h3 id="--response---400-6"><a class="header" href="#--response---400-6">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-13"><a class="header" href="#--response---400-13">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -1074,7 +1899,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
 </summary>
 <br>
 <p>Utilisé pour vérifier le type d'argument que l'on attend est un <code>int</code> (pour les <code>{id}</code>). Impose une taille limite de <code>2147483647</code>.</p>
-<h3 id="--response---400-7"><a class="header" href="#--response---400-7">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-14"><a class="header" href="#--response---400-14">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -1085,7 +1910,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
     "status_message": "[R400 REST] : L\'identifiant doit être un entier positif non null"
 }
 </code></pre>
-<h3 id="--response---400-8"><a class="header" href="#--response---400-8">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-15"><a class="header" href="#--response---400-15">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -1105,7 +1930,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
 </summary>
 <br>
 <p>Utilisé pour vérifier le type d'argument que l'on attend est une <code>string</code>.</p>
-<h3 id="--response---400-9"><a class="header" href="#--response---400-9">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-16"><a class="header" href="#--response---400-16">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>

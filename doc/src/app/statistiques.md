@@ -210,7 +210,7 @@ Content-Type : application/json
 
 ---
 
-## Pour tout autre méthode :
+## Pour tout autre URL :
 
 <details>
 <summary style="font-size: 1.2em; font-weight: bold; transform: translateY(20px);">

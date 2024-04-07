@@ -239,13 +239,68 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <br>
 </details>
 <hr />
+<h2 id="consultation"><a class="header" href="#consultation">Consultation</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Vérifie qu'une consultation dure 15, 30, 45 ou 60 minutes et qu'elle se trouve entre 8h00 et 18h00</p>
+<h3 id="--response---400-2"><a class="header" href="#--response---400-2">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "La durée de la consultation doit être 15, 30, 45 ou 60 minutes"
+}
+</code></pre>
+<h3 id="--response---400-3"><a class="header" href="#--response---400-3">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "L'heure de la consultation doit être entre 08:00 et 18:00"
+}
+</code></pre>
+<br>
+</details>
+<hr />
 <h2 id="date"><a class="header" href="#date">Date</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle.</p>
-<h3 id="--response---400-2"><a class="header" href="#--response---400-2">- Response - <em>400</em></a></h3>
+<p>Utilisé pour vérifier si une date est inférieure (date de naissance) ou supèrieur (rendez-vous) à la date actuelle. Ainsi que pour vérifier la validité du format de cette dernière.</p>
+<h3 id="--response---400-4"><a class="header" href="#--response---400-4">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date &lt;date_parametre&gt; est invalide, elle doit être au format jj/mm/aaaa"
+}
+</code></pre>
+<br>
+<h3 id="--response---400-5"><a class="header" href="#--response---400-5">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : La date &lt;date_parametre&gt; n'existe pas"
+}
+</code></pre>
+<br>
+<h3 id="--response---400-6"><a class="header" href="#--response---400-6">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -259,13 +314,33 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 <br>
 </details>
 <hr />
+<h2 id="disponible"><a class="header" href="#disponible">Disponible</a></h2>
+<details open>
+<summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
+</summary>
+<br>
+<p>Vérifie qu'un usager ou un médecin est diponible pour une consultation à une date et une heure donnée.</p>
+<h3 id="--response---400-7"><a class="header" href="#--response---400-7">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] : Le &lt;médecin/usager&gt; n'est pas disponible à cette date et heure"
+}
+</code></pre>
+<br>
+</details>
+<hr />
 <h2 id="données-autorisées"><a class="header" href="#données-autorisées">Données Autorisées</a></h2>
 <details open>
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
 <p>A partir des données passées en corps, vérifie si touts les champs sont autorisés (surtout pour les requêtes de modification).</p>
-<h3 id="--response---400-3"><a class="header" href="#--response---400-3">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-8"><a class="header" href="#--response---400-8">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -285,7 +360,7 @@ On vérifie donc en fonction du role actuel de l'utilisateur si il à le droit d
 </summary>
 <br>
 <p>A partir des données passées en corps, vérifie si touts les champs nécessaires sont présents (surtout pour les requêtes de création).</p>
-<h3 id="--response---400-4"><a class="header" href="#--response---400-4">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-9"><a class="header" href="#--response---400-9">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -396,8 +471,8 @@ La vérification de la validité est effectuée coté serveur d'authentification
 <summary style="font-size: 1.5em; font-weight: bold; transform: translateY(23px);">
 </summary>
 <br>
-<p>Vérifie si le numéro de sécurité sociale est disponible.</p>
-<h3 id="--response---400-5"><a class="header" href="#--response---400-5">- Response - <em>400</em></a></h3>
+<p>Vérifie si le numéro de sécurité sociale est composé de 15 chiffres et si il n'est pas déjà utilisé.</p>
+<h3 id="--response---400-10"><a class="header" href="#--response---400-10">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -409,6 +484,30 @@ La vérification de la validité est effectuée coté serveur d'authentification
 }
 </code></pre>
 <br>
+<h3 id="--response---400-11"><a class="header" href="#--response---400-11">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale doit être composé de 15 chiffres"
+}
+</code></pre>
+<br>
+<h3 id="--response---400-12"><a class="header" href="#--response---400-12">- Response - <em>400</em></a></h3>
+<p><strong>Header :</strong></p>
+<pre><code class="language-yaml">Content-Type : application/json
+</code></pre>
+<p><strong>Body :</strong></p>
+<pre><code class="language-json">{
+    "status": "error",
+    "status_code": 400,
+    "status_message": "[R400 REST API] :  Le numéro de sécurité sociale doit être composé uniquement de chiffres"
+}
+</code></pre>
+<br>
 </details>
 <hr />
 <h2 id="sexe"><a class="header" href="#sexe">Sexe</a></h2>
@@ -417,7 +516,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
 </summary>
 <br>
 <p>Vérifie si le sexe est valide. Celui-ci doit être soit <code>H</code> soit <code>F</code>.</p>
-<h3 id="--response---400-6"><a class="header" href="#--response---400-6">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-13"><a class="header" href="#--response---400-13">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -437,7 +536,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
 </summary>
 <br>
 <p>Utilisé pour vérifier le type d'argument que l'on attend est un <code>int</code> (pour les <code>{id}</code>). Impose une taille limite de <code>2147483647</code>.</p>
-<h3 id="--response---400-7"><a class="header" href="#--response---400-7">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-14"><a class="header" href="#--response---400-14">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -448,7 +547,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
     "status_message": "[R400 REST] : L\'identifiant doit être un entier positif non null"
 }
 </code></pre>
-<h3 id="--response---400-8"><a class="header" href="#--response---400-8">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-15"><a class="header" href="#--response---400-15">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
@@ -468,7 +567,7 @@ La vérification de la validité est effectuée coté serveur d'authentification
 </summary>
 <br>
 <p>Utilisé pour vérifier le type d'argument que l'on attend est une <code>string</code>.</p>
-<h3 id="--response---400-9"><a class="header" href="#--response---400-9">- Response - <em>400</em></a></h3>
+<h3 id="--response---400-16"><a class="header" href="#--response---400-16">- Response - <em>400</em></a></h3>
 <p><strong>Header :</strong></p>
 <pre><code class="language-yaml">Content-Type : application/json
 </code></pre>
