@@ -139,9 +139,7 @@ class AppAPI extends ConnexionDB
     protected function validateDate(string $date, string $sup_inf): bool
     {
         if ($sup_inf !== 'sup' && $sup_inf !== 'inf') {
-            class InvalidParameterException extends Exception {}
-
-            throw new InvalidParameterException("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
+            throw new Exception("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
         }
         $currentDate = date('d/m/y');
         switch ($sup_inf) {
