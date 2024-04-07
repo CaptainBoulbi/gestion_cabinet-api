@@ -27,7 +27,7 @@ class UsagerAPI extends AppAPI
      */
     public function __construct(array $allowedOptions){
         parent::__construct($allowedOptions, ['civilite', 'nom', 'prenom', 'sexe', 'adresse', 'code_postal',
-        'ville', 'date_nais', 'lieu_nais', 'num_secu', 'id_medecin']);
+        'ville', 'date_nais', 'lieu_nais', 'num_secu']);
         $this->jwtu = new JWTUtils();
     }
 
@@ -74,9 +74,13 @@ class UsagerAPI extends AppAPI
         
         $this->checkNumSecuUsed($data['num_secu']);
         $this->validateDate($data['date_nais'], 'inf');
-        $this->checkMedecinExists($data['id_medecin']);
         $this->checkCivilite($data['civilite']);
         $this->checkSexe($data['sexe']);
+        if (isset($data['id_medecin'])) {
+            $this->checkMedecinExists($data['id_medecin']);
+        } else {
+            $data['id_medecin'] = null;
+        }
 
         $sql = 'INSERT INTO usager ('. implode(', ', $this->getInfos()) .', login) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
@@ -119,7 +123,7 @@ class UsagerAPI extends AppAPI
         $infos_jwt = $this->jwtu->checkRole(["administrateur", "usager"]);
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $this->checkAllowedData($data, $this->getInfos());
+        $this->checkAllowedData($data, array_merge($this->getInfos(),["id_medecin"]));
 
         $infos_us = $this->checkUsagerExists($id);
         if ($infos_jwt["role"] == "usager" && $infos_jwt["login"] != $infos_us["login"]) {
