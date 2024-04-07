@@ -136,6 +136,7 @@ class UsagerAPI extends AppAPI
         }
         if (isset($data['date_nais'])) {
             $this->validateDate($data['date_nais'], 'inf');
+            $data['date_nais'] = $this->convertDateToMysql($data['date_nais']);
         }
         if (isset($data['id_medecin'])) {
             $this->checkMedecinExists($data['id_medecin']);
