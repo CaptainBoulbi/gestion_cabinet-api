@@ -72,7 +72,7 @@ class UsagerAPI extends AppAPI
 
         $this->checkNeededData($data, array_merge($this->getInfos(),["mdp"]));
         
-        $this->checkNumSecuUsed($data['num_secu']);
+        $this->checkNumSecu($data['num_secu']);
         $this->validateDate($data['date_nais'], 'inf');
         $this->checkCivilite($data['civilite']);
         $this->checkSexe($data['sexe']);
@@ -102,14 +102,15 @@ class UsagerAPI extends AppAPI
         if($result){
             $data = ["login" => $this->generateLogin($data, 'U'), "mdp" => $data["mdp"]];
             if(!$this->jwtu->createUsager($data)){
+                $sql = "DELETE FROM usager WHERE id_usager = ?";
+                $this->updateDelete($sql, [$result]);
                 $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de la création de l'usager");
             }
             $sql = "SELECT * FROM usager WHERE id_usager = ?";
             $result = $this->selectFirst($sql, [$result]);
             $this->deliverResponse('success', 201, '[R201 REST API] : Usager inséré en base de donnée avec succès', $result);
         }else{
-            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion de l'usager
-            en base de donnée");
+            $this->deliverResponse('error', 500, "[R500 REST API] : Erreur lors de l'insertion de l'usager en base de donnée");
         }
     }
 
@@ -131,7 +132,7 @@ class UsagerAPI extends AppAPI
         }
         
         if (isset($data['num_secu'])) {
-            $this->checkNumSecuUsed($data['num_secu']);
+            $this->checkNumSecu($data['num_secu']);
         }
         if (isset($data['date_nais'])) {
             $this->validateDate($data['date_nais'], 'inf');
@@ -196,12 +197,18 @@ class UsagerAPI extends AppAPI
     }
 
     /**
-     * This function is used to check if the num_secu is already used
+     * This function is used to check if the num_secu is valid and if it is already used
      *
-     * @param int $num Num_secu to be checked
+     * @param string $num Num_secu to be checked
      */
-    private function checkNumSecuUsed(int $num): void
+    private function checkNumSecu(string $num): void
     {
+        if (strlen($num) !== 15) {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale doit être composé de 15 chiffres");
+        }
+        if (!ctype_digit($num)) {
+            $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale doit être composé uniquement de chiffres");
+        }
         $sql = "SELECT * FROM usager WHERE num_secu = ?";
         if ($this->selectFirst($sql, [$num])) {
             $this->deliverResponse('error', 400, "[R400 REST API] : Le numéro de sécurité sociale $num est déjà utilisé");
