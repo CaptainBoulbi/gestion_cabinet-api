@@ -118,11 +118,11 @@ Content-Type : application/json
 
 ### Mots de passe de connexion
 
- Role  | Mot de passe 
-:------:|:-----:
-<mark style="background-color:#FF5733; color:white;">administrateur</mark> &nbsp; | `password1234!`
-<mark style="background-color:#3498DB; color:white;">secretaire</mark> &nbsp; | `password1234!`
-<mark style="background-color:#27AE60; color:white;">medecin</mark> &nbsp; | `med1234!`
-<mark style="background-color:#F1C40F; color:white;">usager</mark> &nbsp; | `user1234!` 
+ Role  | Login |  Mot de passe 
+:------:|:-----:|:-----:
+<mark style="background-color:#FF5733; color:white;">administrateur</mark> &nbsp; | `admin` | `password1234!`
+<mark style="background-color:#3498DB; color:white;">secretaire</mark> &nbsp; | `secretaire1` | `password1234!`
+<mark style="background-color:#27AE60; color:white;">medecin</mark> &nbsp; | Voir liste des medecins | `med1234!`
+<mark style="background-color:#F1C40F; color:white;">usager</mark> &nbsp; | Voir liste des usagers | `user1234!` 
 
 > *Le mot de passe médecin et usaager concerne les 10 premieres entitées de chaque qui sont prégénérées.*
