@@ -139,18 +139,20 @@ class AppAPI extends ConnexionDB
     protected function validateDate(string $date, string $sup_inf): bool
     {
         if ($sup_inf !== 'sup' && $sup_inf !== 'inf') {
-            throw new Exception("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
+            class InvalidParameterException extends Exception {}
+
+            throw new InvalidParameterException("Le paramètre sup_inf doit être soit 'sup' soit 'inf'");
         }
         $currentDate = date('d/m/y');
         switch ($sup_inf) {
             case 'sup':
-                if ($date > $currentDate) {
+                if ($date < $currentDate) {
                     return true;
                 } else {
                     $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide car elle est inferieure à la date actuelle');
                 }
             case 'inf':
-                if ($date < $currentDate) {
+                if ($date > $currentDate) {
                     return true;
                 } else {
                     $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide car elle est supérieure à la date actuelle');
@@ -210,7 +212,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * For a set of data, check if all $neededData value are in $data keys
-     * 
+     *
      * @param array $data Data to be checked
      * @param array $neededData Array of needed data
      * @return void Nothing is returned instead the response is sent to the client in a JSON format
@@ -226,7 +228,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * For a set of data, check if all $allowedData keys are in $data keys
-     * 
+     *
      * @param array $data Data to be checked
      * @param array $allowedData Array of allowed data
      * @return void Nothing is returned instead the response is sent to the client in a JSON format
@@ -242,7 +244,7 @@ class AppAPI extends ConnexionDB
 
     /**
      * This function is used to convert a date to the mysql format
-     * 
+     *
      * @param string $date Date to be converted
      * @return string Returns the date in the mysql format
      */
