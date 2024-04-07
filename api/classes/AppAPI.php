@@ -144,7 +144,7 @@ class AppAPI extends ConnexionDB
         } else {
             $chdate = explode('/', $date);
             if (!checkdate($chdate[1], $chdate[0], $chdate[2])) {
-                $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' est invalide');
+                $this->deliverResponse('error', 400, '[R400 REST API] : La date ' . $date . ' n\'existe pas');
             }
         }
         $currentDate = new DateTime(date('d/m/Y'));
