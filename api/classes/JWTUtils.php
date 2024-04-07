@@ -3,6 +3,7 @@
 class JWTUtils
 {
     private string $SERVER_AUTH = 'https://api-med-auth.fruitpassion.fr';
+    // private string $SERVER_AUTH = 'http://172.18.0.1:7070';
 
 	/**
 	 * This function is used to check if the bearer token is valid and if the user has the required role
@@ -165,9 +166,9 @@ class JWTUtils
      * @param string $token The token to be verified
 	 * @param string $role The role of the user
 	 * @param array $data The data to be sent to the server containing the login and password
-     * @return array Returns the response from the server
+     * @return ?array Returns the response from the server
      */
-    private function jwtAction(string $token, string $role, array $data, string $method): array
+    private function jwtAction(string $token, string $role, array $data, string $method): ?array
 	{
 		$options = [
 			'http' => [
@@ -179,7 +180,7 @@ class JWTUtils
 		];
 
 		$context = stream_context_create($options);
-		$result = file_get_contents($this->SERVER_AUTH.'/'.$role, false, $context);
+		$result = @file_get_contents($this->SERVER_AUTH.'/'.$role, false, $context);
 
 		return json_decode($result, true);
     }
