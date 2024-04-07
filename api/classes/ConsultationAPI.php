@@ -108,6 +108,8 @@ class ConsultationAPI extends AppAPI
 
         $this->validateDate($data['date_consult'], 'sup');
 
+        $data['date_consult'] = $this->convertDateToMysql($data['date_consult']);
+
         if (!in_array($data["duree_consult"], [15, 30, 45, 60])) {
             $this->deliverResponse('error', 400, '[R400 REST API] : La durée de la consultation doit être 15, 30, 45 ou 60 minutes');
         }
@@ -149,6 +151,8 @@ class ConsultationAPI extends AppAPI
         $this->checkRight("usager", "[R403 REST API] : Vous n'avez pas le droit de modifier cette consultation.", $infos_jwt, $result);
 
         $this->validateDate($data['date_consult'], 'sup');
+
+        $data['date_consult'] = $this->convertDateToMysql($data['date_consult']);
 
         if (!in_array($data["duree_consult"], [15, 30, 45, 60])) {
             $this->deliverResponse('error', 400, '[R400 REST API] : La durée de la consultation doit être 15, 30, 45 ou 60 minutes');
@@ -224,7 +228,7 @@ class ConsultationAPI extends AppAPI
         
         $sql = "SELECT * FROM consultation WHERE id_medecin = ? AND date_consult = ?";
         $consultations = $this->selectAll($sql, [$id_medecin, $date]);
-
+        
         $heure = strtotime($heure);
         $heure_fin = $heure + $duree * 60;
 
