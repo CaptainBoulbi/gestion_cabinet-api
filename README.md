@@ -1,30 +1,7 @@
 # Gestion Cabinet
 
-A faire 
-
-## Liste des routes :
-
-A faire 
-
-### Authentification
-
-> Préfixe : cabmed
-
-### API
-
-> Préfixe : authapi
-
-A faire 
-
-### Cabinet
-
-> Préfixe : cabmed-client
-
-A faire 
-
-## Liens
-
-A faire 
+Lien de la documentation : 
+[api-med-doc.fruitpassion.fr](https://api-med-doc.fruitpassion.fr/)
 
 Réalisé par :
 - [Raphael BOUDIN](https://github.com/FruitPassion)
